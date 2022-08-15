@@ -16,7 +16,7 @@ const validationSchema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required").min(6),
 });
-export default function SignUp() {
+function Login() {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -94,3 +94,5 @@ export default function SignUp() {
     </Container>
   );
 }
+
+export default Login;
