@@ -90,6 +90,14 @@ function Login() {
             </Grid>
           </Grid>
         </form>
+
+        {/* demo user */}
+        <Typography component="p" variant="body2" sx={{ mt: 3 }}>
+          Demo User : demo@mail.com
+        </Typography>
+        <Typography component="p" variant="body2">
+          Password : Test@123456
+        </Typography>
       </Box>
     </Container>
   );
