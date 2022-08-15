@@ -11,20 +11,17 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import * as yup from "yup";
 
-const formSchema = yup
-  .object()
-  .shape({
-    email: yup.string().email().required(),
-    password: yup.string().required().min(8),
-    confirmPassword: yup
-      .string()
-      .required()
-      .test("passwords-match", "Passwords must match", function (value) {
-        return this.parent.password === value;
-      }),
-    name: yup.string().required(),
-  })
-  .required();
+const SignupSchema = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
+  password: yup.string().required("Password is required").min(8),
+  confirmPassword: yup
+    .string()
+    .required()
+    .test("passwords-match", "Passwords must match", function (value) {
+      return this.parent.password === value;
+    }),
+  name: yup.string().required("Name is required"),
+});
 
 function Copyright(props: any) {
   return (
