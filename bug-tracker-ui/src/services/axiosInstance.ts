@@ -6,7 +6,7 @@ export const axiosInstance = () => {
     baseURL: Endpoints.baseUrl,
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 };
