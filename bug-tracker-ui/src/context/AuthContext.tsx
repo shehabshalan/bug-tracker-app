@@ -5,15 +5,15 @@ import { Endpoints } from "../services/endpoints";
 import { useNavigate } from "react-router-dom";
 const AuthContext = createContext<any>({} as any);
 
-export function AuthContextProvider({
+export const AuthContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}) => {
   const [user, setUser] = useState(localStorage.getItem("token") || null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  function login(email: string, password: string) {
+  const login = async (email: string, password: string) => {
     setLoading(true);
     return axios
       .post(Endpoints.login, {
@@ -32,13 +32,13 @@ export function AuthContextProvider({
         setLoading(false);
         alert(err);
       });
-  }
-  function logout() {
+  };
+  const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setUser(null);
     navigate("/login");
-  }
+  };
 
   return (
     <AuthContext.Provider
@@ -52,8 +52,8 @@ export function AuthContextProvider({
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export function useAuthContext() {
+export const useAuthContext = () => {
   return useContext(AuthContext);
-}
+};
