@@ -10,50 +10,35 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import * as yup from "yup";
+import { useFormik } from "formik";
 
-const SignupSchema = yup.object().shape({
+const validationSchema = yup.object({
+  name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string().required("Password is required").min(8),
+  password: yup.string().required("Password is required").min(6),
   confirmPassword: yup
     .string()
     .required()
     .test("passwords-match", "Passwords must match", function (value) {
       return this.parent.password === value;
     }),
-  name: yup.string().required("Name is required"),
 });
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -68,49 +53,65 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                autoComplete="given-name"
-                name="name"
-                required
                 fullWidth
                 id="name"
+                name="name"
                 label="Name"
-                autoFocus
+                type="text"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
                 id="email"
-                label="Email Address"
                 name="email"
-                autoComplete="email"
+                label="Email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
+                id="password"
                 name="password"
                 label="Password"
                 type="password"
-                id="password"
-                autoComplete="new-password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
+                id="confirmPassword"
                 name="confirmPassword"
                 label="Confirm Password"
                 type="password"
-                id="confirmPassword"
-                autoComplete="new-password"
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+                helperText={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
               />
             </Grid>
           </Grid>
@@ -129,9 +130,8 @@ export default function SignUp() {
               </Link>
             </Grid>
           </Grid>
-        </Box>
+        </form>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
     </Container>
   );
 }
