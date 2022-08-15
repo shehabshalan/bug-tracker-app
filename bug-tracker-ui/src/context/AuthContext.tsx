@@ -14,8 +14,8 @@ export const AuthContextProvider = ({
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const login = async (email: string, password: string) => {
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await axios.post(Endpoints.login, {
         email,
         password,
