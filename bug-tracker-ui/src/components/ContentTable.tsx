@@ -1,36 +1,59 @@
 import React from "react";
-import { Pagination, Paper } from "@mui/material";
+import { Box, CircularProgress, Pagination, Paper } from "@mui/material";
 import MaterialTable, { Column } from "@material-table/core";
 import { MTableToolbar, MTableBodyRow } from "@material-table/core";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "./Loading";
 function ContentTable({
+  fetchData,
+  cacheKey,
   columns,
-  data,
-  pageSize,
 }: {
+  fetchData: (params: any) => Promise<any>;
+  cacheKey: string;
   columns: Array<Column<any>>;
-  data: Array<any>;
-  pageSize: number;
 }) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = React.useState(1);
+  const [totalPages, setTotalPages] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+  const {
+    data,
+    isLoading,
+    error,
+    status,
+  }: { data: any; isLoading: any; error: any; status: any } = useQuery(
+    [cacheKey, page],
+    fetchData,
+    {
+      keepPreviousData: true,
+    }
+  );
+  React.useEffect(() => {
+    if (status === "success") {
+      setTotalPages(data.totalPages);
+      setLoading(false);
+    }
+  }, [status, data]);
+  const handlePageChange = (event: any, value: number) => {
+    setPage(value);
+    setLoading(!loading);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <p>something wrong happend</p>;
+  }
   return (
     <div style={{ marginTop: "-1rem" }}>
       <MaterialTable
-        data={data}
+        data={data.result}
         columns={columns}
         options={{
-          pageSize: pageSize,
+          pageSize: data.result.length,
           loadingType: "overlay",
           sorting: true,
           showTitle: false,
@@ -39,12 +62,13 @@ function ContentTable({
           searchFieldAlignment: "right",
         }}
         components={{
-          Row: (props) => <MTableBodyRow {...props} />,
+          Row: (props) => <MTableBodyRow id={data.result._id} {...props} />,
           Pagination: () => (
             <Pagination
               sx={{ display: "flex", justifyContent: "center", mt: 2, mb: 2 }}
-              count={1}
-              page={1}
+              count={totalPages}
+              page={page}
+              onChange={handlePageChange}
               color="primary"
               shape="rounded"
             />

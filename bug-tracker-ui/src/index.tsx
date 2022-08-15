@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import App from "./App";
 import { AppContextProvider } from "./context/AppContext";
-import { UserContextProvider } from "./context/UserContext";
+import { AuthContextProvider } from "./context/AuthContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,11 +12,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Router>
-      <UserContextProvider>
+      <AuthContextProvider>
         <AppContextProvider>
           <App />
         </AppContextProvider>
-      </UserContextProvider>
+      </AuthContextProvider>
     </Router>
   </React.StrictMode>
 );
