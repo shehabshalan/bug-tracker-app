@@ -4,9 +4,9 @@ import Sidebar from "./components/Sidebar";
 import { useAuthContext } from "./context/AuthContext";
 
 function ProtectedRoutes() {
-  const { user } = useAuthContext();
+  const { token } = useAuthContext();
 
-  return user === null ? <Navigate to="/login" /> : <Sidebar />;
+  return token === null ? <Navigate to="/login" /> : <Sidebar />;
 }
 
 export default ProtectedRoutes;
