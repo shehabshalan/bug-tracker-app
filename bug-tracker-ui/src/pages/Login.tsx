@@ -10,12 +10,14 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { useAuthContext } from "../context/AuthContext";
 
 const validationSchema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required").min(6),
 });
 function Login() {
+  const { login } = useAuthContext();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -23,7 +25,7 @@ function Login() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      login(values.email, values.password);
     },
   });
 
