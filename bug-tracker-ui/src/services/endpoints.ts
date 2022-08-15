@@ -8,4 +8,5 @@ export class Endpoints {
   public static createMember = Endpoints.baseUrl + "members";
   public static getSessions = Endpoints.baseUrl + "sessions";
   public static verifySession = Endpoints.baseUrl + "sessions/verify";
+  public static getProjects = Endpoints.baseUrl + "projects";
 }
