@@ -8,14 +8,18 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import LoadingButton from "@mui/lab/LoadingButton";
+
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { useAuthContext } from "../context/AuthContext";
 
 const validationSchema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required").min(6),
 });
 function Login() {
+  const { login, loading } = useAuthContext();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -23,7 +27,7 @@ function Login() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      login(values.email, values.password);
     },
   });
 
@@ -74,14 +78,15 @@ function Login() {
               />
             </Grid>
           </Grid>
-          <Button
+          <LoadingButton
             type="submit"
             fullWidth
+            loading={loading}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
             Login
-          </Button>
+          </LoadingButton>
           <Grid container justifyContent="center">
             <Grid item>
               <Link href="/sign-up" variant="body2">

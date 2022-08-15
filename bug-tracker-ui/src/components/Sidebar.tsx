@@ -14,7 +14,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   Dashboard,
   Settings,
@@ -22,6 +22,7 @@ import {
   AccountTree,
 } from "@mui/icons-material";
 import { Container } from "@mui/material";
+import { useAuthContext } from "../context/AuthContext";
 const drawerWidth = 240;
 
 const pages = [
@@ -48,14 +49,11 @@ const pages = [
 ];
 
 function Sidebar({ window }: { window: any }) {
+  const { logout } = useAuthContext();
+  const navigate = useNavigate();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [pageHeader, setPageHeader] = useState("Dashboard");
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/";
-  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -140,7 +138,7 @@ function Sidebar({ window }: { window: any }) {
 
           <Box>
             <Button color="inherit" onClick={logout}>
-              logout{" "}
+              logout
             </Button>
           </Box>
         </Toolbar>

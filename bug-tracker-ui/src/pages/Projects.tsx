@@ -7,84 +7,26 @@ import ContentTable from "../components/ContentTable";
 
 function Projects() {
   interface IPerson {
-    firstName: string;
-    lastName: string;
-    birthYear: number;
-    availability: boolean;
+    projectName: string;
+    projectDescription: string;
+    projectMembers: number;
+    availability: string;
   }
 
-  const lookup = { true: "Available", false: "Unavailable" };
-
   const columns: Array<Column<IPerson>> = [
-    { title: "First Name", field: "firstName" },
-    { title: "Last Name", field: "lastName" },
-    { title: "Birth Year", field: "birthYear", type: "numeric" },
-    { title: "Availablity", field: "availability", lookup },
+    { title: "Project Name", field: "projectName" },
+    { title: "Description", field: "projectDescription" },
+    { title: "Members", field: "projectMembers", type: "numeric" },
+    { title: "Created", field: "createdAt" },
   ];
 
-  const data: Array<IPerson> = [
-    {
-      firstName: "Tod",
-      lastName: "Miles",
-      birthYear: 1987,
-      availability: true,
-    },
-    {
-      firstName: "Jess",
-      lastName: "Smith",
-      birthYear: 2000,
-      availability: false,
-    },
-    {
-      firstName: "Jess",
-      lastName: "Smith",
-      birthYear: 2000,
-      availability: false,
-    },
-    {
-      firstName: "Jess",
-      lastName: "Smith",
-      birthYear: 2000,
-      availability: false,
-    },
-    {
-      firstName: "Jess",
-      lastName: "Smith",
-      birthYear: 2000,
-      availability: false,
-    },
-    {
-      firstName: "Jess",
-      lastName: "Smith",
-      birthYear: 2000,
-      availability: false,
-    },
-    {
-      firstName: "Jess",
-      lastName: "Smith",
-      birthYear: 2000,
-      availability: false,
-    },
-    {
-      firstName: "Jess",
-      lastName: "Smith",
-      birthYear: 2000,
-      availability: false,
-    },
-    {
-      firstName: "Jess",
-      lastName: "Smith",
-      birthYear: 2000,
-      availability: false,
-    },
-  ];
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>
         All Projects
       </Typography>
       <ContentTab title={"Projects"} buttonText={"New Project"}>
-        <ContentTable data={data} columns={columns} pageSize={10} />
+        {/* <ContentTable columns={columns} pageSize={10} /> */}
       </ContentTab>
     </ContentPage>
   );
