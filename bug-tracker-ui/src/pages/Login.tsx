@@ -12,23 +12,14 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 
 const validationSchema = yup.object({
-  name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required").min(6),
-  confirmPassword: yup
-    .string()
-    .required()
-    .test("passwords-match", "Passwords must match", function (value) {
-      return this.parent.password === value;
-    }),
 });
-export default function SignUp() {
+function Login() {
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -50,26 +41,14 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
-          Sign up
+          Login
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                id="name"
-                name="name"
-                label="Name"
-                type="text"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
+                autoFocus
                 id="email"
                 name="email"
                 label="Email"
@@ -94,25 +73,6 @@ export default function SignUp() {
                 helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                id="confirmPassword"
-                name="confirmPassword"
-                label="Confirm Password"
-                type="password"
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.confirmPassword &&
-                  Boolean(formik.errors.confirmPassword)
-                }
-                helperText={
-                  formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
-                }
-              />
-            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -120,17 +80,27 @@ export default function SignUp() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Login
           </Button>
           <Grid container justifyContent="center">
             <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Login
+              <Link href="/sign-up" variant="body2">
+                Don't have an account? Sign up
               </Link>
             </Grid>
           </Grid>
         </form>
+
+        {/* demo user */}
+        <Typography component="p" variant="body2" sx={{ mt: 3 }}>
+          Demo User : demo@mail.com
+        </Typography>
+        <Typography component="p" variant="body2">
+          Password : Test@123456
+        </Typography>
       </Box>
     </Container>
   );
 }
+
+export default Login;

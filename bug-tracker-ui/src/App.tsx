@@ -12,6 +12,7 @@ import { useAppContext } from "./context/AppContext";
 import ProjectDetails from "./pages/ProjectDetails";
 import Projects from "./pages/Projects";
 import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ function App() {
         <ThemeProvider theme={theme}>
           <Routes>
             <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
             <Route element={<ProtectedRoutes />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/projects" element={<Projects />} />
