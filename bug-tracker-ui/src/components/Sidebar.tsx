@@ -22,6 +22,7 @@ import {
   AccountTree,
 } from "@mui/icons-material";
 import { Container } from "@mui/material";
+import { useAuthContext } from "../context/AuthContext";
 const drawerWidth = 240;
 
 const pages = [
@@ -48,15 +49,11 @@ const pages = [
 ];
 
 function Sidebar({ window }: { window: any }) {
+  const { logout } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [pageHeader, setPageHeader] = useState("Dashboard");
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
