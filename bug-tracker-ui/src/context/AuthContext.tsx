@@ -15,23 +15,20 @@ export const AuthContextProvider = ({
   const navigate = useNavigate();
   const login = async (email: string, password: string) => {
     setLoading(true);
-    return axios
-      .post(Endpoints.login, {
+    try {
+      const res = await axios.post(Endpoints.login, {
         email,
         password,
-      })
-      .then((res) => {
-        if (res.data.token) {
-          localStorage.setItem("user", JSON.stringify(res.data));
-          localStorage.setItem("token", JSON.stringify(res.data.token));
-          setLoading(false);
-          window.location.href = "/";
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        alert(err);
       });
+      if (res.data.accessToken) {
+        localStorage.setItem("token", JSON.stringify(res.data.accessToken));
+        setLoading(false);
+        window.location.href = "/";
+      }
+    } catch (error: any) {
+      setLoading(false);
+      alert(error.response.data);
+    }
   };
   const logout = () => {
     localStorage.removeItem("user");
