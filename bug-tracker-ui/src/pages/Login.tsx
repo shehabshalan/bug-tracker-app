@@ -48,6 +48,7 @@ function Login() {
             <Grid item xs={12}>
               <TextField
                 fullWidth
+                autoFocus
                 id="email"
                 name="email"
                 label="Email"
@@ -81,9 +82,9 @@ function Login() {
           >
             Login
           </Button>
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="center">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/sign-up" variant="body2">
                 Don't have an account? Sign up
               </Link>
             </Grid>
