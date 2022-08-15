@@ -84,7 +84,7 @@ function Tickets() {
         My Tickets
       </Typography>
       <ContentTab title={"Ticket"}>
-        <ContentTable data={data} columns={columns} pageSize={10} />
+        {/* <ContentTable data={data} columns={columns} pageSize={10} /> */}
       </ContentTab>
     </ContentPage>
   );
