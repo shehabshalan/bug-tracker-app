@@ -7,4 +7,5 @@ export class Endpoints {
   public static adminSignUp = Endpoints.baseUrl + "admin";
   public static createMember = Endpoints.baseUrl + "members";
   public static getSessions = Endpoints.baseUrl + "sessions";
+  public static verifySession = Endpoints.baseUrl + "sessions/verify";
 }
