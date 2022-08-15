@@ -74,7 +74,7 @@ function ProjectDetails() {
         buttonText={"New Ticket"}
         buttonAction={"openTicket"}
       >
-        <ContentTable data={data} columns={columns} pageSize={data.length} />
+        {/* <ContentTable data={data} columns={columns} pageSize={data.length} /> */}
       </ContentTab>
       <ContentDivider />
       <ContentTab title={"Ticket Details"}>
