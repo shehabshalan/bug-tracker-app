@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { useAuthContext } from "../context/AuthContext";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is required"),
@@ -23,6 +24,7 @@ const validationSchema = yup.object({
     }),
 });
 export default function SignUp() {
+  const { signup, loading } = useAuthContext();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -32,7 +34,12 @@ export default function SignUp() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      signup(
+        values.name,
+        values.email,
+        values.password,
+        values.confirmPassword
+      );
     },
   });
 
