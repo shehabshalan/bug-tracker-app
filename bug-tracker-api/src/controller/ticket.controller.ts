@@ -25,7 +25,12 @@ export const getTicketsHandler = async (req: Request, res: Response) => {
   try {
     const { tickets, count } = await getTickets(user, limit, skip);
     if (!tickets || tickets.length === 0) {
-      return res.status(404).json({ message: "No tickets found" });
+      return res.status(200).json({
+        status: "success",
+        totalPages: Math.ceil(count / limit),
+        page,
+        result: tickets,
+      });
     }
     return res.status(200).json({
       status: "success",
@@ -89,7 +94,12 @@ export const getUserTicketsHandler = async (req: Request, res: Response) => {
   try {
     const { userTickets, count } = await getUserTickets(userId, limit, skip);
     if (!userTickets || userTickets.length === 0) {
-      return res.status(404).json({ message: "No tickets found" });
+      return res.status(200).json({
+        status: "success",
+        totalPage: Math.ceil(count / limit),
+        page,
+        result: userTickets,
+      });
     }
     return res.status(200).json({
       status: "success",

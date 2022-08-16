@@ -91,3 +91,12 @@ export const getMembers = async (admin: IUser, limit: number, skip: number) => {
 
   return { members, count };
 };
+
+export const getAllMembers = async (admin: IUser) => {
+  const members = await UserModel.find({
+    role: "user",
+    slug: admin.slug,
+  }).sort({ createdAt: -1 });
+
+  return members;
+};

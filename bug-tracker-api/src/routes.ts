@@ -5,6 +5,7 @@ import {
   deleteProjectHandler,
   getProjectHandler,
   getProjectsHandler,
+  getTopFourProjectsWithMostMembersHandler,
   updateProjectHandler,
 } from "./controller/project.controller";
 import {
@@ -23,6 +24,7 @@ import {
 import {
   createAdminHandler,
   createMemberHandler,
+  getAllMembersHandler,
   getMembersHandler,
 } from "./controller/user.controller";
 import isAdmin from "./middleware/isAdmin";
@@ -64,6 +66,7 @@ const routes = (app: Express) => {
   );
 
   app.get("/api/members", [isAuth, isUser], getMembersHandler);
+  app.get("/api/allmembers", [isAuth, isUser], getAllMembersHandler);
 
   app.post(
     "/api/sessions",
@@ -85,6 +88,11 @@ const routes = (app: Express) => {
     "/api/projects/:id",
     [isAuth, isUser, isValidSchema(getProjectSchema)],
     getProjectHandler
+  );
+  app.get(
+    "/api/projects-overview",
+    [isAuth, isUser],
+    getTopFourProjectsWithMostMembersHandler
   );
   app.post(
     "/api/projects",

@@ -48,16 +48,29 @@ export const getAccountStats = async (user: IUser) => {
     // count
     // count how many tickets there are
     const totalTickets = appStats.length;
-    return {
-      openTicketsCount,
-      closedTicketsCount,
-      inProgressTicketsCount,
-      highPriorityTicketsCount,
-      lowPriorityTicketsCount,
-      mediumPriorityTicketsCount,
+
+    // ticketByType = [0,2,3] => [bug, feature, task]
+    const ticketByType = [
       bugTicketsCount,
       featureTicketsCount,
       taskTicketsCount,
+    ];
+    // ticketByPriority = [0,2,3] => [high, medium, low]
+    const ticketByPriority = [
+      highPriorityTicketsCount,
+      mediumPriorityTicketsCount,
+      lowPriorityTicketsCount,
+    ];
+    // ticketByStatus = [0,2,3] => [open, in progress, closed]
+    const ticketByStatus = [
+      openTicketsCount,
+      inProgressTicketsCount,
+      closedTicketsCount,
+    ];
+    return {
+      ticketByType,
+      ticketByPriority,
+      ticketByStatus,
       totalTickets,
     };
   } catch (e: any) {

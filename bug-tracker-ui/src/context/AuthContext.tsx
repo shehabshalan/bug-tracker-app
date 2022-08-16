@@ -4,6 +4,7 @@ import axios from "axios";
 import { Endpoints } from "../services/endpoints";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import axiosInstance from "../services/axiosInstance";
 
 const AuthContext = createContext<any>({} as any);
 
@@ -14,6 +15,7 @@ export const AuthContextProvider = ({
 }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [user, setUser] = useState();
+  const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const login = async (email: string, password: string) => {
@@ -61,31 +63,33 @@ export const AuthContextProvider = ({
       alert(error.response.data);
     }
   };
-  // const verify = async () => {
-  //   try {
-  //     const token = localStorage.getItem("token");
-  //     if (token) {
-  //       const decoded = jwt_decode(token);
-  //       const res = await axios.get(Endpoints.verifySession, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       if (res.data.user) {
-  //         setUser(res.data.user);
-  //       }
-  //     }
-  //   } catch (error: any) {
-  //     alert(error.response.data);
-  //   }
-  // };
-  // useEffect(() => {
-  //   verify();
-  // }, [token]);
+
+  const getMembers = async () => {
+    try {
+      const res = await axiosInstance.get(Endpoints.getAllMembers);
+      setMembers(res.data.result);
+      console.log(res.data.result);
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  };
+
+  const verify = async () => {
+    try {
+      const res = await axiosInstance.get(Endpoints.verifySession);
+    } catch (error: any) {
+      logout();
+    }
+  };
+  useEffect(() => {
+    verify();
+    getMembers();
+  }, [token]);
 
   return (
     <AuthContext.Provider
       value={{
+        members,
         user,
         token,
         login,

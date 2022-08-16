@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { Theme, useTheme } from "@mui/material/styles";
+import { useAuthContext } from "../context/AuthContext";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -44,8 +45,10 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 function ContentMultiSelect() {
+  const { members } = useAuthContext();
   const theme = useTheme();
   const [personName, setPersonName] = useState<string[]>([]);
+  console.log(personName);
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
     const {
@@ -76,13 +79,13 @@ function ContentMultiSelect() {
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {members.map((member: any) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
+              key={member._id}
+              value={member.name}
+              style={getStyles(member, personName, theme)}
             >
-              {name}
+              {member.name}
             </MenuItem>
           ))}
         </Select>
