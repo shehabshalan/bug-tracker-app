@@ -24,6 +24,7 @@ import {
 import {
   createAdminHandler,
   createMemberHandler,
+  getAllMembersHandler,
   getMembersHandler,
 } from "./controller/user.controller";
 import isAdmin from "./middleware/isAdmin";
@@ -65,6 +66,7 @@ const routes = (app: Express) => {
   );
 
   app.get("/api/members", [isAuth, isUser], getMembersHandler);
+  app.get("/api/allmembers", [isAuth, isUser], getAllMembersHandler);
 
   app.post(
     "/api/sessions",
