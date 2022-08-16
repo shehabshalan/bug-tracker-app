@@ -1,4 +1,3 @@
-import { Column } from "@material-table/core";
 import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
@@ -26,20 +25,18 @@ function Projects() {
     data,
     isLoading,
     error,
-    status,
   }: { data: any; isLoading: any; error: any; status: any } = useQuery(
     ["projects", page],
     getProjects,
     {
       keepPreviousData: true,
+      onSuccess: (data) => {
+        setTotalPages(data.totalPages);
+        setLoading(false);
+      },
     }
   );
-  React.useEffect(() => {
-    if (status === "success") {
-      setTotalPages(data.totalPages);
-      setLoading(false);
-    }
-  }, [status, data]);
+
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>
