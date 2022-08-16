@@ -12,7 +12,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 
 const validationSchema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
