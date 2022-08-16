@@ -9,4 +9,8 @@ export class Endpoints {
   public static getSessions = Endpoints.baseUrl + "sessions";
   public static verifySession = Endpoints.baseUrl + "sessions/verify";
   public static getProjects = Endpoints.baseUrl + "projects";
+  public static getTopFourProjectsWithMostMembers =
+    Endpoints.baseUrl + "projects-overview";
+
+  public static accountStats = Endpoints.baseUrl + "stats";
 }
