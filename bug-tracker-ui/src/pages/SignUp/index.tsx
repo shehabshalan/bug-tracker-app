@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import { LoadingButton } from "@mui/lab";
 
 const validationSchema = yup.object({
