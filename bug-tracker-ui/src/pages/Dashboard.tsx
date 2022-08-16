@@ -18,6 +18,7 @@ export interface IProjects {
   projectName: string;
   projectDescription: string;
   projectMembers: string[];
+  projectTickets: string[];
   createdAt: string;
 }
 export const projectColumns: Array<Column<IProjects>> = [
@@ -33,10 +34,18 @@ export const projectColumns: Array<Column<IProjects>> = [
   { title: "Description", field: "projectDescription" },
   {
     title: "Members",
-    field: "projectMembers",
+    field: "projectTickets",
     type: "numeric",
     render: (rowData: IProjects) => {
       return rowData.projectMembers.length;
+    },
+  },
+  {
+    title: "Tickets",
+    field: "projectTickets",
+    type: "numeric",
+    render: (rowData: IProjects) => {
+      return rowData.projectTickets.length;
     },
   },
   {
