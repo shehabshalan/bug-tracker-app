@@ -4,6 +4,7 @@ import {
   deleteProject,
   getProject,
   getProjects,
+  getTopFourProjectsWithMostMembers,
   updateProject,
 } from "../service/project.service";
 
@@ -75,6 +76,25 @@ export const deleteProjectHandler = async (req: Request, res: Response) => {
         .json({ message: `Project with ${projectId} was not found` });
     }
     return res.status(200).json({ message: "Project deleted" });
+  } catch (e: any) {
+    return res.status(500).json(e.message);
+  }
+};
+
+export const getTopFourProjectsWithMostMembersHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const user = res.locals.user;
+  try {
+    const projects = await getTopFourProjectsWithMostMembers(user);
+    if (!projects || projects.length === 0) {
+      return res.status(404).json({ message: "No projects found" });
+    }
+    return res.status(200).json({
+      status: "success",
+      result: projects,
+    });
   } catch (e: any) {
     return res.status(500).json(e.message);
   }
