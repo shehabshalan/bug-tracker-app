@@ -4,9 +4,6 @@ import { IUser } from "../models/user.model";
 export const getAccountStats = async (user: IUser) => {
   try {
     const appStats = await TicketModel.find({ ticketSlug: user.slug });
-
-    console.log(appStats);
-
     // count how many open tickets there are
     const openTickets = appStats.filter(
       (ticket) => ticket.ticketStatus === "open"
