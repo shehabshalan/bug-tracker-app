@@ -5,6 +5,7 @@ import {
   deleteProjectHandler,
   getProjectHandler,
   getProjectsHandler,
+  getTopFourProjectsWithMostMembersHandler,
   updateProjectHandler,
 } from "./controller/project.controller";
 import {
@@ -15,6 +16,7 @@ import {
 import {
   createTicketHandler,
   deleteTicketHandler,
+  getProjectTicketsHandler,
   getTicketHandler,
   getTicketsHandler,
   getUserTicketsHandler,
@@ -23,6 +25,7 @@ import {
 import {
   createAdminHandler,
   createMemberHandler,
+  getAllMembersHandler,
   getMembersHandler,
 } from "./controller/user.controller";
 import isAdmin from "./middleware/isAdmin";
@@ -42,6 +45,7 @@ import {
   updateTicketSchema,
 } from "./schema/ticket.schema";
 import { createUserSchema } from "./schema/user.schema";
+import { getProjectTickets } from "./service/ticket.service";
 
 const routes = (app: Express) => {
   // health check
@@ -64,6 +68,7 @@ const routes = (app: Express) => {
   );
 
   app.get("/api/members", [isAuth, isUser], getMembersHandler);
+  app.get("/api/allmembers", [isAuth, isUser], getAllMembersHandler);
 
   app.post(
     "/api/sessions",
@@ -86,6 +91,11 @@ const routes = (app: Express) => {
     [isAuth, isUser, isValidSchema(getProjectSchema)],
     getProjectHandler
   );
+  app.get(
+    "/api/projects-overview",
+    [isAuth, isUser],
+    getTopFourProjectsWithMostMembersHandler
+  );
   app.post(
     "/api/projects",
     [isAuth, isUser, isValidSchema(createProjectSchema)],
@@ -106,6 +116,11 @@ const routes = (app: Express) => {
     "/api/tickets/:id",
     [isAuth, isUser, isValidSchema(getTicketSchema)],
     getTicketHandler
+  );
+  app.get(
+    "/api/project-tickets/:id",
+    [isAuth, isUser],
+    getProjectTicketsHandler
   );
   app.post(
     "/api/tickets",

@@ -9,7 +9,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import Tickets from "./pages/Tickets";
 import Settings from "./pages/Settings";
 import { useAppContext } from "./context/AppContext";
-import ProjectDetails from "./pages/ProjectDetails";
+import ProjectDetails from "./pages/ProjectTickets";
 import Projects from "./pages/Projects";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";

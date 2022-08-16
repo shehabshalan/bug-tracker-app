@@ -1,43 +1,27 @@
 import React from "react";
-import { Box, CircularProgress, Pagination, Paper } from "@mui/material";
+import { Box, Pagination, Paper } from "@mui/material";
 import MaterialTable, { Column } from "@material-table/core";
 import { MTableToolbar, MTableBodyRow } from "@material-table/core";
-import { useQuery } from "@tanstack/react-query";
 import Loading from "./Loading";
 function ContentTable({
-  fetchData,
-  cacheKey,
+  data,
   columns,
+  error,
+  isLoading,
+  setPage,
+  totalPages,
+  page,
 }: {
-  fetchData: (params: any) => Promise<any>;
-  cacheKey: string;
+  data: any;
   columns: Array<Column<any>>;
+  error: any;
+  isLoading: boolean;
+  setPage: (page: number) => void;
+  totalPages?: number;
+  page?: number;
 }) {
-  const [page, setPage] = React.useState(1);
-  const [totalPages, setTotalPages] = React.useState(0);
-  const [loading, setLoading] = React.useState(false);
-
-  const {
-    data,
-    isLoading,
-    error,
-    status,
-  }: { data: any; isLoading: any; error: any; status: any } = useQuery(
-    [cacheKey, page],
-    fetchData,
-    {
-      keepPreviousData: true,
-    }
-  );
-  React.useEffect(() => {
-    if (status === "success") {
-      setTotalPages(data.totalPages);
-      setLoading(false);
-    }
-  }, [status, data]);
   const handlePageChange = (event: any, value: number) => {
     setPage(value);
-    setLoading(!loading);
   };
 
   if (isLoading) {
@@ -45,7 +29,7 @@ function ContentTable({
   }
 
   if (error) {
-    return <p>something wrong happend</p>;
+    return <p>Something wrong happened</p>;
   }
   return (
     <div style={{ marginTop: "-1rem" }}>

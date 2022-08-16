@@ -7,6 +7,13 @@ export class Endpoints {
   public static adminSignUp = Endpoints.baseUrl + "admin";
   public static createMember = Endpoints.baseUrl + "members";
   public static getSessions = Endpoints.baseUrl + "sessions";
-  public static verifySession = Endpoints.baseUrl + "sessions/verify";
+  public static verifySession = Endpoints.baseUrl + "sessions";
   public static getProjects = Endpoints.baseUrl + "projects";
+  public static createProject = Endpoints.baseUrl + "projects";
+  public static getTopFourProjectsWithMostMembers =
+    Endpoints.baseUrl + "projects-overview";
+  public static accountStats = Endpoints.baseUrl + "stats";
+  public static getUserTickets = Endpoints.baseUrl + "user/tickets";
+  public static getMembers = Endpoints.baseUrl + "members";
+  public static getAllMembers = Endpoints.baseUrl + "allmembers";
 }

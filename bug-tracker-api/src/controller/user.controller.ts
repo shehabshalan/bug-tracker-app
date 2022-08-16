@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 
-import { createAdmin, createMember, getMembers } from "../service/user.service";
+import {
+  createAdmin,
+  createMember,
+  getAllMembers,
+  getMembers,
+} from "../service/user.service";
 import logger from "../utils/logger";
 export const createAdminHandler = async (req: Request, res: Response) => {
   try {
@@ -34,6 +39,19 @@ export const getMembersHandler = async (req: Request, res: Response) => {
       status: "success",
       totalPages: Math.ceil(count / limit),
       page,
+      result: members,
+    });
+  } catch (e: any) {
+    logger.error(e.message);
+    return res.status(409).send(e.message);
+  }
+};
+export const getAllMembersHandler = async (req: Request, res: Response) => {
+  const admin = res.locals.user;
+  try {
+    const members = await getAllMembers(admin);
+    return res.status(200).json({
+      status: "success",
       result: members,
     });
   } catch (e: any) {

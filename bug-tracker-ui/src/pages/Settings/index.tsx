@@ -1,6 +1,6 @@
 import React from "react";
-import AddNewMember from "../components/AddNewMember";
-import ContentTab from "../components/ContentTab";
+import AddNewMember from "./AddNewMember";
+import ContentTab from "../../components/ContentTab";
 
 function Settings() {
   return (

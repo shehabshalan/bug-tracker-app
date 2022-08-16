@@ -67,3 +67,17 @@ export const deleteProject = async (id: string) => {
     throw new Error(e);
   }
 };
+
+export const getTopFourProjects = async (user: IUser) => {
+  try {
+    //  get top 4 projects based on the number of tickets and the number of members
+
+    const projects = await ProjectModel.find({ projectSlug: user.slug })
+      .sort({ projectTickets: -1 })
+      .limit(4);
+
+    return projects;
+  } catch (e: any) {
+    throw new Error(e);
+  }
+};
