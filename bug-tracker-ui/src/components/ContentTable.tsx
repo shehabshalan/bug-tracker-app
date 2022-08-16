@@ -29,7 +29,7 @@ function ContentTable({
   }
 
   if (error) {
-    return <p>something wrong happend</p>;
+    return <p>Something wrong happened</p>;
   }
   return (
     <div style={{ marginTop: "-1rem" }}>
