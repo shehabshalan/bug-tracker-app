@@ -44,7 +44,7 @@ export const getSessionsHandler = async (req: Request, res: Response) => {
 
   try {
     const sessions = await getSessions({ user: userId, valid: true });
-    return res.send(sessions);
+    return res.send();
   } catch (e: any) {
     return res.status(500).send(e.message);
   }
