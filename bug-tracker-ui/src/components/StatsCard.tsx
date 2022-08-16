@@ -4,6 +4,9 @@ import { Stack, Typography, Paper, Box } from "@mui/material";
 import { PieChart } from "react-minimal-pie-chart";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import axiosInstance from "../services/axiosInstance";
+import { Endpoints } from "../services/endpoints";
+import { useQuery } from "@tanstack/react-query";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -32,29 +35,47 @@ const StatChart = styled(Typography)(({ theme }) => ({
 }));
 
 function StatsCard() {
-  const data = {
-    labels: ["Red", "Blue", "Yellow"],
+  const getAccountStats = async () => {
+    const res = await axiosInstance.get(`${Endpoints.accountStats}`);
+    return res.data;
+  };
+  const { data }: { data: any } = useQuery(["stats"], getAccountStats, {
+    keepPreviousData: true,
+  });
+
+  const backgroundColor = ["#FF6384", "#36A2EB", "#FFCE56"];
+  const hoverBackgroundColor = ["#FF6384", "#36A2EB", "#FFCE56"];
+
+  const ticketByTypeChart = {
+    labels: ["Bug", "Feature", "Task"],
     datasets: [
       {
-        label: "# of Votes",
-        data: [12, 19, 3],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderWidth: 1,
+        label: "Type",
+        backgroundColor: backgroundColor,
+        hoverBackgroundColor: hoverBackgroundColor,
+        data: data?.result?.ticketByType,
+      },
+    ],
+  };
+  const ticketByPriorityChart = {
+    labels: ["High", "Medium", "Low"],
+    datasets: [
+      {
+        label: "Proirity",
+        backgroundColor: backgroundColor,
+        hoverBackgroundColor: hoverBackgroundColor,
+        data: data?.result?.ticketByPriority,
+      },
+    ],
+  };
+  const ticketByStatusChart = {
+    labels: ["Open", "In Progress", "Closed"],
+    datasets: [
+      {
+        label: "Status",
+        backgroundColor: backgroundColor,
+        hoverBackgroundColor: hoverBackgroundColor,
+        data: data?.result?.ticketByStatus,
       },
     ],
   };
@@ -69,19 +90,28 @@ function StatsCard() {
       <Card>
         <Heading>Ticket by type</Heading>
         <StatChart>
-          <Doughnut data={data} options={{ maintainAspectRatio: false }} />
+          <Doughnut
+            data={ticketByTypeChart}
+            options={{ maintainAspectRatio: false }}
+          />
         </StatChart>
       </Card>
       <Card>
         <Heading>Ticket by priority </Heading>
         <StatChart>
-          <Doughnut data={data} options={{ maintainAspectRatio: false }} />
+          <Doughnut
+            data={ticketByPriorityChart}
+            options={{ maintainAspectRatio: false }}
+          />
         </StatChart>
       </Card>
       <Card>
         <Heading>Ticket by status</Heading>
         <StatChart>
-          <Doughnut data={data} options={{ maintainAspectRatio: false }} />
+          <Doughnut
+            data={ticketByStatusChart}
+            options={{ maintainAspectRatio: false }}
+          />
         </StatChart>
       </Card>
     </Stack>
