@@ -17,8 +17,8 @@ function ContentTable({
   error: any;
   isLoading: boolean;
   setPage: (page: number) => void;
-  totalPages: number;
-  page: number;
+  totalPages?: number;
+  page?: number;
 }) {
   const handlePageChange = (event: any, value: number) => {
     setPage(value);
