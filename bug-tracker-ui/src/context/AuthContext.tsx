@@ -89,6 +89,7 @@ export const AuthContextProvider = ({
   return (
     <AuthContext.Provider
       value={{
+        members,
         user,
         token,
         login,
