@@ -88,14 +88,13 @@ function Tickets() {
     getUserTickets,
     {
       keepPreviousData: true,
+      onSuccess: (data) => {
+        setTotalPages(data.totalPages);
+        setLoading(false);
+      },
     }
   );
-  React.useEffect(() => {
-    if (status === "success") {
-      setTotalPages(data.totalPages);
-      setLoading(false);
-    }
-  }, [status, data]);
+
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>
@@ -108,7 +107,7 @@ function Tickets() {
           error={error}
           isLoading={isLoading}
           setPage={setPage}
-          totalPages={totalPages}
+          totalPages={Number(totalPages)}
           page={page}
         />
       </ContentTab>
