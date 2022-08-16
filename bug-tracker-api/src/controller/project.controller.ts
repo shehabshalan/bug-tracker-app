@@ -4,7 +4,7 @@ import {
   deleteProject,
   getProject,
   getProjects,
-  getTopFourProjectsWithMostMembers,
+  getTopFourProjects,
   updateProject,
 } from "../service/project.service";
 
@@ -87,7 +87,7 @@ export const getTopFourProjectsWithMostMembersHandler = async (
 ) => {
   const user = res.locals.user;
   try {
-    const projects = await getTopFourProjectsWithMostMembers(user);
+    const projects = await getTopFourProjects(user);
     if (!projects || projects.length === 0) {
       return res.status(404).json({ message: "No projects found" });
     }
