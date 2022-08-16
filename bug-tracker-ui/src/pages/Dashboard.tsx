@@ -1,7 +1,7 @@
 import { Column } from "@material-table/core";
 import { Box, CssBaseline, Divider, Grid, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import { useQuery, QueryObserver } from "@tanstack/react-query";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AddProject from "../components/AddProject";
 import ContentDivider from "../components/ContentDivider";
@@ -64,27 +64,16 @@ function Dashboard() {
   };
 
   const [page, setPage] = React.useState(1);
-  const [totalPages, setTotalPages] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
 
-  const {
-    data,
-    isLoading,
-    error,
-    status,
-  }: { data: any; isLoading: any; error: any; status: any } = useQuery(
-    ["topProjects", page],
-    getTopProjects,
-    {
+  const { data, isLoading, error }: { data: any; isLoading: any; error: any } =
+    useQuery(["topProjects", page], getTopProjects, {
       keepPreviousData: true,
-    }
-  );
-  React.useEffect(() => {
-    if (status === "success") {
-      setTotalPages(data.totalPages);
-      setLoading(false);
-    }
-  }, [status, data]);
+      onSuccess: () => {
+        setLoading(false);
+      },
+    });
+
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>
@@ -101,8 +90,6 @@ function Dashboard() {
           error={error}
           isLoading={isLoading}
           setPage={setPage}
-          totalPages={totalPages}
-          page={page}
         />
       </ContentTab>
       <ContentDivider />
