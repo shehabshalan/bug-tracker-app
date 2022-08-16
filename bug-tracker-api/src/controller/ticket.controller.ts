@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   createTicket,
   deleteTicket,
+  getProjectTickets,
   getTicket,
   getTickets,
   getUserTickets,
@@ -90,6 +91,28 @@ export const getUserTicketsHandler = async (req: Request, res: Response) => {
       totalPage: Math.ceil(count / limit),
       page,
       result: userTickets,
+    });
+  } catch (e: any) {
+    return res.status(500).json(e.message);
+  }
+};
+
+export const getProjectTicketsHandler = async (req: Request, res: Response) => {
+  const projectId = req.params.id;
+  const { page = 1, size = 10 }: { page?: number; size?: number } = req.query;
+  const limit = size;
+  const skip = (page - 1) * size;
+  try {
+    const { projectTickets, count } = await getProjectTickets(
+      projectId,
+      limit,
+      skip
+    );
+    return res.status(200).json({
+      status: "success",
+      totalPage: Math.ceil(count / limit),
+      page,
+      result: projectTickets,
     });
   } catch (e: any) {
     return res.status(500).json(e.message);
