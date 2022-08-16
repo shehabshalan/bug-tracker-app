@@ -28,7 +28,6 @@ function AddProject() {
         projectName: title,
         projectDescription: description,
       });
-
       navigate(`/project/${res.data._id}`);
       handleClose();
     } catch (error: any) {
