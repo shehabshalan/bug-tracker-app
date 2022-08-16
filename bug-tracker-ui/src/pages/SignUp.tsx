@@ -11,6 +11,7 @@ import Container from "@mui/material/Container";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useAuthContext } from "../context/AuthContext";
+import { LoadingButton } from "@mui/lab";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is required"),
@@ -121,14 +122,15 @@ export default function SignUp() {
               />
             </Grid>
           </Grid>
-          <Button
+          <LoadingButton
             type="submit"
             fullWidth
+            loading={loading}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
             Sign Up
-          </Button>
+          </LoadingButton>
           <Grid container justifyContent="center">
             <Grid item>
               <Link href="/login" variant="body2">
