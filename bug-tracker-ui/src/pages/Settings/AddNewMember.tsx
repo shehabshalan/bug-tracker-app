@@ -7,11 +7,11 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../../context/AppContext";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import axiosInstance from "../services/axiosInstance";
-import { Endpoints } from "../services/endpoints";
+import axiosInstance from "../../services/axiosInstance";
+import { Endpoints } from "../../services/endpoints";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is required"),
