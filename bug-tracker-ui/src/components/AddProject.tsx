@@ -10,6 +10,9 @@ import {
 import { useAppContext } from "../context/AppContext";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import axiosInstance from "../services/axiosInstance";
+import { Endpoints } from "../services/endpoints";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
   title: yup.string().required("title is required"),
@@ -17,6 +20,22 @@ const validationSchema = yup.object({
 });
 function AddProject() {
   const { handleClose, openType } = useAppContext();
+  const navigate = useNavigate();
+
+  const handleProjectSubmit = async (title: string, description: string) => {
+    try {
+      const res = await axiosInstance.post(`${Endpoints.createProject}`, {
+        projectName: title,
+        projectDescription: description,
+      });
+
+      navigate(`/project/${res.data._id}`);
+      handleClose();
+    } catch (error: any) {
+      alert(error.response.data);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -24,9 +43,10 @@ function AddProject() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      handleProjectSubmit(values.title, values.description);
     },
   });
+
   return (
     <Dialog open={openType.openProject} onClose={handleClose}>
       <DialogTitle>Create project</DialogTitle>
