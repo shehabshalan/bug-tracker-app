@@ -3,12 +3,12 @@ import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link } from "react-router-dom";
-import ContentPage from "../components/ContentPage";
-import ContentTab from "../components/ContentTab";
-import ContentTable from "../components/ContentTable";
-import axiosInstance from "../services/axiosInstance";
-import { Endpoints } from "../services/endpoints";
-import dateConverter from "../utils/dateConverter";
+import ContentPage from "../../components/ContentPage";
+import ContentTab from "../../components/ContentTab";
+import ContentTable from "../../components/ContentTable";
+import axiosInstance from "../../services/axiosInstance";
+import { Endpoints } from "../../services/endpoints";
+import dateConverter from "../../utils/dateConverter";
 
 export interface ITicketProject {
   _id: string;
