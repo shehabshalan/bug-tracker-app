@@ -9,12 +9,19 @@ function ContentSelect({
   menuItems: string[];
 }) {
   const [value, setValue] = React.useState("");
+  const [memberId, setMemberId] = React.useState("");
 
   const handleChange = (event: any) => {
     console.log(event.target.value);
 
     setValue(event.target.value as string);
+
+    const findMemberId: any = menuItems.find(
+      (member: any) => member.name === event.target.value
+    );
+    setMemberId(findMemberId._id as string);
   };
+
   return (
     <TextField
       value={value}
@@ -23,9 +30,9 @@ function ContentSelect({
       label={label}
       fullWidth
     >
-      {menuItems.map((item) => (
-        <MenuItem key={item} value={item}>
-          {item}
+      {menuItems.map((member: any) => (
+        <MenuItem key={member._id} value={member.name}>
+          {member.name}
         </MenuItem>
       ))}
     </TextField>
