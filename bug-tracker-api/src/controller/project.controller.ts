@@ -24,14 +24,6 @@ export const getProjectsHandler = async (req: Request, res: Response) => {
   const skip = (page - 1) * size;
   try {
     const { projects, count } = await getProjects(user, limit, skip);
-    if (!projects || projects.length === 0) {
-      return res.status(200).json({
-        status: "success",
-        totalPages: Math.ceil(count / limit),
-        page,
-        result: projects,
-      });
-    }
     return res.status(200).json({
       status: "success",
       totalPages: Math.ceil(count / limit),
@@ -93,12 +85,6 @@ export const getTopFourProjectsWithMostMembersHandler = async (
   const user = res.locals.user;
   try {
     const projects = await getTopFourProjects(user);
-    if (!projects || projects.length === 0) {
-      return res.status(200).json({
-        status: "success",
-        result: projects,
-      });
-    }
     return res.status(200).json({
       status: "success",
       result: projects,
