@@ -11,6 +11,6 @@ export class Endpoints {
   public static getProjects = Endpoints.baseUrl + "projects";
   public static getTopFourProjectsWithMostMembers =
     Endpoints.baseUrl + "projects-overview";
-
   public static accountStats = Endpoints.baseUrl + "stats";
+  public static getUserTickets = Endpoints.baseUrl + "user/tickets";
 }
