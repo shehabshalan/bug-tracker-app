@@ -2,6 +2,7 @@ import { Column } from "@material-table/core";
 import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import AddProject from "../components/AddProject";
 import ContentPage from "../components/ContentPage";
 import ContentTab from "../components/ContentTab";
 import ContentTable from "../components/ContentTable";
@@ -44,7 +45,11 @@ function Projects() {
       <Typography variant="h6" gutterBottom>
         All Projects
       </Typography>
-      <ContentTab title={"Projects"} buttonText={"New Project"}>
+      <ContentTab
+        title={"Projects"}
+        buttonText={"New Project"}
+        buttonAction={"openProject"}
+      >
         <ContentTable
           data={data}
           columns={projectColumns}
@@ -55,6 +60,7 @@ function Projects() {
           page={page}
         />
       </ContentTab>
+      <AddProject />
     </ContentPage>
   );
 }
