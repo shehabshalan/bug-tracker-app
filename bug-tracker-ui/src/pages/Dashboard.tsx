@@ -35,7 +35,6 @@ export const projectColumns: Array<Column<IProjects>> = [
   {
     title: "Members",
     field: "projectTickets",
-    type: "numeric",
     render: (rowData: IProjects) => {
       return rowData.projectMembers.length;
     },
@@ -43,7 +42,6 @@ export const projectColumns: Array<Column<IProjects>> = [
   {
     title: "Tickets",
     field: "projectTickets",
-    type: "numeric",
     render: (rowData: IProjects) => {
       return rowData.projectTickets.length;
     },
