@@ -67,3 +67,18 @@ export const deleteProject = async (id: string) => {
     throw new Error(e);
   }
 };
+
+export const getTopFourProjectsWithMostMembers = async (user: IUser) => {
+  try {
+    const projects = await ProjectModel.find({
+      projectSlug: user.slug,
+    })
+      .sort({
+        projectMembers: -1,
+      })
+      .limit(4);
+    return projects;
+  } catch (e: any) {
+    throw new Error(e);
+  }
+};
