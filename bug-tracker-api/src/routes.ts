@@ -16,6 +16,7 @@ import {
 import {
   createTicketHandler,
   deleteTicketHandler,
+  getProjectTicketsHandler,
   getTicketHandler,
   getTicketsHandler,
   getUserTicketsHandler,
@@ -44,6 +45,7 @@ import {
   updateTicketSchema,
 } from "./schema/ticket.schema";
 import { createUserSchema } from "./schema/user.schema";
+import { getProjectTickets } from "./service/ticket.service";
 
 const routes = (app: Express) => {
   // health check
@@ -114,6 +116,11 @@ const routes = (app: Express) => {
     "/api/tickets/:id",
     [isAuth, isUser, isValidSchema(getTicketSchema)],
     getTicketHandler
+  );
+  app.get(
+    "/api/project-tickets/:id",
+    [isAuth, isUser],
+    getProjectTicketsHandler
   );
   app.post(
     "/api/tickets",

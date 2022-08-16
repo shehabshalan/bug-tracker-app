@@ -1,17 +1,17 @@
 import { Fab, Stack, Typography } from "@mui/material";
-import ContentPage from "../components/ContentPage";
-import ContentTab from "../components/ContentTab";
-import ContentTable from "../components/ContentTable";
+import ContentPage from "../../components/ContentPage";
+import ContentTab from "../../components/ContentTab";
+import ContentTable from "../../components/ContentTable";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import AddIcon from "@mui/icons-material/Add";
 import { Column } from "@material-table/core";
-import ContentDivider from "../components/ContentDivider";
-import Content from "../components/Content";
-import AddTicket from "../components/AddTicket";
-import { useAppContext } from "../context/AppContext";
-import AddMember from "../components/AddMember";
-import AlertMessage from "../components/AlertMessage";
+import ContentDivider from "../../components/ContentDivider";
+import Content from "../../components/Content";
+import AddTicket from "./AddTicket";
+import { useAppContext } from "../../context/AppContext";
+import AddMember from "./AddMember";
+import AlertMessage from "../../components/AlertMessage";
 
 function ProjectDetails() {
   const { handleClickOpen } = useAppContext();

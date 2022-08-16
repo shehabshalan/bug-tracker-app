@@ -4,8 +4,8 @@ import { Stack, Typography, Paper, Box } from "@mui/material";
 import { PieChart } from "react-minimal-pie-chart";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import axiosInstance from "../services/axiosInstance";
-import { Endpoints } from "../services/endpoints";
+import axiosInstance from "../../services/axiosInstance";
+import { Endpoints } from "../../services/endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 ChartJS.register(ArcElement, Tooltip, Legend);

@@ -8,11 +8,15 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import { useAppContext } from "../context/AppContext";
-import AlertMessage from "./AlertMessage";
-import ContentSelect from "./ContentSelect";
+import { useAppContext } from "../../context/AppContext";
+import { useAuthContext } from "../../context/AuthContext";
+import AlertMessage from "../../components/AlertMessage";
+import ContentSelect from "../../components/ContentSelect";
 function AddMember({}) {
+  const { members } = useAuthContext();
+  console.log(members);
   const memberLabel = "Member";
+
   const memberMenuItems = ["Shehab", "Ali", "Ahmed", "Hassan"];
   const {
     handleClose,
@@ -32,11 +36,11 @@ function AddMember({}) {
 
   return (
     <Dialog open={openType.openMember} onClose={handleClose} fullWidth>
-      <DialogTitle>Create ticket</DialogTitle>
+      <DialogTitle>Add member</DialogTitle>
       <DialogContent>
         <Grid container spacing={3}>
           <Grid item xs={12} sx={{ mt: 1 }}>
-            <ContentSelect label={memberLabel} menuItems={memberMenuItems} />
+            <ContentSelect label={memberLabel} menuItems={members} />
           </Grid>
         </Grid>
       </DialogContent>

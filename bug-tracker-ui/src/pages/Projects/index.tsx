@@ -1,14 +1,13 @@
-import { Column } from "@material-table/core";
 import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import AddProject from "../components/AddProject";
-import ContentPage from "../components/ContentPage";
-import ContentTab from "../components/ContentTab";
-import ContentTable from "../components/ContentTable";
-import axiosInstance from "../services/axiosInstance";
-import { Endpoints } from "../services/endpoints";
-import { projectColumns } from "./Dashboard";
+import AddProject from "../Dashboard/AddProject";
+import ContentPage from "../../components/ContentPage";
+import ContentTab from "../../components/ContentTab";
+import ContentTable from "../../components/ContentTable";
+import { projectColumns } from "../../data/projectColumns";
+import axiosInstance from "../../services/axiosInstance";
+import { Endpoints } from "../../services/endpoints";
 
 function Projects() {
   const getProjects = async ({ queryKey }: { queryKey: any }) => {
@@ -26,20 +25,18 @@ function Projects() {
     data,
     isLoading,
     error,
-    status,
   }: { data: any; isLoading: any; error: any; status: any } = useQuery(
     ["projects", page],
     getProjects,
     {
       keepPreviousData: true,
+      onSuccess: (data) => {
+        setTotalPages(data.totalPages);
+        setLoading(false);
+      },
     }
   );
-  React.useEffect(() => {
-    if (status === "success") {
-      setTotalPages(data.totalPages);
-      setLoading(false);
-    }
-  }, [status, data]);
+
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>

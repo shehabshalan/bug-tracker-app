@@ -7,11 +7,11 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../../context/AppContext";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import axiosInstance from "../services/axiosInstance";
-import { Endpoints } from "../services/endpoints";
+import axiosInstance from "../../services/axiosInstance";
+import { Endpoints } from "../../services/endpoints";
 import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
@@ -28,7 +28,6 @@ function AddProject() {
         projectName: title,
         projectDescription: description,
       });
-
       navigate(`/project/${res.data._id}`);
       handleClose();
     } catch (error: any) {

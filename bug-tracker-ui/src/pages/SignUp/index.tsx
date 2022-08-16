@@ -1,17 +1,17 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  TextField,
-} from "@mui/material";
-import { useAppContext } from "../context/AppContext";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import axiosInstance from "../services/axiosInstance";
-import { Endpoints } from "../services/endpoints";
+import { useAuthContext } from "../../context/AuthContext";
+import { LoadingButton } from "@mui/lab";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is required"),
@@ -19,35 +19,13 @@ const validationSchema = yup.object({
   password: yup.string().required("Password is required").min(6),
   confirmPassword: yup
     .string()
-    .required("Password confirmation is required")
+    .required()
     .test("passwords-match", "Passwords must match", function (value) {
       return this.parent.password === value;
     }),
 });
-function AddNewMember() {
-  const { handleClose, openType } = useAppContext();
-
-  const handleMemberSubmit = async (
-    name: string,
-    email: string,
-    password: string,
-    confirmPassword: string
-  ) => {
-    try {
-      const res = await axiosInstance.post(`${Endpoints.createMember}`, {
-        email,
-        password,
-        passwordConfirmation: confirmPassword,
-        name,
-        role: "user",
-      });
-
-      handleClose();
-      alert("Member created successfully");
-    } catch (error: any) {
-      alert(error.response.data);
-    }
-  };
+export default function SignUp() {
+  const { signup, loading } = useAuthContext();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -57,7 +35,7 @@ function AddNewMember() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      handleMemberSubmit(
+      signup(
         values.name,
         values.email,
         values.password,
@@ -65,13 +43,26 @@ function AddNewMember() {
       );
     },
   });
+
   return (
-    <Dialog open={openType.openUser} onClose={handleClose}>
-      <DialogTitle>Create project</DialogTitle>
-      <form onSubmit={formik.handleSubmit}>
-        <DialogContent>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sx={{ mt: 1 }}>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
+          Sign up
+        </Typography>
+        <form onSubmit={formik.handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 id="name"
@@ -131,14 +122,24 @@ function AddNewMember() {
               />
             </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Create</Button>
-        </DialogActions>
-      </form>
-    </Dialog>
+          <LoadingButton
+            type="submit"
+            fullWidth
+            loading={loading}
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign Up
+          </LoadingButton>
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Link href="/login" variant="body2">
+                Already have an account? Login
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </Box>
+    </Container>
   );
 }
-
-export default AddNewMember;

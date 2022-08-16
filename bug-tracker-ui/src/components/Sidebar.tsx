@@ -25,7 +25,7 @@ import { Container } from "@mui/material";
 import { useAuthContext } from "../context/AuthContext";
 const drawerWidth = 240;
 
-const pages = [
+const pagesAdmin = [
   {
     name: "Dashboard",
     path: "/",
@@ -48,8 +48,26 @@ const pages = [
   },
 ];
 
+const pagesUsers = [
+  {
+    name: "Dashboard",
+    path: "/",
+    icon: <Dashboard />,
+  },
+  {
+    name: "Projects",
+    path: "/projects",
+    icon: <AccountTree />,
+  },
+  {
+    name: "Tickets",
+    path: "/tickets",
+    icon: <BugReport />,
+  },
+];
+
 function Sidebar({ window }: { window: any }) {
-  const { logout } = useAuthContext();
+  const { logout, getUserRole } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -61,9 +79,13 @@ function Sidebar({ window }: { window: any }) {
 
   const handlePageHeader = () => {
     const path = location.pathname;
-    const page = pages.find((page) => page.path === path);
-    if (page) {
-      setPageHeader(page.name);
+    const pageAdmin = pagesAdmin.find((page) => page.path === path);
+    if (pageAdmin) {
+      setPageHeader(pageAdmin.name);
+    }
+    const pagesUser = pagesUsers.find((page) => page.path === path);
+    if (pagesUser) {
+      setPageHeader(pagesUser.name);
     }
   };
 
@@ -81,23 +103,44 @@ function Sidebar({ window }: { window: any }) {
           </ListItemIcon> */}
           <ListItemText primary="LOGO" />
         </ListItemButton>
-        <List component="div" disablePadding>
-          {pages.map((page) => (
-            <div key={page.name}>
-              <Link
-                to={page.path}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <ListItem disablePadding>
-                  <ListItemButton onClick={() => setPageHeader(page.name)}>
-                    <ListItemIcon>{page.icon}</ListItemIcon>
-                    <ListItemText primary={page.name} />
-                  </ListItemButton>
-                </ListItem>
-              </Link>
-            </div>
-          ))}
-        </List>
+
+        {getUserRole() === "admin" ? (
+          <List component="div" disablePadding>
+            {pagesAdmin.map((page) => (
+              <div key={page.name}>
+                <Link
+                  to={page.path}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => setPageHeader(page.name)}>
+                      <ListItemIcon>{page.icon}</ListItemIcon>
+                      <ListItemText primary={page.name} />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              </div>
+            ))}
+          </List>
+        ) : (
+          <List component="div" disablePadding>
+            {pagesUsers.map((page) => (
+              <div key={page.name}>
+                <Link
+                  to={page.path}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => setPageHeader(page.name)}>
+                      <ListItemIcon>{page.icon}</ListItemIcon>
+                      <ListItemText primary={page.name} />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              </div>
+            ))}
+          </List>
+        )}
       </List>
     </div>
   );

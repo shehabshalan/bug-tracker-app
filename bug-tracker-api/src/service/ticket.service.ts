@@ -86,3 +86,22 @@ export const getUserTickets = async (
     throw new Error(e);
   }
 };
+
+export const getProjectTickets = async (
+  id: string,
+  limit: number,
+  skip: number
+) => {
+  try {
+    let count = await TicketModel.countDocuments({ ticketProject: id });
+    const projectTickets = await TicketModel.find({ ticketProject: id })
+      .populate("ticketAuthor", "-password -__v")
+      .populate("ticketAssignedTo", "-password -__v")
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(skip);
+    return { projectTickets, count };
+  } catch (e: any) {
+    throw new Error(e);
+  }
+};

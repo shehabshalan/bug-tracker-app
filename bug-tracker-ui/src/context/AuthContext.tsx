@@ -41,6 +41,16 @@ export const AuthContextProvider = ({
     navigate("/login");
   };
 
+  const getUserRole = () => {
+    //   decode token to get user info
+    const token = JSON.parse(localStorage.getItem("token") || "");
+    if (!token) {
+      return null;
+    }
+    const user = jwt_decode(token) as any;
+    return user.role;
+  };
+
   const signup = async (
     name: string,
     email: string,
@@ -89,6 +99,7 @@ export const AuthContextProvider = ({
   return (
     <AuthContext.Provider
       value={{
+        getUserRole,
         members,
         user,
         token,
