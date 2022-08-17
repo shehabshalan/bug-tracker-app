@@ -1,18 +1,6 @@
 import axiosInstance from "./axiosInstance";
 import { Endpoints } from "./endpoints";
 
-export const login = async (email: string, password: string) => {
-  try {
-    const response = await axiosInstance.post(Endpoints.login, {
-      email,
-      password,
-    });
-    return response.data;
-  } catch (error: any) {
-    return error.response.data;
-  }
-};
-
 export const getProjectTickets = async ({ queryKey }: { queryKey: any }) => {
   const [_key, id, page] = queryKey;
   const res = await axiosInstance.get(
@@ -20,7 +8,35 @@ export const getProjectTickets = async ({ queryKey }: { queryKey: any }) => {
   );
   return res.data;
 };
+export const getProjectMembers = async ({ queryKey }: { queryKey: any }) => {
+  const [_key, id] = queryKey;
+  const res = await axiosInstance.get(`${Endpoints.getProjectById}/${id}`);
+  return res.data;
+};
 
 export const createTicket = async (payload: any) => {
-  await axiosInstance.post(`${Endpoints.createTicket}`, payload);
+  const res = await axiosInstance.post(Endpoints.createTicket, payload);
+  return res.data;
+};
+
+export const createProject = async (payload: any) => {
+  const res = await axiosInstance.post(Endpoints.createProject, payload);
+  return res.data;
+
+  // navigate(`/project/${res.data._id}`);
+};
+export const updateProject = async ({
+  payload,
+  id,
+}: {
+  payload: any;
+  id: string | undefined;
+}) => {
+  const res = await axiosInstance.put(
+    `${Endpoints.updateProjectById}/${id}`,
+    payload
+  );
+  return res.data;
+
+  // navigate(`/project/${res.data._id}`);
 };
