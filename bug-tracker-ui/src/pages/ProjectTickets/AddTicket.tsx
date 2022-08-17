@@ -8,25 +8,31 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
-import ContentSelect from "../../components/ContentSelect";
+import { createTicket } from "../../services/api";
 
-function AddTicket() {
-  const memberLabel = "Member";
-  const memberMenuItems = ["Shehab", "Ali", "Ahmed", "Hassan"];
-  const typeLable = "Type";
-  const typeMenuItems = ["Bug", "Feature", "Task"];
-  const priorityLabel = "Priority";
-  const priorityMenuItems = ["Low", "Medium", "High"];
-  const statusLabel = "Status";
-  const statusMenuItems = ["Open", "In Progress", "Closed"];
-  const MIN = 1;
-  const MAX = 24;
-  const { handleClose, openType } = useAppContext();
+const TICKET_TYPE = ["Bug", "Feature", "Task"];
+const TICKET_PRIORITY = ["Low", "Medium", "High"];
+const TICKET_STATUS = ["Open", "In Progress", "Closed"];
+const MIN = 1;
+const MAX = 24;
+
+function AddTicket({
+  id,
+  membersData,
+}: {
+  id: string | undefined;
+  membersData: any;
+}) {
+  const queryClient = useQueryClient();
+
+  const { handleClose, openType, setSuccess, setError, setMessage } =
+    useAppContext();
   const { members } = useAuthContext();
-
   const [priorityValue, setPriorityValue] = useState("");
   const [statusValue, setStatusValue] = useState("");
   const [typeValue, setTypeValue] = useState("");
@@ -36,6 +42,20 @@ function AddTicket() {
   const [description, setDescription] = useState("");
   const [time, setTime] = useState(0);
 
+  const { mutate } = useMutation(createTicket, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["project-tickets", id, 1]);
+      setSuccess(true);
+      setMessage("Ticket created successfully");
+      handleClose();
+    },
+    onError: (error: any) => {
+      setError(true);
+      setMessage(error.response.data);
+      handleClose();
+    },
+  });
+
   const handlePriorityChange = (event: any) => {
     setPriorityValue(event.target.value as string);
   };
@@ -43,8 +63,6 @@ function AddTicket() {
     setStatusValue(event.target.value as string);
   };
   const handleTypeChange = (event: any) => {
-    console.log(event.target.value);
-
     setTypeValue(event.target.value as string);
   };
   const handleMemberChange = (event: any) => {
@@ -67,16 +85,17 @@ function AddTicket() {
 
   const handleSubmit = () => {
     const payload = {
-      title,
-      description,
-      time,
-      priority: priorityValue,
-      status: statusValue,
-      type: typeValue,
-      memberId,
+      ticketName: title,
+      ticketDescription: description,
+      ticketType: typeValue.toLowerCase(),
+      ticketPriority: priorityValue.toLowerCase(),
+      ticketStatus: statusValue.toLowerCase(),
+      ticketEstimateTimeInHours: time,
+      ticketAssignedTo: memberId ? memberId : null,
+      ticketProject: id,
     };
-    console.log(payload);
-    handleClose();
+
+    mutate(payload);
   };
   return (
     <Dialog open={openType.openTicket} onClose={handleClose}>
@@ -112,10 +131,10 @@ function AddTicket() {
                 value={memberValue}
                 onChange={handleMemberChange}
                 select
-                label={memberLabel}
+                label={"Member"}
                 fullWidth
               >
-                {members.map((member: any) => (
+                {membersData?.projectMembers.map((member: any) => (
                   <MenuItem key={member._id} value={member.name}>
                     {member.name}
                   </MenuItem>
@@ -140,10 +159,10 @@ function AddTicket() {
                 value={typeValue}
                 onChange={handleTypeChange}
                 select
-                label={typeLable}
+                label={"Type"}
                 fullWidth
               >
-                {typeMenuItems.map((item: any) => (
+                {TICKET_TYPE.map((item: any) => (
                   <MenuItem key={item} value={item}>
                     {item}
                   </MenuItem>
@@ -155,10 +174,10 @@ function AddTicket() {
                 value={priorityValue}
                 onChange={handlePriorityChange}
                 select
-                label={priorityLabel}
+                label={"Priority"}
                 fullWidth
               >
-                {priorityMenuItems.map((item: any) => (
+                {TICKET_PRIORITY.map((item: any) => (
                   <MenuItem key={item} value={item}>
                     {item}
                   </MenuItem>
@@ -170,10 +189,10 @@ function AddTicket() {
                 value={statusValue}
                 onChange={handleStatusChange}
                 select
-                label={statusLabel}
+                label={"Status"}
                 fullWidth
               >
-                {statusMenuItems.map((item: any) => (
+                {TICKET_STATUS.map((item: any) => (
                   <MenuItem key={item} value={item}>
                     {item}
                   </MenuItem>

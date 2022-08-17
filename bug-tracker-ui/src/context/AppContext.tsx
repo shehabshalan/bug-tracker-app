@@ -40,7 +40,6 @@ export function AppContextProvider({
     type: "openMember" | "openTicket" | "openProject" | "openUser"
   ) => {
     setOpen({ ...openType, [type]: true });
-    // console.log(type);
   };
 
   const handleClose = () => {

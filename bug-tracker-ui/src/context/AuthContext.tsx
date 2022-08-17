@@ -38,7 +38,7 @@ export const AuthContextProvider = ({
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
-    navigate("/login");
+    // navigate("/login");
   };
 
   const getUserRole = () => {
@@ -78,7 +78,6 @@ export const AuthContextProvider = ({
     try {
       const res = await axiosInstance.get(Endpoints.getAllMembers);
       setMembers(res.data.result);
-      console.log(res.data.result);
     } catch (error: any) {
       console.log(error.response.data);
     }

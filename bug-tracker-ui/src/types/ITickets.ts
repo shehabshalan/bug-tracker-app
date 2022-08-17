@@ -4,8 +4,8 @@ interface TicketAuthor {
   email: string;
   role: string;
   slug: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface TicketAssignedTo {
@@ -14,8 +14,8 @@ interface TicketAssignedTo {
   email: string;
   role: string;
   slug: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ITicket {
@@ -30,7 +30,7 @@ export interface ITicket {
   ticketSlug: string;
   ticketAuthor: TicketAuthor;
   ticketAssignedTo: TicketAssignedTo;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   __v: number;
 }

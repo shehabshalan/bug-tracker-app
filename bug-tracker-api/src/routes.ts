@@ -118,7 +118,7 @@ const routes = (app: Express) => {
     getTicketHandler
   );
   app.get(
-    "/api/project-tickets/:id",
+    "/api/project/tickets/:id",
     [isAuth, isUser],
     getProjectTicketsHandler
   );
