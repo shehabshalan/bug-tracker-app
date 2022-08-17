@@ -5,7 +5,7 @@ import dateConverter from "../utils/dateConverter";
 
 export const ticketColumns: Array<Column<ITicket>> = [
   {
-    title: "Ticket Name",
+    title: "Ticket",
     field: "ticketName",
     render: (rowData) => (
       <Link to={`/ticket/${rowData._id}`} style={{ color: "black" }}>
@@ -14,6 +14,10 @@ export const ticketColumns: Array<Column<ITicket>> = [
     ),
   },
   { title: "Description", field: "ticketDescription" },
+  {
+    title: "Assignee",
+    field: "ticketAssignedTo.name",
+  },
   {
     title: "Author",
     field: "ticketAuthor.name",
