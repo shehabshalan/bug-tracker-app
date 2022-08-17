@@ -16,52 +16,47 @@ import { useQuery } from "@tanstack/react-query";
 import { ticketColumns } from "../../data/ticketColumns";
 import { useParams } from "react-router-dom";
 import { getProjectMembers, getProjectTickets } from "../../services/api";
-import { useAuthContext } from "../../context/AuthContext";
 import { IUser } from "../../types/IUser";
 
 function ProjectDetails() {
-  const { handleClickOpen } = useAppContext();
-  const { members } = useAuthContext();
+  const { handleClickOpen, setError, setMessage } = useAppContext();
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const {
-    data,
+    data: tickets,
     isLoading,
     error,
-  }: { data: any; isLoading: any; error: any; status: any } = useQuery(
-    ["project-tickets", id, page],
+  }: { data: any; isLoading: any; error: any } = useQuery(
+    ["tickets", id, page],
     getProjectTickets,
     {
       keepPreviousData: true,
-      onSuccess: (data) => {
-        setTotalPages(data.totalPages);
-        setLoading(false);
+      onSuccess: (tickets) => {
+        setTotalPages(tickets.totalPages);
+      },
+      onError: () => {
+        setError(true);
+        setMessage("Error fetching tickets");
       },
     }
   );
 
-  const {
-    data: membersData,
-    isLoading: membersLoading,
-    error: membersError,
-  }: { data: any; isLoading: any; error: any; status: any } = useQuery(
-    ["project-members", id, page],
-    getProjectMembers,
-    {
+  const { data: projectDetails }: { data: any; isLoading: any; error: any } =
+    useQuery(["project-details", id, page], getProjectMembers, {
       keepPreviousData: true,
-      onSuccess: (data) => {
-        setLoading(false);
+      onError: () => {
+        setError(true);
+        setMessage("Error fetching members");
       },
-    }
-  );
+    });
 
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>
-        Project Tickets
+        Project {projectDetails?.projectName} - tickets
       </Typography>
       <Stack
         direction="row"
@@ -72,8 +67,8 @@ function ProjectDetails() {
       >
         {!loading && (
           <>
-            <AvatarGroup total={membersData?.projectMembers.length}>
-              {membersData?.projectMembers.map((member: IUser) => (
+            <AvatarGroup total={projectDetails?.projectMembers.length}>
+              {projectDetails?.projectMembers.map((member: IUser) => (
                 <Tooltip title={member.name}>
                   <Avatar alt={member.name} src={member.name} />
                 </Tooltip>
@@ -86,15 +81,6 @@ function ProjectDetails() {
             <AddIcon onClick={() => handleClickOpen("openMember")} />
           </Fab>
         </Tooltip>
-        {/* <AvatarGroup total={5}>
-          <Avatar alt="Remy Sharp" />
-          <Avatar alt="Travis Howard" />
-          <Avatar alt="Agnes Walker" />
-          <Avatar alt="Trevor Henderson" />
-        </AvatarGroup>
-        <Fab size="small" color="secondary" aria-label="add">
-          <AddIcon onClick={() => handleClickOpen("openMember")} />
-        </Fab> */}
       </Stack>
       <ContentTab
         title={"Tickets"}
@@ -102,7 +88,7 @@ function ProjectDetails() {
         buttonAction={"openTicket"}
       >
         <ContentTable
-          data={data}
+          data={tickets}
           columns={ticketColumns}
           error={error}
           isLoading={isLoading}
@@ -116,8 +102,8 @@ function ProjectDetails() {
         <Content />
       </ContentTab>
 
-      <AddTicket id={id} membersData={membersData} />
-      <AddMember id={id} membersData={membersData} />
+      <AddTicket id={id} membersData={projectDetails} />
+      <AddMember id={id} membersData={projectDetails} />
       <AlertMessage />
     </ContentPage>
   );
