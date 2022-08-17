@@ -1,4 +1,4 @@
-import { Fab, Stack, Typography } from "@mui/material";
+import { Fab, Stack, Tooltip, Typography } from "@mui/material";
 import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
@@ -15,10 +15,13 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ticketColumns } from "../../data/ticketColumns";
 import { useParams } from "react-router-dom";
-import { getProjectTickets } from "../../services/api";
+import { getProjectMembers, getProjectTickets } from "../../services/api";
+import { useAuthContext } from "../../context/AuthContext";
+import { IUser } from "../../types/IUser";
 
 function ProjectDetails() {
   const { handleClickOpen } = useAppContext();
+  const { members } = useAuthContext();
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -40,6 +43,21 @@ function ProjectDetails() {
     }
   );
 
+  const {
+    data: membersData,
+    isLoading: membersLoading,
+    error: membersError,
+  }: { data: any; isLoading: any; error: any; status: any } = useQuery(
+    ["project-members", id, page],
+    getProjectMembers,
+    {
+      keepPreviousData: true,
+      onSuccess: (data) => {
+        setLoading(false);
+      },
+    }
+  );
+
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>
@@ -52,7 +70,23 @@ function ProjectDetails() {
           my: 2,
         }}
       >
-        <AvatarGroup total={5}>
+        {!loading && (
+          <>
+            <AvatarGroup total={membersData?.projectMembers.length}>
+              {membersData?.projectMembers.map((member: IUser) => (
+                <Tooltip title={member.name}>
+                  <Avatar alt={member.name} src={member.name} />
+                </Tooltip>
+              ))}
+            </AvatarGroup>
+          </>
+        )}
+        <Tooltip title="Add Member">
+          <Fab size="small" color="secondary" aria-label="add">
+            <AddIcon onClick={() => handleClickOpen("openMember")} />
+          </Fab>
+        </Tooltip>
+        {/* <AvatarGroup total={5}>
           <Avatar alt="Remy Sharp" />
           <Avatar alt="Travis Howard" />
           <Avatar alt="Agnes Walker" />
@@ -60,7 +94,7 @@ function ProjectDetails() {
         </AvatarGroup>
         <Fab size="small" color="secondary" aria-label="add">
           <AddIcon onClick={() => handleClickOpen("openMember")} />
-        </Fab>
+        </Fab> */}
       </Stack>
       <ContentTab
         title={"Tickets"}
@@ -81,8 +115,9 @@ function ProjectDetails() {
       <ContentTab title={"Ticket Details"}>
         <Content />
       </ContentTab>
-      <AddTicket />
-      <AddMember />
+
+      <AddTicket id={id} membersData={membersData} />
+      <AddMember id={id} membersData={membersData} />
       <AlertMessage />
     </ContentPage>
   );
