@@ -10,30 +10,25 @@ import {
 import { useAppContext } from "../../context/AppContext";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import axiosInstance from "../../services/axiosInstance";
-import { Endpoints } from "../../services/endpoints";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createProject } from "../../services/api";
 
 const validationSchema = yup.object({
   title: yup.string().required("title is required"),
   description: yup.string().required("Password is required"),
 });
-function AddProject() {
+function AddProject({ cacheKey }: { cacheKey: string }) {
   const { handleClose, openType } = useAppContext();
   const navigate = useNavigate();
-
-  const handleProjectSubmit = async (title: string, description: string) => {
-    try {
-      const res = await axiosInstance.post(`${Endpoints.createProject}`, {
-        projectName: title,
-        projectDescription: description,
-      });
-      navigate(`/project/${res.data._id}`);
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(createProject, {
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries([cacheKey]);
+      navigate(`/project/${data._id}`);
       handleClose();
-    } catch (error: any) {
-      alert(error.response.data);
-    }
-  };
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -42,7 +37,12 @@ function AddProject() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      handleProjectSubmit(values.title, values.description);
+      const payload = {
+        projectName: values.title,
+        projectDescription: values.description,
+      };
+
+      mutate(payload);
     },
   });
 
