@@ -14,9 +14,7 @@ import AlertMessage from "../../components/AlertMessage";
 import ContentSelect from "../../components/ContentSelect";
 function AddMember({}) {
   const { members } = useAuthContext();
-  console.log(members);
   const memberLabel = "Member";
-
   const memberMenuItems = ["Shehab", "Ali", "Ahmed", "Hassan"];
   const {
     handleClose,
