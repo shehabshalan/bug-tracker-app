@@ -3,7 +3,10 @@ const dateConverter = (date: string) => {
   const year = d.getFullYear();
   const month = d.getMonth() + 1;
   const day = d.getDate();
-  const time = `${year}-${month}-${day}`;
+  const hour = d.getHours();
+  const minute = d.getMinutes();
+
+  const time = `${year}-${month}-${day} at ${hour}:${minute}`;
   return time;
 };
 export default dateConverter;
