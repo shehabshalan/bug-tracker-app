@@ -8,12 +8,12 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
-import { createTicket, getProjectTickets } from "../../services/api";
+import { createTicket } from "../../services/api";
 
 const TICKET_TYPE = ["Bug", "Feature", "Task"];
 const TICKET_PRIORITY = ["Low", "Medium", "High"];
@@ -21,8 +21,15 @@ const TICKET_STATUS = ["Open", "In Progress", "Closed"];
 const MIN = 1;
 const MAX = 24;
 
-function AddTicket() {
-  const { id } = useParams();
+function AddTicket({
+  id,
+  membersData,
+}: {
+  id: string | undefined;
+  membersData: any;
+}) {
+  const queryClient = useQueryClient();
+
   const { handleClose, openType, setSuccess, setError, setMessage } =
     useAppContext();
   const { members } = useAuthContext();
@@ -35,7 +42,19 @@ function AddTicket() {
   const [description, setDescription] = useState("");
   const [time, setTime] = useState(0);
 
-  const { mutate } = useMutation(createTicket);
+  const { mutate } = useMutation(createTicket, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["project-tickets", id, 1]);
+      setSuccess(true);
+      setMessage("Ticket created successfully");
+      handleClose();
+    },
+    onError: (error: any) => {
+      setError(true);
+      setMessage(error.response.data);
+      handleClose();
+    },
+  });
 
   const handlePriorityChange = (event: any) => {
     setPriorityValue(event.target.value as string);
@@ -72,26 +91,11 @@ function AddTicket() {
       ticketPriority: priorityValue.toLowerCase(),
       ticketStatus: statusValue.toLowerCase(),
       ticketEstimateTimeInHours: time,
-      ticketAssignedTo: memberId,
+      ticketAssignedTo: memberId ? memberId : null,
       ticketProject: id,
     };
 
-    const queryKey = ["project-tickets", id, 1];
-    mutate(payload, {
-      onSuccess: () => {
-        setSuccess(true);
-        setMessage("Ticket created successfully");
-        getProjectTickets({
-          queryKey,
-        });
-        handleClose();
-      },
-      onError: (error: any) => {
-        setError(true);
-        setMessage(error.response.data);
-        handleClose();
-      },
-    });
+    mutate(payload);
   };
   return (
     <Dialog open={openType.openTicket} onClose={handleClose}>
@@ -130,7 +134,7 @@ function AddTicket() {
                 label={"Member"}
                 fullWidth
               >
-                {members.map((member: any) => (
+                {membersData?.projectMembers.map((member: any) => (
                   <MenuItem key={member._id} value={member.name}>
                     {member.name}
                   </MenuItem>
