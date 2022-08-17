@@ -19,16 +19,11 @@ export const createTicketSchema = object({
     ticketEstimateTimeInHours: z.number({
       required_error: "Estimated time is required",
     }),
-    ticketAuthor: string({
-      required_error: "Author is required",
-    }).regex(/^[0-9a-fA-F]{24}$/, {
-      message: "Author must be a valid MongoDB id",
-    }),
-    ticketAssignedTo: string({
-      required_error: "Assigned to is required",
-    }).regex(/^[0-9a-fA-F]{24}$/, {
-      message: "Assigned to must be a valid MongoDB id",
-    }),
+    // ticketAssignedTo: string({
+    //   required_error: "Assigned to is required",
+    // }).regex(/^[0-9a-fA-F]{24}$/, {
+    //   message: "Assigned to must be a valid MongoDB id",
+    // }),
     ticketProject: string({
       required_error: "ProjectId is required",
     }).regex(/^[0-9a-fA-F]{24}$/, {

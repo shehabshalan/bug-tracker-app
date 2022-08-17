@@ -48,7 +48,6 @@ function ContentMultiSelect() {
   const { members } = useAuthContext();
   const theme = useTheme();
   const [personName, setPersonName] = useState<string[]>([]);
-  console.log(personName);
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
     const {

@@ -12,8 +12,6 @@ function ContentSelect({
   const [memberId, setMemberId] = React.useState("");
 
   const handleChange = (event: any) => {
-    console.log(event.target.value);
-
     setValue(event.target.value as string);
 
     const findMemberId: any = menuItems.find(

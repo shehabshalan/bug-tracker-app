@@ -13,7 +13,7 @@ const isValidSchema =
       });
       next();
     } catch (e: any) {
-      return res.status(400).send(e.errors);
+      return res.status(400).send("Invalid request. Missing required fields");
     }
   };
 
