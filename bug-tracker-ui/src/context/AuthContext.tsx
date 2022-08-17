@@ -17,7 +17,6 @@ export const AuthContextProvider = ({
   const [user, setUser] = useState();
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const login = async (email: string, password: string) => {
     try {
       setLoading(true);
@@ -38,7 +37,6 @@ export const AuthContextProvider = ({
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
-    // navigate("/login");
   };
 
   const getUserRole = () => {
@@ -48,6 +46,7 @@ export const AuthContextProvider = ({
       return null;
     }
     const user = jwt_decode(token) as any;
+    setUser(user);
     return user.role;
   };
 
