@@ -37,6 +37,4 @@ export const updateProject = async ({
     payload
   );
   return res.data;
-
-  // navigate(`/project/${res.data._id}`);
 };
