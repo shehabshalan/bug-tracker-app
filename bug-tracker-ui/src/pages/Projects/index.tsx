@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import AddProject from "../Dashboard/AddProject";
 import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
@@ -13,7 +13,7 @@ function Projects() {
   const getProjects = async ({ queryKey }: { queryKey: any }) => {
     const [_key, page] = queryKey;
     const res = await axiosInstance.get(
-      `${Endpoints.getProjects}?page=${queryKey[1]}`
+      `${Endpoints.getProjects}?page=${page}`
     );
     return res.data;
   };
@@ -42,6 +42,7 @@ function Projects() {
       <Typography variant="h6" gutterBottom>
         All Projects
       </Typography>
+
       <ContentTab
         title={"Projects"}
         buttonText={"New Project"}
@@ -57,7 +58,7 @@ function Projects() {
           page={page}
         />
       </ContentTab>
-      <AddProject />
+      <AddProject cacheKey={"projects"} />
     </ContentPage>
   );
 }
