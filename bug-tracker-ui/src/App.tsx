@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
-import ProtectedRoutes from "./ProtectedRoutes";
+// import ProtectedRoutes from "./ProtectedRoutes";
 import Tickets from "./pages/Tickets";
 import Settings from "./pages/Settings";
 import { useAppContext } from "./context/AppContext";
@@ -12,6 +12,7 @@ import ProjectDetails from "./pages/ProjectTickets";
 import Projects from "./pages/Projects";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 function App() {
   const { theme } = useAppContext();
@@ -20,7 +21,7 @@ function App() {
     <main>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route element={<ProtectedRoutes />}>
             <Route path="/" element={<Dashboard />} />
@@ -28,8 +29,8 @@ function App() {
             <Route path="/tickets" element={<Tickets />} />
             <Route path="/project/:id" element={<ProjectDetails />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="*" element={<NotFound />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </ThemeProvider>
     </main>
