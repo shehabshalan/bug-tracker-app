@@ -53,7 +53,7 @@ function AlertMessage() {
           severity="error"
           sx={{ width: "100%" }}
         >
-          Something wrong happened
+          {message}
         </Alert>
       </Snackbar>
     </Stack>
