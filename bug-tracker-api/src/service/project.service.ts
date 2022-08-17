@@ -1,6 +1,6 @@
 import { DocumentDefinition } from "mongoose";
 import ProjectModel, { IProject } from "../models/project.model";
-import { IUser } from "../models/user.model";
+import UserModel, { IUser } from "../models/user.model";
 
 export const createProject = async (
   requestBody: DocumentDefinition<Omit<IProject, "createdAt" | "updatedAt">>,
@@ -80,4 +80,12 @@ export const getTopFourProjects = async (user: IUser) => {
   } catch (e: any) {
     throw new Error(e);
   }
+};
+
+export const getProjectMembers = async (projectId: string) => {
+  const members = await UserModel.find({
+    slug: projectId,
+  }).sort({ createdAt: -1 });
+
+  return members;
 };
