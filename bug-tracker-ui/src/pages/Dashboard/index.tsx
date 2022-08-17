@@ -53,7 +53,7 @@ function Dashboard() {
         Stats Overview
       </Typography>
       <StatsCard />
-      <AddProject />
+      <AddProject cacheKey={"topProjects"} />
     </ContentPage>
   );
 }
