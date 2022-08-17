@@ -38,7 +38,7 @@ export const AuthContextProvider = ({
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
-    navigate("/login");
+    // navigate("/login");
   };
 
   const getUserRole = () => {
