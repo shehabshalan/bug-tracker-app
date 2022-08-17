@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
 import { createTicket } from "../../services/api";
@@ -29,7 +29,7 @@ function AddTicket({
   membersData: any;
 }) {
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate();
   const { handleClose, openType, setSuccess, setError, setMessage } =
     useAppContext();
   const { members } = useAuthContext();
@@ -43,10 +43,11 @@ function AddTicket({
   const [time, setTime] = useState(0);
 
   const { mutate } = useMutation(createTicket, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries(["project-tickets", id, 1]);
       setSuccess(true);
       setMessage("Ticket created successfully");
+      navigate(`/ticket/${data._id}`);
       handleClose();
     },
     onError: (error: any) => {
