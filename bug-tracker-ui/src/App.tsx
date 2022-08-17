@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -14,29 +13,25 @@ import Projects from "./pages/Projects";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 
-const queryClient = new QueryClient();
-
 function App() {
-  const { mode, setMode, theme } = useAppContext();
+  const { theme } = useAppContext();
 
   return (
     <main>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-            <Route element={<ProtectedRoutes />}>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/tickets" element={<Tickets />} />
-              <Route path="/project/:id" element={<ProjectDetails />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </ThemeProvider>
-      </QueryClientProvider>
+      <ThemeProvider theme={theme}>
+        <Routes>
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/tickets" element={<Tickets />} />
+            <Route path="/project/:id" element={<ProjectDetails />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
     </main>
   );
 }
