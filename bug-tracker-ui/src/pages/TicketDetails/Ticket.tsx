@@ -6,10 +6,11 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import ContentDivider from "./ContentDivider";
-import React from "react";
+import { capitalize } from "lodash";
+import { ITicket } from "../../types/ITicket";
+import dateConverter from "../../utils/dateConverter";
 
-function Content() {
+function Ticket({ ticket }: { ticket: ITicket }) {
   return (
     <>
       <Grid
@@ -21,19 +22,28 @@ function Content() {
       >
         <Grid item xs={12} sm={3}>
           <ListItem>
-            <ListItemText primary="Created" secondary={"12/12/2020"} />
+            <ListItemText
+              primary="Created"
+              secondary={dateConverter(ticket?.createdAt)}
+            />
             <Divider orientation="vertical" flexItem />
           </ListItem>
         </Grid>
         <Grid item xs={12} sm={3}>
           <ListItem>
-            <ListItemText primary="Author" secondary={"John Doe"} />
+            <ListItemText
+              primary="Author"
+              secondary={ticket?.ticketAuthor?.name}
+            />
             <Divider orientation="vertical" flexItem />
           </ListItem>
         </Grid>
         <Grid item xs={12} sm={3}>
           <ListItem>
-            <ListItemText primary="Assigned to" secondary={"Sarah Doe"} />
+            <ListItemText
+              primary="Assigned to"
+              secondary={ticket?.ticketAssignedTo?.name}
+            />
             <Divider orientation="vertical" flexItem />
           </ListItem>
         </Grid>
@@ -41,7 +51,7 @@ function Content() {
           <ListItem>
             <ListItemText
               primary="Time estimate"
-              secondary={`${Math.floor(Math.random() * 10)} hours`}
+              secondary={`${ticket.ticketEstimateTimeInHours} hours`}
             />
           </ListItem>
         </Grid>
@@ -61,11 +71,7 @@ function Content() {
               primary="Ticket Status"
               secondary={
                 <Chip
-                  label={
-                    ["Open", "In Progress", "Closed"][
-                      Math.floor(Math.random() * 3)
-                    ]
-                  }
+                  label={capitalize(ticket.ticketStatus)}
                   color="secondary"
                   variant="outlined"
                   size="small"
@@ -81,9 +87,7 @@ function Content() {
               primary="Ticket Type"
               secondary={
                 <Chip
-                  label={
-                    ["Bug", "Feature", "Task"][Math.floor(Math.random() * 3)]
-                  }
+                  label={capitalize(ticket.ticketType)}
                   color="secondary"
                   variant="outlined"
                   size="small"
@@ -99,9 +103,7 @@ function Content() {
               primary="Ticket Priority"
               secondary={
                 <Chip
-                  label={
-                    ["Low", "Medium", "High"][Math.floor(Math.random() * 3)]
-                  }
+                  label={capitalize(ticket.ticketPriority)}
                   color="secondary"
                   variant="outlined"
                   size="small"
@@ -115,16 +117,14 @@ function Content() {
       <Divider sx={{ my: 3 }} />
       <List>
         <ListItem>
-          <ListItemText primary="Ticket Title" secondary={"Ticket Title"} />
+          <ListItemText primary="Ticket Title" secondary={ticket.ticketName} />
         </ListItem>
 
         <Divider flexItem />
         <ListItem>
           <ListItemText
             primary="Ticket Details"
-            secondary={
-              "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus voluptates fugiat atque velit amet sit pariatur necessitatibus exercitationem numquam nulla dolorem ea officiis, et expedita facilis facere, magni, quis deserunt."
-            }
+            secondary={ticket.ticketDescription}
           />
         </ListItem>
       </List>
@@ -132,4 +132,4 @@ function Content() {
   );
 }
 
-export default Content;
+export default Ticket;
