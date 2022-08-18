@@ -14,9 +14,9 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
+import { IProjects } from "../../interfaces/IProject";
+import { ITicket } from "../../interfaces/ITicket";
 import { createTicket, updateTicket } from "../../services/api";
-import { IProjects } from "../../types/IProject";
-import { ITicket } from "../../types/ITicket";
 
 const TICKET_TYPE = ["Bug", "Feature", "Task"];
 const TICKET_PRIORITY = ["Low", "Medium", "High"];

@@ -15,7 +15,6 @@ import { useQuery } from "@tanstack/react-query";
 import { ticketColumns } from "../../data/ticketColumns";
 import { useParams } from "react-router-dom";
 import { getProjectMembers, getProjectTickets } from "../../services/api";
-import { IUser } from "../../types/IUser";
 
 function ProjectDetails() {
   const { handleClickOpen, setError, setMessage } = useAppContext();
@@ -67,7 +66,7 @@ function ProjectDetails() {
         {!loading && (
           <>
             <AvatarGroup total={projectDetails?.projectMembers.length}>
-              {projectDetails?.projectMembers.map((member: IUser) => (
+              {projectDetails?.projectMembers.map((member: any) => (
                 <Tooltip title={member.name}>
                   <Avatar alt={member.name} src={member.name} />
                 </Tooltip>

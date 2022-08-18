@@ -7,7 +7,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { capitalize } from "lodash";
-import { ITicket } from "../../types/ITicket";
+import { ITicket } from "../../interfaces/ITicket";
 import dateConverter from "../../utils/dateConverter";
 
 function Ticket({ ticket }: { ticket: ITicket }) {
