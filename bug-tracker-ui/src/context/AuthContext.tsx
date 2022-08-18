@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
 import { Endpoints } from "../services/endpoints";
-import { useNavigate } from "react-router-dom";
-import jwt_decode, { JwtPayload } from "jwt-decode";
+import jwt_decode from "jwt-decode";
 import axiosInstance from "../services/axiosInstance";
 
 const AuthContext = createContext<any>({} as any);
@@ -43,7 +42,6 @@ export const AuthContextProvider = ({
   };
 
   const getUserRole = () => {
-    //   decode token to get user info
     const token = JSON.parse(localStorage.getItem("token") || "");
     if (!token) {
       return null;
