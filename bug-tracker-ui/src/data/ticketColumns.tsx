@@ -1,6 +1,6 @@
 import { Column } from "@material-table/core";
 import { Link } from "react-router-dom";
-import { ITicket } from "../types/ITickets";
+import { ITicket } from "../types/ITicket";
 import dateConverter from "../utils/dateConverter";
 
 export const ticketColumns: Array<Column<ITicket>> = [
