@@ -8,10 +8,6 @@ import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
 import { ticketColumns } from "../../data/ticketColumns";
 import { getUserTickets } from "../../services/api";
-import axiosInstance from "../../services/axiosInstance";
-import { Endpoints } from "../../services/endpoints";
-import { ITicket } from "../../types/ITicket";
-import dateConverter from "../../utils/dateConverter";
 
 function Tickets() {
   const [page, setPage] = React.useState(1);
