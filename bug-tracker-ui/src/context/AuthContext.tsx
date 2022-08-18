@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 import axios from "axios";
 import { Endpoints } from "../services/endpoints";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import jwt_decode, { JwtPayload } from "jwt-decode";
 import axiosInstance from "../services/axiosInstance";
 
 const AuthContext = createContext<any>({} as any);
@@ -14,7 +14,7 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(localStorage.getItem("user") || {});
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const login = async (email: string, password: string) => {
@@ -26,6 +26,7 @@ export const AuthContextProvider = ({
       });
       if (res.data.accessToken) {
         localStorage.setItem("token", JSON.stringify(res.data.accessToken));
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         setLoading(false);
         window.location.href = "/";
       }
@@ -36,7 +37,9 @@ export const AuthContextProvider = ({
   };
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setToken(null);
+    setUser({});
   };
 
   const getUserRole = () => {
@@ -46,10 +49,8 @@ export const AuthContextProvider = ({
       return null;
     }
     const user = jwt_decode(token) as any;
-    setUser(user);
     return user.role;
   };
-
   const signup = async (
     name: string,
     email: string,
@@ -97,9 +98,9 @@ export const AuthContextProvider = ({
   return (
     <AuthContext.Provider
       value={{
+        user,
         getUserRole,
         members,
-        user,
         token,
         login,
         logout,
