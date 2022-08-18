@@ -11,6 +11,23 @@ import { projectColumns } from "../../data/projectColumns";
 import axiosInstance from "../../services/axiosInstance";
 import { Endpoints } from "../../services/endpoints";
 
+type Result = {
+  _id: string;
+  projectSlug: string;
+  projectName: string;
+  projectDescription: string;
+  projectMembers: string[];
+  projectTickets: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+};
+
+type TopProjects = {
+  status: string;
+  result: Result[];
+};
+
 function Dashboard() {
   const getTopProjects = async () => {
     const res = await axiosInstance.get(
@@ -50,7 +67,7 @@ function Dashboard() {
       </ContentTab>
       <ContentDivider />
       <Typography variant="h6" gutterBottom>
-        Stats Overview
+        Tickets Overview
       </Typography>
       <StatsCard />
       <AddProject cacheKey={"topProjects"} />
