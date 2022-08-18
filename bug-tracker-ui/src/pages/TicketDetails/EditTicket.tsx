@@ -9,45 +9,54 @@ import {
   TextField,
 } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import _ from "lodash";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  TicketHours,
-  TicketPriority,
-  TicketStatus,
-  TicketType,
-} from "../../constants/enums";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
-import { createTicket } from "../../services/api";
+import { IProjects } from "../../interfaces/IProject";
+import { ITicket } from "../../interfaces/ITicket";
+import { createTicket, updateTicket } from "../../services/api";
 
-function AddTicket({
-  id,
+const TICKET_TYPE = ["Bug", "Feature", "Task"];
+const TICKET_PRIORITY = ["Low", "Medium", "High"];
+const TICKET_STATUS = ["Open", "In Progress", "Closed"];
+const MIN = 1;
+const MAX = 24;
+
+function EditTicket({
+  projectId,
   membersData,
+  ticket,
 }: {
-  id: string | undefined;
-  membersData: any;
+  projectId: string | undefined;
+  membersData: IProjects;
+  ticket: ITicket;
 }) {
+  const { id } = useParams();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { handleClose, openType, setSuccess, setError, setMessage } =
     useAppContext();
   const { members } = useAuthContext();
-  const [priorityValue, setPriorityValue] = useState("");
-  const [statusValue, setStatusValue] = useState("");
-  const [typeValue, setTypeValue] = useState("");
-  const [memberValue, setMemberValue] = useState("");
+  const [priorityValue, setPriorityValue] = useState(
+    _.capitalize(ticket.ticketPriority)
+  );
+  const [statusValue, setStatusValue] = useState(
+    _.startCase(ticket.ticketStatus)
+  );
+  const [typeValue, setTypeValue] = useState(_.capitalize(ticket.ticketType));
+  const [memberValue, setMemberValue] = useState(ticket.ticketAssignedTo.name);
   const [memberId, setMemberId] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [time, setTime] = useState(0);
+  const [title, setTitle] = useState(ticket.ticketName);
+  const [description, setDescription] = useState(ticket.ticketDescription);
+  const [time, setTime] = useState(ticket.ticketEstimateTimeInHours);
 
-  const { mutate } = useMutation(createTicket, {
+  const { mutate } = useMutation(updateTicket, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["project-tickets", id, 1]);
+      queryClient.invalidateQueries(["ticket-details", id]);
       setSuccess(true);
-      setMessage("Ticket created successfully");
-      navigate(`/ticket/${data._id}`);
+      setMessage("Updated created successfully");
       handleClose();
     },
     onError: (error: any) => {
@@ -68,10 +77,6 @@ function AddTicket({
   };
   const handleMemberChange = (event: any) => {
     setMemberValue(event.target.value as string);
-    const findMemberId: any = members.find(
-      (member: any) => member.name === event.target.value
-    );
-    setMemberId(findMemberId._id as string);
   };
   const handleTitleChange = (event: any) => {
     setTitle(event.target.value as string);
@@ -80,10 +85,7 @@ function AddTicket({
     setDescription(event.target.value as string);
   };
   const handleTimeChange = (event: any) => {
-    const time = Math.max(
-      TicketHours.Min,
-      Math.min(TicketHours.Max, Number(event.target.value))
-    );
+    const time = Math.max(MIN, Math.min(MAX, Number(event.target.value)));
     setTime(time);
   };
 
@@ -95,15 +97,20 @@ function AddTicket({
       ticketPriority: priorityValue.toLowerCase(),
       ticketStatus: statusValue.toLowerCase(),
       ticketEstimateTimeInHours: time,
-      ticketAssignedTo: memberId ? memberId : null,
-      ticketProject: id,
+      ticketAssignedTo: members.find(
+        (member: any) => member.name === memberValue
+      )._id,
+      ticketProject: projectId,
     };
 
-    mutate(payload);
+    mutate({
+      payload,
+      id,
+    });
   };
   return (
-    <Dialog open={openType.openTicket} onClose={handleClose}>
-      <DialogTitle>Create ticket</DialogTitle>
+    <Dialog open={openType.openEditTicket} onClose={handleClose}>
+      <DialogTitle>Update ticket</DialogTitle>
       <DialogContent>
         <Grid container spacing={3}>
           <Grid item xs={12} sx={{ mt: 1 }}>
@@ -120,7 +127,7 @@ function AddTicket({
           <Grid item xs={12}>
             <TextField
               value={description}
-              id="title"
+              id="description"
               label="Description"
               fullWidth
               variant="outlined"
@@ -166,7 +173,7 @@ function AddTicket({
                 label={"Type"}
                 fullWidth
               >
-                {Object.values(TicketType).map((item: any) => (
+                {TICKET_TYPE.map((item: any) => (
                   <MenuItem key={item} value={item}>
                     {item}
                   </MenuItem>
@@ -181,7 +188,7 @@ function AddTicket({
                 label={"Priority"}
                 fullWidth
               >
-                {Object.values(TicketPriority).map((item: any) => (
+                {TICKET_PRIORITY.map((item: any) => (
                   <MenuItem key={item} value={item}>
                     {item}
                   </MenuItem>
@@ -196,7 +203,7 @@ function AddTicket({
                 label={"Status"}
                 fullWidth
               >
-                {Object.values(TicketStatus).map((item: any) => (
+                {TICKET_STATUS.map((item: any) => (
                   <MenuItem key={item} value={item}>
                     {item}
                   </MenuItem>
@@ -214,4 +221,4 @@ function AddTicket({
   );
 }
 
-export default AddTicket;
+export default EditTicket;

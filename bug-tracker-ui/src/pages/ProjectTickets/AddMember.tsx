@@ -29,7 +29,7 @@ function AddMember({
   const [memberId, setMemberId] = useState("");
   const { mutate } = useMutation(updateProject, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["project-members", id]);
+      queryClient.invalidateQueries(["project-details", id]);
       setSuccess(true);
       setMessage("member added successfully");
       handleClose();

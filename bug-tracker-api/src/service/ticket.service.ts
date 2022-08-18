@@ -1,4 +1,5 @@
 import { DocumentDefinition } from "mongoose";
+import ProjectModel from "../models/project.model";
 import TicketModel, { ITicket } from "../models/ticket.model";
 import { IUser } from "../models/user.model";
 
@@ -12,6 +13,16 @@ export const createTicket = async (
       ticketAuthor: user._id,
       ticketSlug: user.slug,
     });
+
+    const addTicketToProject = await ProjectModel.findByIdAndUpdate(
+      requestBody.ticketProject,
+      {
+        $push: {
+          projectTickets: newTicket._id,
+        },
+      },
+      { new: true }
+    );
     return newTicket.toJSON();
   } catch (e: any) {
     throw new Error(e);

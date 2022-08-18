@@ -2,19 +2,19 @@ import React from "react";
 import AddNewMember from "./AddNewMember";
 import ContentTab from "../../components/ContentTab";
 
-function Settings() {
+function Members() {
   return (
     <div>
       <ContentTab
-        title={"Settings"}
+        title={"Members"}
         buttonText={"New Member"}
         buttonAction={"openUser"}
       >
-        <div>Settings</div>
+        <div>Members</div>
       </ContentTab>
       <AddNewMember />
     </div>
   );
 }
 
-export default Settings;
+export default Members;
