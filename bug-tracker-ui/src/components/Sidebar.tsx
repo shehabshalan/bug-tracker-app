@@ -20,8 +20,9 @@ import {
   Settings,
   BugReport,
   AccountTree,
+  AccountCircle,
 } from "@mui/icons-material";
-import { Container } from "@mui/material";
+import { Container, Divider } from "@mui/material";
 import { useAuthContext } from "../context/AuthContext";
 const drawerWidth = 240;
 
@@ -98,17 +99,18 @@ function Sidebar({ window }: { window: any }) {
       {/* <Toolbar /> */}
       <List>
         <ListItemButton>
-          {/* <ListItemIcon>
-            <Dashboard />
-          </ListItemIcon> */}
+          <ListItemIcon>
+            <AccountCircle color="secondary" fontSize="large" />
+          </ListItemIcon>
           <ListItemText
             primary={
-              <Typography variant="h6" color="inherit">
+              <Typography variant="h6" color="secondary">
                 {JSON.parse(user as string).name}
               </Typography>
             }
           />
         </ListItemButton>
+        <Divider />
 
         {getUserRole() === "admin" ? (
           <List component="div" disablePadding>
