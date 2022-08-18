@@ -49,9 +49,6 @@ Navigate to the saas-bug-tracker
   ```
   npm start
   ```
-## Assumptions:
-- There is no authentication hence the system is built for a single user, but files can shared with others.
-- Not all files will be previewed.
 
 ## How it works?
 - if both backend and frontend are running correctly, then you can navigate to localhost:3000.
