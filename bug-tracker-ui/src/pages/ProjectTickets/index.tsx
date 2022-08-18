@@ -6,7 +6,6 @@ import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import AddIcon from "@mui/icons-material/Add";
 import ContentDivider from "../../components/ContentDivider";
-import Content from "../../components/Content";
 import AddTicket from "./AddTicket";
 import { useAppContext } from "../../context/AppContext";
 import AddMember from "./AddMember";
@@ -98,9 +97,6 @@ function ProjectDetails() {
         />
       </ContentTab>
       <ContentDivider />
-      <ContentTab title={"Ticket Details"}>
-        <Content />
-      </ContentTab>
 
       <AddTicket id={id} membersData={projectDetails} />
       <AddMember id={id} membersData={projectDetails} />
