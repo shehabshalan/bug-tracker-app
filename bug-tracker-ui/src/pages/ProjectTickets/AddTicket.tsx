@@ -11,15 +11,15 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  TicketHours,
+  TicketPriority,
+  TicketStatus,
+  TicketType,
+} from "../../constants/enums";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
 import { createTicket } from "../../services/api";
-
-const TICKET_TYPE = ["Bug", "Feature", "Task"];
-const TICKET_PRIORITY = ["Low", "Medium", "High"];
-const TICKET_STATUS = ["Open", "In Progress", "Closed"];
-const MIN = 1;
-const MAX = 24;
 
 function AddTicket({
   id,
@@ -80,7 +80,10 @@ function AddTicket({
     setDescription(event.target.value as string);
   };
   const handleTimeChange = (event: any) => {
-    const time = Math.max(MIN, Math.min(MAX, Number(event.target.value)));
+    const time = Math.max(
+      TicketHours.Min,
+      Math.min(TicketHours.Max, Number(event.target.value))
+    );
     setTime(time);
   };
 
@@ -163,7 +166,7 @@ function AddTicket({
                 label={"Type"}
                 fullWidth
               >
-                {TICKET_TYPE.map((item: any) => (
+                {Object.values(TicketType).map((item: any) => (
                   <MenuItem key={item} value={item}>
                     {item}
                   </MenuItem>
@@ -178,7 +181,7 @@ function AddTicket({
                 label={"Priority"}
                 fullWidth
               >
-                {TICKET_PRIORITY.map((item: any) => (
+                {Object.values(TicketPriority).map((item: any) => (
                   <MenuItem key={item} value={item}>
                     {item}
                   </MenuItem>
@@ -193,7 +196,7 @@ function AddTicket({
                 label={"Status"}
                 fullWidth
               >
-                {TICKET_STATUS.map((item: any) => (
+                {Object.values(TicketStatus).map((item: any) => (
                   <MenuItem key={item} value={item}>
                     {item}
                   </MenuItem>
