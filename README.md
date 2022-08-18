@@ -53,30 +53,23 @@ Navigate to the saas-bug-tracker
 - There is no authentication hence the system is built for a single user, but files can shared with others.
 - Not all files will be previewed.
 
-## How to test?
+## How it works?
 - if both backend and frontend are running correctly, then you can navigate to localhost:3000.
-- upload a file or files using the upload area. 
-- each file such PDF / Excel / Word/ txt/ pictures documents will be assigned a corresponding icon based on the file type.
-- you will instantlly get the uploaded file/files in the document area. 
-- click on download to download or click on share to share the file for a specified duration. 
-- set the specified duration as you wish but make it one minute from your current time so you can see the link expiring after that 1 minute.
-- you will get a generated link, copy the link and paste it in a new tab. 
-- come back after one minute and try the copied link again. it should show that the link has expired.
+- Sign up and you will be given admin privileges
+- Login and add members to your space in the members tab and they will be given user privileges.
+- The dashboard will have a breakdown of the top projects along with charts about tickets organized by type, status, and priority.
+- Create a project and add members to it. 
+- Create a ticket and assign a member to it. 
+- A member can navigate to his tickets tab to see tickets that belong to him.
+- A ticket can be viewed, created and updated by anyone. 
+- A project can be viewed, created by anyone. 
+- A member can only be created by an admin.
 
 ## Architecture
 
-![architecture](https://user-images.githubusercontent.com/30008865/177472581-72341a49-766b-4f94-8c52-30bc97840223.png)
 
-## Improvements
-- Adding authentication to allow more users and have each user only get their own uploads.
-- File validation such as type, size etc.
-- Document preview for all document types allowed, currently only images and pdfs support preview.
-- Web viewer for documents. This is to allow users to view documents inside the browser.
-- UI tweaks.
 
 ## Inside look:
-
-![Animation](https://user-images.githubusercontent.com/30008865/177664882-4849d693-ce5d-47d9-8623-34dc224e3f05.gif)
 
 
 ## Core Tech Stack:
@@ -86,5 +79,4 @@ Navigate to the saas-bug-tracker
 | Node.js  | 16.13.2  |
 | Express.js  | 4.18.1  |
 | MongoDB using mongoose  | 6.4.2  |
-| Cloudinary  | 1.30.0  |
 | MUI  | 5.8.6  |
