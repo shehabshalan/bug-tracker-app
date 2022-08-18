@@ -20,12 +20,13 @@ import {
   Settings,
   BugReport,
   AccountTree,
+  AccountCircle,
 } from "@mui/icons-material";
-import { Container } from "@mui/material";
+import { Container, Divider } from "@mui/material";
 import { useAuthContext } from "../context/AuthContext";
 const drawerWidth = 240;
 
-const pagesAdmin = [
+const ADMIN_PAGES = [
   {
     name: "Dashboard",
     path: "/",
@@ -42,13 +43,13 @@ const pagesAdmin = [
     icon: <BugReport />,
   },
   {
-    name: "Settings",
-    path: "/settings",
+    name: "Members",
+    path: "/members",
     icon: <Settings />,
   },
 ];
 
-const pagesUsers = [
+const USER_PAGES = [
   {
     name: "Dashboard",
     path: "/",
@@ -67,8 +68,8 @@ const pagesUsers = [
 ];
 
 function Sidebar({ window }: { window: any }) {
-  const { logout, getUserRole } = useAuthContext();
-  const navigate = useNavigate();
+  const { logout, getUserRole, user } = useAuthContext();
+
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [pageHeader, setPageHeader] = useState("Dashboard");
@@ -79,11 +80,11 @@ function Sidebar({ window }: { window: any }) {
 
   const handlePageHeader = () => {
     const path = location.pathname;
-    const pageAdmin = pagesAdmin.find((page) => page.path === path);
+    const pageAdmin = ADMIN_PAGES.find((page) => page.path === path);
     if (pageAdmin) {
       setPageHeader(pageAdmin.name);
     }
-    const pagesUser = pagesUsers.find((page) => page.path === path);
+    const pagesUser = USER_PAGES.find((page) => page.path === path);
     if (pagesUser) {
       setPageHeader(pagesUser.name);
     }
@@ -98,15 +99,22 @@ function Sidebar({ window }: { window: any }) {
       {/* <Toolbar /> */}
       <List>
         <ListItemButton>
-          {/* <ListItemIcon>
-            <Dashboard />
-          </ListItemIcon> */}
-          <ListItemText primary="LOGO" />
+          <ListItemIcon>
+            <AccountCircle color="secondary" fontSize="large" />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography variant="h6" color="secondary">
+                {JSON.parse(user as string).name}
+              </Typography>
+            }
+          />
         </ListItemButton>
+        <Divider />
 
         {getUserRole() === "admin" ? (
           <List component="div" disablePadding>
-            {pagesAdmin.map((page) => (
+            {ADMIN_PAGES.map((page) => (
               <div key={page.name}>
                 <Link
                   to={page.path}
@@ -124,7 +132,7 @@ function Sidebar({ window }: { window: any }) {
           </List>
         ) : (
           <List component="div" disablePadding>
-            {pagesUsers.map((page) => (
+            {USER_PAGES.map((page) => (
               <div key={page.name}>
                 <Link
                   to={page.path}

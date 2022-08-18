@@ -2,7 +2,7 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
+
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -13,6 +13,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useAuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const validationSchema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -89,8 +90,10 @@ function Login() {
           </LoadingButton>
           <Grid container justifyContent="center">
             <Grid item>
-              <Link href="/sign-up" variant="body2">
-                Don't have an account? Sign up
+              <Link to={"/signup"}>
+                <Typography variant="body2">
+                  Don't have an account? Sign up
+                </Typography>
               </Link>
             </Grid>
           </Grid>

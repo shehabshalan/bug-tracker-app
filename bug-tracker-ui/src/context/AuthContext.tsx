@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
 import { Endpoints } from "../services/endpoints";
-import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosInstance from "../services/axiosInstance";
 
@@ -14,10 +13,9 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(localStorage.getItem("user") || {});
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const login = async (email: string, password: string) => {
     try {
       setLoading(true);
@@ -27,6 +25,7 @@ export const AuthContextProvider = ({
       });
       if (res.data.accessToken) {
         localStorage.setItem("token", JSON.stringify(res.data.accessToken));
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         setLoading(false);
         window.location.href = "/";
       }
@@ -37,12 +36,12 @@ export const AuthContextProvider = ({
   };
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setToken(null);
-    // navigate("/login");
+    setUser({});
   };
 
   const getUserRole = () => {
-    //   decode token to get user info
     const token = JSON.parse(localStorage.getItem("token") || "");
     if (!token) {
       return null;
@@ -50,7 +49,6 @@ export const AuthContextProvider = ({
     const user = jwt_decode(token) as any;
     return user.role;
   };
-
   const signup = async (
     name: string,
     email: string,
@@ -98,9 +96,9 @@ export const AuthContextProvider = ({
   return (
     <AuthContext.Provider
       value={{
+        user,
         getUserRole,
         members,
-        user,
         token,
         login,
         logout,

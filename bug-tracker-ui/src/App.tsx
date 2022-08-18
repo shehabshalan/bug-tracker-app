@@ -6,13 +6,14 @@ import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 // import ProtectedRoutes from "./ProtectedRoutes";
 import Tickets from "./pages/Tickets";
-import Settings from "./pages/Settings";
+import Settings from "./pages/Members";
 import { useAppContext } from "./context/AppContext";
 import ProjectDetails from "./pages/ProjectTickets";
 import Projects from "./pages/Projects";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import ProtectedRoutes from "./ProtectedRoutes";
+import TicketDetails from "./pages/TicketDetails";
 
 function App() {
   const { theme } = useAppContext();
@@ -28,7 +29,8 @@ function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/tickets" element={<Tickets />} />
             <Route path="/project/:id" element={<ProjectDetails />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/ticket/:id" element={<TicketDetails />} />
+            <Route path="/members" element={<Settings />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

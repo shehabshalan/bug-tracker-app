@@ -34,10 +34,16 @@ export function AppContextProvider({
     openTicket: false,
     openProject: false,
     openUser: false,
+    openEditTicket: false,
   });
 
   const handleClickOpen = (
-    type: "openMember" | "openTicket" | "openProject" | "openUser"
+    type:
+      | "openMember"
+      | "openTicket"
+      | "openProject"
+      | "openUser"
+      | "openEditTicket"
   ) => {
     setOpen({ ...openType, [type]: true });
   };
@@ -49,6 +55,7 @@ export function AppContextProvider({
       openTicket: false,
       openProject: false,
       openUser: false,
+      openEditTicket: false,
     });
   };
 
