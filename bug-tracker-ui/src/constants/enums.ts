@@ -1,7 +1,3 @@
-// const TICKET_TYPE = ["Bug", "Feature", "Task"];
-// const TICKET_PRIORITY = ["Low", "Medium", "High"];
-// const TICKET_STATUS = ["Open", "In Progress", "Closed"];
-
 export enum TicketStatus {
   Open = "Open",
   InProgress = "In Progress",
@@ -18,4 +14,9 @@ export enum TicketPriority {
   Low = "Low",
   Medium = "Medium",
   High = "High",
+}
+
+export enum TicketHours {
+  Min = 1,
+  Max = 24,
 }
