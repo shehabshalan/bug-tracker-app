@@ -20,4 +20,6 @@ export class Endpoints {
   public static getAllMembers = Endpoints.baseUrl + "allmembers";
   public static createTicket = Endpoints.baseUrl + "tickets";
   public static getProjectTickets = Endpoints.baseUrl + "project/tickets";
+  public static getTicketById = Endpoints.baseUrl + "tickets";
+  public static updateTicketById = Endpoints.baseUrl + "tickets";
 }
