@@ -54,7 +54,7 @@ function ProjectDetails() {
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>
-        Project {projectDetails?.projectName} - tickets
+        {projectDetails?.projectName} | Tickets
       </Typography>
       <Stack
         direction="row"
