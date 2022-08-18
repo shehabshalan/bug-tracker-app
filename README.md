@@ -1,7 +1,7 @@
 # What is this?
 it is a bug tracker with multi-level authentication and authorization using JWT. it is built with Node.js, Express.js, and MongoDB for the api, and React.js and Material UI for the frontend.
 
-**Demo**: https://document-library-api.herokuapp.com/
+**Demo**:https://bug-tracker-ui.netlify.app/
 
 *Please allow for 20 seconds or so for the demo. it uses Heroku's free plan and it could take time to boot up.*
 
@@ -15,31 +15,31 @@ it is a bug tracker with multi-level authentication and authorization using JWT.
   ```
   git clone https://github.com/shehabshalan/document-library
   ```
-Navigate to the document-library
+Navigate to the saas-bug-tracker
   ```
-  cd document-library
+  cd saas-bug-tracker
   ```
-**Backend**:
-- Navigate to backend folder
+**API**:
+- Navigate to api folder
   ```
-  cd backend
+  cd bug-tracker-api
   ```
-- Install packages using  npm 
+- Install packages using yarn 
     ```
-  npm install
+  yarn install
   ```
 - Create .env file in the root folder (below command uses windows cmd)
   ```
   type . > .env
   ```
-- Run the backend
+- Run the api
   ```
-  npm start
+  yarn dev
   ```
 **Frontend**:
 - Navigate to frontend folder
   ```
-  cd frontend
+  cd bug-tracker-ui
   ```
 - Install packages using npm
     ```
