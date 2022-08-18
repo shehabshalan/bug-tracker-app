@@ -31,8 +31,6 @@ export const getTicketById = async ({ queryKey }: { queryKey: any }) => {
 export const createProject = async (payload: any) => {
   const res = await axiosInstance.post(Endpoints.createProject, payload);
   return res.data;
-
-  // navigate(`/project/${res.data._id}`);
 };
 export const updateProject = async ({
   payload,
