@@ -68,7 +68,7 @@ const USER_PAGES = [
 
 function Sidebar({ window }: { window: any }) {
   const { logout, getUserRole, user } = useAuthContext();
-  const navigate = useNavigate();
+
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [pageHeader, setPageHeader] = useState("Dashboard");
@@ -101,7 +101,13 @@ function Sidebar({ window }: { window: any }) {
           {/* <ListItemIcon>
             <Dashboard />
           </ListItemIcon> */}
-          <ListItemText primary="LOGO" />
+          <ListItemText
+            primary={
+              <Typography variant="h6" color="inherit">
+                {JSON.parse(user as string).name}
+              </Typography>
+            }
+          />
         </ListItemButton>
 
         {getUserRole() === "admin" ? (
