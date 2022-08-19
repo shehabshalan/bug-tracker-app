@@ -63,3 +63,14 @@ export const updateTicket = async ({
   );
   return res.data;
 };
+
+export const deleteTicket = async (id: string | undefined) => {
+  const res = await axiosInstance.delete(`${Endpoints.deleteTicketById}/${id}`);
+  return res.data;
+};
+export const deleteProject = async (id: string | undefined) => {
+  const res = await axiosInstance.delete(
+    `${Endpoints.deleteProjectById}/${id}`
+  );
+  return res.data;
+};
