@@ -40,11 +40,11 @@ function AddTicket({
   const [memberId, setMemberId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState<string | number>(0);
 
   const { mutate } = useMutation(createTicket, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["project-tickets", id, 1]);
+      queryClient.invalidateQueries(["tickets", id, 1]);
       setSuccess(true);
       setMessage("Ticket created successfully");
       navigate(`/ticket/${data._id}`);
@@ -80,10 +80,11 @@ function AddTicket({
     setDescription(event.target.value as string);
   };
   const handleTimeChange = (event: any) => {
-    const time = Math.max(
-      TicketHours.Min,
-      Math.min(TicketHours.Max, Number(event.target.value))
-    );
+    const time: string | number =
+      Math.max(
+        TicketHours.Min,
+        Math.min(TicketHours.Max, Number(event.target.value))
+      ) || "";
     setTime(time);
   };
 
