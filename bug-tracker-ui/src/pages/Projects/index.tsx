@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React from "react";
 import AddProject from "../Dashboard/AddProject";
 import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
