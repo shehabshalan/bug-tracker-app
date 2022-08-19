@@ -100,11 +100,20 @@ function Login() {
         </form>
 
         {/* demo user */}
+
         <Typography component="p" variant="body2" sx={{ mt: 3 }}>
-          Demo User : demo@mail.com
+          <b>Demo admin: </b>
+          demo@demo.com
         </Typography>
         <Typography component="p" variant="body2">
-          Password : Test@123456
+          Password : 1234567
+        </Typography>
+        <Typography component="p" variant="body2" sx={{ mt: 3 }}>
+          <b>Demo user: </b>
+          demouser@demo.com
+        </Typography>
+        <Typography component="p" variant="body2">
+          Password : 1234567
         </Typography>
       </Box>
     </Container>
