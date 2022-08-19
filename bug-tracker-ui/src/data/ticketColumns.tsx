@@ -14,10 +14,10 @@ export const ticketColumns: Array<Column<ITicket>> = [
     ),
   },
   { title: "Description", field: "ticketDescription" },
-  {
-    title: "Assignee",
-    field: "ticketAssignedTo.name",
-  },
+  // {
+  //   title: "Assignee",
+  //   field: "ticketAssignedTo.name",
+  // },
   {
     title: "Author",
     field: "ticketAuthor.name",

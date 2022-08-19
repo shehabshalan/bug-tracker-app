@@ -43,7 +43,7 @@ function Tickets() {
           error={error}
           isLoading={isLoading}
           setPage={setPage}
-          totalPages={Number(totalPages)}
+          totalPages={totalPages}
           page={page}
         />
       </ContentTab>

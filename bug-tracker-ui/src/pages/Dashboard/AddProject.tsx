@@ -19,12 +19,14 @@ const validationSchema = yup.object({
   description: yup.string().required("Password is required"),
 });
 function AddProject({ cacheKey }: { cacheKey: string }) {
-  const { handleClose, openType } = useAppContext();
+  const { handleClose, openType, setSuccess, setMessage } = useAppContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { mutate } = useMutation(createProject, {
     onSuccess: (data: any) => {
       queryClient.invalidateQueries([cacheKey]);
+      setSuccess(true);
+      setMessage("Project created successfully");
       navigate(`/project/${data._id}`);
       handleClose();
     },
@@ -68,7 +70,6 @@ function AddProject({ cacheKey }: { cacheKey: string }) {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                autoFocus
                 id="description"
                 name="description"
                 label="Description"

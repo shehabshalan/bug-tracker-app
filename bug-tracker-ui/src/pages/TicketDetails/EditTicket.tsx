@@ -28,10 +28,12 @@ function EditTicket({
   projectId,
   membersData,
   ticket,
+  refetch,
 }: {
   projectId: string | undefined;
   membersData: IProjects;
   ticket: ITicket;
+  refetch: () => void;
 }) {
   const { id } = useParams();
   const queryClient = useQueryClient();
@@ -46,7 +48,9 @@ function EditTicket({
     _.startCase(ticket.ticketStatus)
   );
   const [typeValue, setTypeValue] = useState(_.capitalize(ticket.ticketType));
-  const [memberValue, setMemberValue] = useState(ticket.ticketAssignedTo.name);
+  const [memberValue, setMemberValue] = useState(
+    ticket?.ticketAssignedTo?.name || ""
+  );
   const [memberId, setMemberId] = useState("");
   const [title, setTitle] = useState(ticket.ticketName);
   const [description, setDescription] = useState(ticket.ticketDescription);
@@ -54,9 +58,11 @@ function EditTicket({
 
   const { mutate } = useMutation(updateTicket, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["ticket-details", id]);
+      refetch();
       setSuccess(true);
-      setMessage("Updated created successfully");
+      setMessage("Updated successfully");
+      console.log("success");
+
       handleClose();
     },
     onError: (error: any) => {

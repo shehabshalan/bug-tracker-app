@@ -68,22 +68,6 @@ function Ticket({ ticket }: { ticket: ITicket }) {
         <Grid item xs={12} sm={4}>
           <ListItem>
             <ListItemText
-              primary="Ticket Status"
-              secondary={
-                <Chip
-                  label={capitalize(ticket.ticketStatus)}
-                  color="secondary"
-                  variant="outlined"
-                  size="small"
-                />
-              }
-            />
-            <Divider orientation="vertical" flexItem />
-          </ListItem>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <ListItem>
-            <ListItemText
               primary="Ticket Type"
               secondary={
                 <Chip
@@ -104,6 +88,22 @@ function Ticket({ ticket }: { ticket: ITicket }) {
               secondary={
                 <Chip
                   label={capitalize(ticket.ticketPriority)}
+                  color="secondary"
+                  variant="outlined"
+                  size="small"
+                />
+              }
+            />
+            <Divider orientation="vertical" flexItem />
+          </ListItem>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <ListItem>
+            <ListItemText
+              primary="Ticket Status"
+              secondary={
+                <Chip
+                  label={capitalize(ticket.ticketStatus)}
                   color="secondary"
                   variant="outlined"
                   size="small"
