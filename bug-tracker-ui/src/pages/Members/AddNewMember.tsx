@@ -67,13 +67,14 @@ function AddNewMember() {
   });
   return (
     <Dialog open={openType.openUser} onClose={handleClose}>
-      <DialogTitle>Create project</DialogTitle>
+      <DialogTitle>Create member</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent>
           <Grid container spacing={3}>
             <Grid item xs={12} sx={{ mt: 1 }}>
               <TextField
                 fullWidth
+                autoFocus
                 id="name"
                 name="name"
                 label="Name"
