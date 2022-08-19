@@ -17,7 +17,7 @@ it is a bug tracker with multi-level authentication and authorization using JWT.
   ```
   git clone https://github.com/shehabshalan/saas-bug-tracker
   ```
-Navigate to the saas-bug-tracker
+Navigate to the clone
   ```
   cd saas-bug-tracker
   ```
