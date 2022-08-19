@@ -39,13 +39,16 @@ function Dashboard() {
   const [page, setPage] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
 
-  const { data, isLoading, error }: { data: any; isLoading: any; error: any } =
-    useQuery(["topProjects", page], getTopProjects, {
+  const { data, isLoading, error } = useQuery(
+    ["topProjects", page],
+    getTopProjects,
+    {
       keepPreviousData: true,
       onSuccess: () => {
         setLoading(false);
       },
-    });
+    }
+  );
 
   return (
     <ContentPage>
