@@ -10,8 +10,9 @@ import {
 import { useAppContext } from "../../context/AppContext";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import axiosInstance from "../../services/axiosInstance";
-import { Endpoints } from "../../services/endpoints";
+import { useAuthContext } from "../../context/AuthContext";
+import { createMember } from "../../services/api";
+import { useMutation } from "@tanstack/react-query";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is required"),
@@ -24,30 +25,25 @@ const validationSchema = yup.object({
       return this.parent.password === value;
     }),
 });
-function AddNewMember() {
-  const { handleClose, openType } = useAppContext();
+function AddNewMember({ refetch }: { refetch: () => void }) {
+  const { handleClose, openType, setError, setSuccess, setMessage } =
+    useAppContext();
+  const { refetchMembers } = useAuthContext();
 
-  const handleMemberSubmit = async (
-    name: string,
-    email: string,
-    password: string,
-    confirmPassword: string
-  ) => {
-    try {
-      const res = await axiosInstance.post(`${Endpoints.createMember}`, {
-        email,
-        password,
-        passwordConfirmation: confirmPassword,
-        name,
-        role: "user",
-      });
-
+  const { mutate } = useMutation(createMember, {
+    onSuccess: () => {
+      refetch();
+      refetchMembers();
       handleClose();
-      alert("Member created successfully");
-    } catch (error: any) {
-      alert(error.response.data);
-    }
-  };
+      setSuccess(true);
+      setMessage("Member created successfully");
+    },
+    onError: (error) => {
+      setError(true);
+      setMessage("Something went wrong. Please try again");
+    },
+  });
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -57,12 +53,14 @@ function AddNewMember() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      handleMemberSubmit(
-        values.name,
-        values.email,
-        values.password,
-        values.confirmPassword
-      );
+      const payload = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        passwordConfirmation: values.confirmPassword,
+        role: "user",
+      };
+      mutate(payload);
     },
   });
   return (
