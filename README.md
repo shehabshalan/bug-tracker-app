@@ -2,8 +2,10 @@
 it is a bug tracker with multi-level authentication and authorization using JWT. it is built with Node.js, Express.js, and MongoDB for the api, and React.js and Material UI for the frontend.
 
 **Demo**:https://bug-tracker-ui.netlify.app/
-
 *Please allow for 20 seconds or so for the demo. it uses Heroku's free plan and it could take time to boot up.*
+
+**API Documentation**: https://documenter.getpostman.com/view/22906593/VUqoQJjQ
+
 
 ### Requirements
 - Node v16
