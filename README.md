@@ -1,10 +1,10 @@
 # What is this?
 it is a bug tracker with multi-level authentication and authorization using JWT. it is built with Node.js, Express.js, and MongoDB for the api, and React.js and Material UI for the frontend.
 
-**Demo**:https://bug-tracker-ui.netlify.app/
+**Demo** : https://bug-tracker-ui.netlify.app/
 *Please allow for 20 seconds or so for the demo. it uses Heroku's free plan and it could take time to boot up.*
 
-**API Documentation**: https://documenter.getpostman.com/view/22906593/VUqoQJjQ
+**API Documentation** : https://documenter.getpostman.com/view/22906593/VUqoQJjQ
 
 
 ### Requirements
@@ -43,9 +43,9 @@ Navigate to the saas-bug-tracker
   ```
   cd bug-tracker-ui
   ```
-- Install packages using npm
+- Install packages using yarn
     ```
-  npm install
+  yarn install
   ```
 - Run the frontend
   ```
@@ -63,9 +63,6 @@ Navigate to the saas-bug-tracker
 - A ticket can be viewed, created and updated by anyone. 
 - A project can be viewed, created by anyone. 
 - A member can only be created by an admin.
-
-## Architecture
-
 
 
 ## Inside look:
