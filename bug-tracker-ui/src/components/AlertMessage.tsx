@@ -36,7 +36,7 @@ function AlertMessage() {
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Snackbar
         open={success}
-        autoHideDuration={6000}
+        autoHideDuration={1000}
         onClose={handleCloseSuccess}
       >
         <Alert
@@ -47,7 +47,7 @@ function AlertMessage() {
           {message}
         </Alert>
       </Snackbar>
-      <Snackbar open={error} autoHideDuration={6000} onClose={handleCloseError}>
+      <Snackbar open={error} autoHideDuration={1000} onClose={handleCloseError}>
         <Alert
           onClose={handleCloseError}
           severity="error"
