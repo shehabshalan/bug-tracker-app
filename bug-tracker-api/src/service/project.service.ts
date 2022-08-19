@@ -73,7 +73,7 @@ export const getTopFourProjects = async (user: IUser) => {
     //  get top 4 projects based on the number of tickets and the number of members
 
     const projects = await ProjectModel.find({ projectSlug: user.slug })
-      .sort({ projectTickets: -1 })
+      .sort({ updatedAt: -1 })
       .limit(4);
 
     return projects;

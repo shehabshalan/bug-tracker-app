@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React from "react";
 import AddProject from "../Dashboard/AddProject";
 import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
@@ -21,21 +21,13 @@ function Projects() {
   const [totalPages, setTotalPages] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
 
-  const {
-    data,
-    isLoading,
-    error,
-  }: { data: any; isLoading: any; error: any; status: any } = useQuery(
-    ["projects", page],
-    getProjects,
-    {
-      keepPreviousData: true,
-      onSuccess: (data) => {
-        setTotalPages(data.totalPages);
-        setLoading(false);
-      },
-    }
-  );
+  const { data, isLoading, error } = useQuery(["projects", page], getProjects, {
+    keepPreviousData: true,
+    onSuccess: (data) => {
+      setTotalPages(data.totalPages);
+      setLoading(false);
+    },
+  });
 
   return (
     <ContentPage>

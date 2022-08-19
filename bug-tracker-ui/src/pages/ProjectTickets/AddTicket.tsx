@@ -8,7 +8,7 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -24,11 +24,12 @@ import { createTicket } from "../../services/api";
 function AddTicket({
   id,
   membersData,
+  refetchTickets,
 }: {
   id: string | undefined;
   membersData: any;
+  refetchTickets: () => void;
 }) {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { handleClose, openType, setSuccess, setError, setMessage } =
     useAppContext();
@@ -40,11 +41,11 @@ function AddTicket({
   const [memberId, setMemberId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState<string | number>(0);
 
   const { mutate } = useMutation(createTicket, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["project-tickets", id, 1]);
+      refetchTickets();
       setSuccess(true);
       setMessage("Ticket created successfully");
       navigate(`/ticket/${data._id}`);
@@ -80,10 +81,11 @@ function AddTicket({
     setDescription(event.target.value as string);
   };
   const handleTimeChange = (event: any) => {
-    const time = Math.max(
-      TicketHours.Min,
-      Math.min(TicketHours.Max, Number(event.target.value))
-    );
+    const time: string | number =
+      Math.max(
+        TicketHours.Min,
+        Math.min(TicketHours.Max, Number(event.target.value))
+      ) || "";
     setTime(time);
   };
 

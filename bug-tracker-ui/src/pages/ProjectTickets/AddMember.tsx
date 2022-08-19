@@ -8,28 +8,28 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
 import AlertMessage from "../../components/AlertMessage";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { updateProject } from "../../services/api";
 import { useParams } from "react-router-dom";
 function AddMember({
   id,
   membersData,
+  refetch,
 }: {
   id: string | undefined;
   membersData: any;
+  refetch: () => void;
 }) {
-  const queryClient = useQueryClient();
-
   const { members } = useAuthContext();
   const [memberValue, setMemberValue] = useState("");
   const [memberId, setMemberId] = useState("");
   const { mutate } = useMutation(updateProject, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["project-details", id]);
+      refetch();
       setSuccess(true);
       setMessage("member added successfully");
       handleClose();

@@ -6,12 +6,13 @@ import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { useQuery } from "@tanstack/react-query";
 import EditTicket from "./EditTicket";
+import AlertMessage from "../../components/AlertMessage";
 
 function TicketDetails() {
   const { setError, setMessage } = useAppContext();
   const { id } = useParams();
 
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading, error, refetch } = useQuery(
     ["ticket-details", id],
     getTicketById,
     {
@@ -54,7 +55,9 @@ function TicketDetails() {
         projectId={data?.ticketProject?._id}
         membersData={projectDetails}
         ticket={data}
+        refetch={refetch}
       />
+      <AlertMessage />
     </div>
   );
 }

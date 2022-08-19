@@ -81,6 +81,9 @@ export const AuthContextProvider = ({
     }
   };
 
+  const refetchMembers = async () => {
+    await getMembers();
+  };
   const verify = async () => {
     try {
       const res = await axiosInstance.get(Endpoints.verifySession);
@@ -96,6 +99,7 @@ export const AuthContextProvider = ({
   return (
     <AuthContext.Provider
       value={{
+        refetchMembers,
         user,
         getUserRole,
         members,
