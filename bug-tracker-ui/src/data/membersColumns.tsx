@@ -1,37 +1,18 @@
 import { Column } from "@material-table/core";
-import { Link } from "react-router-dom";
-import { IProjects } from "../interfaces/IProject";
+import { IUser } from "../interfaces/IUser";
 import dateConverter from "../utils/dateConverter";
 
-export const projectColumns: Array<Column<IProjects>> = [
+export const membersColumns: Array<Column<IUser>> = [
   {
-    title: "Project Name",
-    field: "projectName",
-    render: (rowData) => (
-      <Link to={`/project/${rowData._id}`} style={{ color: "black" }}>
-        {rowData.projectName}
-      </Link>
-    ),
+    title: "Member Name",
+    field: "name",
   },
-  { title: "Description", field: "projectDescription" },
-  {
-    title: "Members",
-    field: "projectTickets",
-    render: (rowData: IProjects) => {
-      return rowData.projectMembers.length;
-    },
-  },
-  {
-    title: "Tickets",
-    field: "projectTickets",
-    render: (rowData: IProjects) => {
-      return rowData.projectTickets.length;
-    },
-  },
+  { title: "Member Email", field: "email" },
+
   {
     title: "Created",
     field: "createdAt",
-    render: (rowData: IProjects) => {
+    render: (rowData: IUser) => {
       return dateConverter(rowData.createdAt);
     },
   },
