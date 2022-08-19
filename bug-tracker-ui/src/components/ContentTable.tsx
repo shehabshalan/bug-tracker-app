@@ -37,7 +37,7 @@ function ContentTable({
         data={data.result}
         columns={columns}
         options={{
-          pageSize: data.result.length,
+          pageSize: data?.result?.length,
           loadingType: "overlay",
           sorting: true,
           showTitle: false,
