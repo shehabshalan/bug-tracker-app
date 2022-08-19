@@ -4,8 +4,28 @@ import ContentTab from "../../components/ContentTab";
 import ContentPage from "../../components/ContentPage";
 import ContentTable from "../../components/ContentTable";
 import { Typography } from "@mui/material";
+import { membersColumns } from "../../data/membersColumns";
+import { useAuthContext } from "../../context/AuthContext";
+import { Endpoints } from "../../services/endpoints";
+import axiosInstance from "../../services/axiosInstance";
+import { useQuery } from "@tanstack/react-query";
+import AlertMessage from "../../components/AlertMessage";
 
 function Members() {
+  const [page, setPage] = React.useState(1);
+  const [loading, setLoading] = React.useState(false);
+  const getMembers = async () => {
+    const res = await axiosInstance.get(Endpoints.getAllMembers);
+    return res.data;
+  };
+
+  const { data, isLoading, error, refetch } = useQuery(
+    ["get-all-members", page],
+    getMembers,
+    {
+      keepPreviousData: true,
+    }
+  );
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>
@@ -17,17 +37,18 @@ function Members() {
         buttonText={"New Member"}
         buttonAction={"openUser"}
       >
-        {/* <ContentTable
+        <ContentTable
           data={data}
-          columns={projectColumns}
+          columns={membersColumns}
           error={error}
           isLoading={isLoading}
           setPage={setPage}
-          totalPages={totalPages}
+          totalPages={page}
           page={page}
-        /> */}
+        />
       </ContentTab>
-      <AddNewMember />
+      <AddNewMember refetch={refetch} />
+      <AlertMessage />
     </ContentPage>
   );
 }
