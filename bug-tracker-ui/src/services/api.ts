@@ -32,6 +32,11 @@ export const createProject = async (payload: any) => {
   const res = await axiosInstance.post(Endpoints.createProject, payload);
   return res.data;
 };
+
+export const createMember = async (payload: any) => {
+  const res = await axiosInstance.post(`${Endpoints.createMember}`, payload);
+  return res.data;
+};
 export const updateProject = async ({
   payload,
   id,
