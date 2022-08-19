@@ -50,7 +50,7 @@ function Dashboard() {
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>
-        Top Projects
+        Recent Projects
       </Typography>
       <ContentTab
         title={"Projects"}
