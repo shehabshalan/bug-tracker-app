@@ -1,6 +1,8 @@
 import { Column } from "@material-table/core";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ITicket } from "../interfaces/ITicket";
+import { deleteTicket } from "../services/api";
 import dateConverter from "../utils/dateConverter";
 
 export const ticketColumns: Array<Column<ITicket>> = [
@@ -28,5 +30,21 @@ export const ticketColumns: Array<Column<ITicket>> = [
     render: (rowData: ITicket) => {
       return dateConverter(rowData.createdAt);
     },
+  },
+  {
+    title: "Actions",
+    field: "_id",
+    render: (rowData) => (
+      <Button
+        color="secondary"
+        size="small"
+        variant="contained"
+        onClick={() =>
+          deleteTicket(rowData._id).then(() => alert("Ticket deleted"))
+        }
+      >
+        Delete
+      </Button>
+    ),
   },
 ];

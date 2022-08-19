@@ -22,4 +22,6 @@ export class Endpoints {
   public static getProjectTickets = Endpoints.baseUrl + "project/tickets";
   public static getTicketById = Endpoints.baseUrl + "tickets";
   public static updateTicketById = Endpoints.baseUrl + "tickets";
+  public static deleteProjectById = Endpoints.baseUrl + "projects";
+  public static deleteTicketById = Endpoints.baseUrl + "tickets";
 }
