@@ -27,29 +27,29 @@ function ProjectDetails() {
     data: tickets,
     isLoading,
     error,
-  }: { data: any; isLoading: any; error: any } = useQuery(
-    ["tickets", id, page],
-    getProjectTickets,
-    {
-      keepPreviousData: true,
-      onSuccess: (tickets) => {
-        setTotalPages(tickets.totalPages);
-      },
-      onError: () => {
-        setError(true);
-        setMessage("Error fetching tickets");
-      },
-    }
-  );
+    refetch: refetchTickets,
+  } = useQuery(["tickets", id, page], getProjectTickets, {
+    keepPreviousData: true,
+    onSuccess: (tickets) => {
+      setTotalPages(tickets.totalPages);
+    },
+    onError: () => {
+      setError(true);
+      setMessage("Error fetching tickets");
+    },
+  });
 
-  const { data: projectDetails }: { data: any; isLoading: any; error: any } =
-    useQuery(["project-details", id, page], getProjectMembers, {
+  const { data: projectDetails, refetch } = useQuery(
+    ["project-details", id, page],
+    getProjectMembers,
+    {
       keepPreviousData: true,
       onError: () => {
         setError(true);
         setMessage("Error fetching members");
       },
-    });
+    }
+  );
 
   return (
     <ContentPage>
@@ -97,8 +97,12 @@ function ProjectDetails() {
       </ContentTab>
       <ContentDivider />
 
-      <AddTicket id={id} membersData={projectDetails} />
-      <AddMember id={id} membersData={projectDetails} />
+      <AddTicket
+        id={id}
+        membersData={projectDetails}
+        refetchTickets={refetchTickets}
+      />
+      <AddMember id={id} membersData={projectDetails} refetch={refetch} />
       <AlertMessage />
     </ContentPage>
   );
