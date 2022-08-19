@@ -21,21 +21,13 @@ function Projects() {
   const [totalPages, setTotalPages] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
 
-  const {
-    data,
-    isLoading,
-    error,
-  }: { data: any; isLoading: any; error: any; status: any } = useQuery(
-    ["projects", page],
-    getProjects,
-    {
-      keepPreviousData: true,
-      onSuccess: (data) => {
-        setTotalPages(data.totalPages);
-        setLoading(false);
-      },
-    }
-  );
+  const { data, isLoading, error } = useQuery(["projects", page], getProjects, {
+    keepPreviousData: true,
+    onSuccess: (data) => {
+      setTotalPages(data.totalPages);
+      setLoading(false);
+    },
+  });
 
   return (
     <ContentPage>
