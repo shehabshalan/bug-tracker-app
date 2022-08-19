@@ -1,6 +1,8 @@
 import { Column } from "@material-table/core";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { IProjects } from "../interfaces/IProject";
+import { deleteProject } from "../services/api";
 import dateConverter from "../utils/dateConverter";
 
 export const projectColumns: Array<Column<IProjects>> = [
@@ -34,5 +36,21 @@ export const projectColumns: Array<Column<IProjects>> = [
     render: (rowData: IProjects) => {
       return dateConverter(rowData.createdAt);
     },
+  },
+  {
+    title: "Actions",
+    field: "_id",
+    render: (rowData) => (
+      <Button
+        color="secondary"
+        size="small"
+        variant="contained"
+        onClick={() =>
+          deleteProject(rowData._id).then(() => alert("Project deleted"))
+        }
+      >
+        Delete
+      </Button>
+    ),
   },
 ];
