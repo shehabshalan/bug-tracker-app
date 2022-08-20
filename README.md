@@ -60,8 +60,8 @@ Navigate to the clone
 - Create a project and add members to it. 
 - Create a ticket and assign a member to it. 
 - A member can navigate to his tickets tab to see tickets that belong to him.
-- A ticket can be viewed, created and updated by anyone. 
-- A project can be viewed, created by anyone. 
+- A ticket can be viewed, created and deleted by anyone. 
+- A project can be viewed, created, and deleted by anyone. 
 - A member can only be created by an admin.
 
 
