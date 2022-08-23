@@ -1,12 +1,10 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
 import { Stack, Typography, Paper, Box } from "@mui/material";
-import { PieChart } from "react-minimal-pie-chart";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import axiosInstance from "../../services/axiosInstance";
-import { Endpoints } from "../../services/endpoints";
 import { useQuery } from "@tanstack/react-query";
+import { getAccountStats } from "../../services/api";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -35,10 +33,6 @@ const StatChart = styled(Typography)(({ theme }) => ({
 }));
 
 function StatsCard() {
-  const getAccountStats = async () => {
-    const res = await axiosInstance.get(`${Endpoints.accountStats}`);
-    return res.data;
-  };
   const { data }: { data: any } = useQuery(["stats"], getAccountStats, {
     keepPreviousData: true,
   });

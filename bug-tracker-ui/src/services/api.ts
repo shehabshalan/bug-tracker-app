@@ -8,6 +8,21 @@ export const getProjectTickets = async ({ queryKey }: { queryKey: any }) => {
   );
   return res.data;
 };
+export const getTopProjects = async () => {
+  const res = await axiosInstance.get(
+    `${Endpoints.getTopFourProjectsWithMostMembers}`
+  );
+  return res.data;
+};
+export const getAccountStats = async () => {
+  const res = await axiosInstance.get(`${Endpoints.accountStats}`);
+  return res.data;
+};
+
+export const getMembers = async () => {
+  const res = await axiosInstance.get(Endpoints.getAllMembers);
+  return res.data;
+};
 
 export const getUserTickets = async () => {
   const res = await axiosInstance.get(`${Endpoints.getUserTickets}`);
@@ -18,7 +33,11 @@ export const getProjectMembers = async ({ queryKey }: { queryKey: any }) => {
   const res = await axiosInstance.get(`${Endpoints.getProjectById}/${id}`);
   return res.data;
 };
-
+export const getProjects = async ({ queryKey }: { queryKey: any }) => {
+  const [_key, page] = queryKey;
+  const res = await axiosInstance.get(`${Endpoints.getProjects}?page=${page}`);
+  return res.data;
+};
 export const createTicket = async (payload: any) => {
   const res = await axiosInstance.post(Endpoints.createTicket, payload);
   return res.data;

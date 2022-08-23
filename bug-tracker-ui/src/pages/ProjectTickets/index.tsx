@@ -1,10 +1,11 @@
-import { Fab, Stack, Tooltip, Typography } from "@mui/material";
+import { Fab, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import ContentDivider from "../../components/ContentDivider";
 import AddTicket from "./AddTicket";
 import { useAppContext } from "../../context/AppContext";
@@ -77,6 +78,11 @@ function ProjectDetails() {
         <Tooltip title="Add Member">
           <Fab size="small" color="secondary" aria-label="add">
             <AddIcon onClick={() => handleClickOpen("openMember")} />
+          </Fab>
+        </Tooltip>
+        <Tooltip title="Remove Member">
+          <Fab size="small" color="secondary" aria-label="add">
+            <DeleteIcon onClick={() => handleClickOpen("openMember")} />
           </Fab>
         </Tooltip>
       </Stack>

@@ -6,17 +6,9 @@ import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
 import { projectColumns } from "../../data/projectColumns";
-import axiosInstance from "../../services/axiosInstance";
-import { Endpoints } from "../../services/endpoints";
+import { getProjects } from "../../services/api";
 
 function Projects() {
-  const getProjects = async ({ queryKey }: { queryKey: any }) => {
-    const [_key, page] = queryKey;
-    const res = await axiosInstance.get(
-      `${Endpoints.getProjects}?page=${page}`
-    );
-    return res.data;
-  };
   const [page, setPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(0);
   const [loading, setLoading] = React.useState(false);

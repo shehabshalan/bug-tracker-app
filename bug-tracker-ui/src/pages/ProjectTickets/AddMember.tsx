@@ -14,7 +14,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import AlertMessage from "../../components/AlertMessage";
 import { useMutation } from "@tanstack/react-query";
 import { updateProject } from "../../services/api";
-import { useParams } from "react-router-dom";
+import { IUser } from "../../interfaces/IUser";
 function AddMember({
   id,
   membersData,
@@ -27,6 +27,13 @@ function AddMember({
   const { members } = useAuthContext();
   const [memberValue, setMemberValue] = useState("");
   const [memberId, setMemberId] = useState("");
+
+  const uniqueMembers = members.filter((member: IUser) => {
+    return !membersData?.projectMembers.some(
+      (data: IUser) => data._id === member._id
+    );
+  });
+
   const { mutate } = useMutation(updateProject, {
     onSuccess: () => {
       refetch();
@@ -67,6 +74,7 @@ function AddMember({
     );
     setMemberId(findMemberId._id as string);
   };
+
   return (
     <Dialog open={openType.openMember} onClose={handleClose} fullWidth>
       <DialogTitle>Add member</DialogTitle>
@@ -80,7 +88,7 @@ function AddMember({
               label={"Member"}
               fullWidth
             >
-              {members.map((member: any) => (
+              {uniqueMembers.map((member: any) => (
                 <MenuItem key={member._id} value={member.name}>
                   {member.name}
                 </MenuItem>
