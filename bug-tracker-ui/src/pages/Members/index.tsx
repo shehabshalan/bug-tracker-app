@@ -5,19 +5,13 @@ import ContentPage from "../../components/ContentPage";
 import ContentTable from "../../components/ContentTable";
 import { Typography } from "@mui/material";
 import { membersColumns } from "../../data/membersColumns";
-import { useAuthContext } from "../../context/AuthContext";
-import { Endpoints } from "../../services/endpoints";
-import axiosInstance from "../../services/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import AlertMessage from "../../components/AlertMessage";
+import { getMembers } from "../../services/api";
 
 function Members() {
   const [page, setPage] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
-  const getMembers = async () => {
-    const res = await axiosInstance.get(Endpoints.getAllMembers);
-    return res.data;
-  };
 
   const { data, isLoading, error, refetch } = useQuery(
     ["get-all-members", page],
