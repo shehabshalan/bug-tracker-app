@@ -29,7 +29,7 @@ function AddMember({
   const [memberId, setMemberId] = useState("");
 
   const uniqueMembers = members.filter((member: IUser) => {
-    return !membersData.projectMembers.some(
+    return !membersData?.projectMembers.some(
       (data: IUser) => data._id === member._id
     );
   });
