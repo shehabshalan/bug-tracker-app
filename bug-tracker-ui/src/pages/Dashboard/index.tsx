@@ -8,8 +8,7 @@ import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
 import StatsCard from "./StatsCard";
 import { projectColumns } from "../../data/projectColumns";
-import axiosInstance from "../../services/axiosInstance";
-import { Endpoints } from "../../services/endpoints";
+import { getTopProjects } from "../../services/api";
 
 type Result = {
   _id: string;
@@ -29,13 +28,6 @@ type TopProjects = {
 };
 
 function Dashboard() {
-  const getTopProjects = async () => {
-    const res = await axiosInstance.get(
-      `${Endpoints.getTopFourProjectsWithMostMembers}`
-    );
-    return res.data;
-  };
-
   const [page, setPage] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
 
