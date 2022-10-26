@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Endpoints } from "../services/endpoints";
+import { Endpoints } from "./endpoints";
 
 const axiosInstance = axios.create({
   baseURL: `${Endpoints.baseUrl}`,
