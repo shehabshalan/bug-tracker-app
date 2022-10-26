@@ -2,7 +2,7 @@ import { Column } from "@material-table/core";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { IProjects } from "../interfaces/IProject";
-import { deleteProject } from "../services/api";
+import { deleteProject } from "../api/api";
 import dateConverter from "../utils/dateConverter";
 
 export const projectColumns: Array<Column<IProjects>> = [

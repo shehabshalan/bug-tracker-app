@@ -6,7 +6,7 @@ import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
 import { projectColumns } from "../../data/projectColumns";
-import { getProjects } from "../../services/api";
+import { getProjects } from "../../api/api";
 
 function Projects() {
   const [page, setPage] = React.useState(1);

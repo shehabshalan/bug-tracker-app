@@ -1,7 +1,7 @@
 import React from "react";
 import Ticket from "./Ticket";
 import ContentTab from "../../components/ContentTab";
-import { getProjectMembers, getTicketById } from "../../services/api";
+import { getProjectMembers, getTicketById } from "../../api/api";
 import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { useQuery } from "@tanstack/react-query";

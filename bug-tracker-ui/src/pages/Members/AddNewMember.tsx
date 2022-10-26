@@ -11,7 +11,7 @@ import { useAppContext } from "../../context/AppContext";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useAuthContext } from "../../context/AuthContext";
-import { createMember } from "../../services/api";
+import { createMember } from "../../api/api";
 import { useMutation } from "@tanstack/react-query";
 
 const validationSchema = yup.object({

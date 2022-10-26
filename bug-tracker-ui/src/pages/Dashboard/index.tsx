@@ -8,7 +8,7 @@ import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
 import StatsCard from "./StatsCard";
 import { projectColumns } from "../../data/projectColumns";
-import { getTopProjects } from "../../services/api";
+import { getTopProjects } from "../../api/api";
 
 type Result = {
   _id: string;

@@ -12,7 +12,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createProject } from "../../services/api";
+import { createProject } from "../../api/api";
 
 const validationSchema = yup.object({
   title: yup.string().required("title is required"),

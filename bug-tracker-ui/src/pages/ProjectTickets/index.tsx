@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ticketColumns } from "../../data/ticketColumns";
 import { useParams } from "react-router-dom";
-import { getProjectMembers, getProjectTickets } from "../../services/api";
+import { getProjectMembers, getProjectTickets } from "../../api/api";
 
 function ProjectDetails() {
   const { handleClickOpen, setError, setMessage } = useAppContext();

@@ -19,7 +19,7 @@ import {
 } from "../../constants/enums";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
-import { createTicket } from "../../services/api";
+import { createTicket } from "../../api/api";
 
 function AddTicket({
   id,

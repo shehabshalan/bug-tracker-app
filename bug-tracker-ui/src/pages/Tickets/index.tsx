@@ -7,7 +7,7 @@ import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
 import { ticketColumns } from "../../data/ticketColumns";
-import { getUserTickets } from "../../services/api";
+import { getUserTickets } from "../../api/api";
 
 function Tickets() {
   const [page, setPage] = React.useState(1);

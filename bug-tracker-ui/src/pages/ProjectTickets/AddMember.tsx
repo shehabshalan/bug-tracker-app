@@ -13,7 +13,7 @@ import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
 import AlertMessage from "../../components/AlertMessage";
 import { useMutation } from "@tanstack/react-query";
-import { updateProject } from "../../services/api";
+import { updateProject } from "../../api/api";
 import { IUser } from "../../interfaces/IUser";
 function AddMember({
   id,

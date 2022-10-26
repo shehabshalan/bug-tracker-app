@@ -7,7 +7,7 @@ import { Typography } from "@mui/material";
 import { membersColumns } from "../../data/membersColumns";
 import { useQuery } from "@tanstack/react-query";
 import AlertMessage from "../../components/AlertMessage";
-import { getMembers } from "../../services/api";
+import { getMembers } from "../../api/api";
 
 function Members() {
   const [page, setPage] = React.useState(1);

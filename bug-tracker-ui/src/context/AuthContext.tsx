@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
-import { Endpoints } from "../services/endpoints";
+import { Endpoints } from "../api/endpoints";
 import jwt_decode from "jwt-decode";
-import axiosInstance from "../services/axiosInstance";
+import axiosInstance from "../api/axiosInstance";
 
 const AuthContext = createContext<any>({} as any);
 

@@ -2,7 +2,7 @@ import { Column } from "@material-table/core";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ITicket } from "../interfaces/ITicket";
-import { deleteTicket } from "../services/api";
+import { deleteTicket } from "../api/api";
 import dateConverter from "../utils/dateConverter";
 
 export const ticketColumns: Array<Column<ITicket>> = [

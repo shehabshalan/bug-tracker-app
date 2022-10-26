@@ -4,7 +4,7 @@ import { Stack, Typography, Paper, Box } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { useQuery } from "@tanstack/react-query";
-import { getAccountStats } from "../../services/api";
+import { getAccountStats } from "../../api/api";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

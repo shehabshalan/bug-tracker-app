@@ -16,7 +16,7 @@ import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
 import { IProjects } from "../../interfaces/IProject";
 import { ITicket } from "../../interfaces/ITicket";
-import { createTicket, updateTicket } from "../../services/api";
+import { createTicket, updateTicket } from "../../api/api";
 
 const TICKET_TYPE = ["Bug", "Feature", "Task"];
 const TICKET_PRIORITY = ["Low", "Medium", "High"];
