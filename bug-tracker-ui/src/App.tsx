@@ -1,10 +1,8 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
-// import ProtectedRoutes from "./ProtectedRoutes";
 import Tickets from "./pages/Tickets";
 import Settings from "./pages/Members";
 import { useAppContext } from "./context/AppContext";

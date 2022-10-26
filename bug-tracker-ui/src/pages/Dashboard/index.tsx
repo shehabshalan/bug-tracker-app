@@ -10,23 +10,6 @@ import StatsCard from "./StatsCard";
 import { projectColumns } from "../../data/projectColumns";
 import { getTopProjects } from "../../api/api";
 
-type Result = {
-  _id: string;
-  projectSlug: string;
-  projectName: string;
-  projectDescription: string;
-  projectMembers: string[];
-  projectTickets: string[];
-  createdAt: Date;
-  updatedAt: Date;
-  __v: number;
-};
-
-type TopProjects = {
-  status: string;
-  result: Result[];
-};
-
 function Dashboard() {
   const [page, setPage] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
