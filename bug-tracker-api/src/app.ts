@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(PORT, async () => {
-  logger.info(`Api is running at http://localhost:${PORT}/api`);
+  logger.info(`Api is running at port ${PORT}`);
   await dbConnect();
   routes(app);
 });

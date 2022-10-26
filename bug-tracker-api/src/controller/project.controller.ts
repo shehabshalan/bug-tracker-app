@@ -4,7 +4,7 @@ import {
   deleteProject,
   getProject,
   getProjects,
-  getTopFourProjects,
+  getRecentProjects,
   updateProject,
 } from "../service/project.service";
 
@@ -78,13 +78,10 @@ export const deleteProjectHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const getTopFourProjectsWithMostMembersHandler = async (
-  req: Request,
-  res: Response
-) => {
+export const getRecentProjectsHandler = async (req: Request, res: Response) => {
   const user = res.locals.user;
   try {
-    const projects = await getTopFourProjects(user);
+    const projects = await getRecentProjects(user);
     return res.status(200).json({
       status: "success",
       result: projects,

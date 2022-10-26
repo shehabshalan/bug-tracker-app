@@ -68,9 +68,9 @@ export const deleteProject = async (id: string) => {
   }
 };
 
-export const getTopFourProjects = async (user: IUser) => {
+export const getRecentProjects = async (user: IUser) => {
   try {
-    //  get top 4 projects based on the number of tickets and the number of members
+    //  get 4 recent projects
 
     const projects = await ProjectModel.find({ projectSlug: user.slug })
       .sort({ updatedAt: -1 })

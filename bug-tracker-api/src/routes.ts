@@ -5,7 +5,7 @@ import {
   deleteProjectHandler,
   getProjectHandler,
   getProjectsHandler,
-  getTopFourProjectsWithMostMembersHandler,
+  getRecentProjectsHandler,
   updateProjectHandler,
 } from "./controller/project.controller";
 import {
@@ -91,11 +91,7 @@ const routes = (app: Express) => {
     [isAuth, isUser, isValidSchema(getProjectSchema)],
     getProjectHandler
   );
-  app.get(
-    "/api/projects-overview",
-    [isAuth, isUser],
-    getTopFourProjectsWithMostMembersHandler
-  );
+  app.get("/api/projects-overview", [isAuth, isUser], getRecentProjectsHandler);
   app.post(
     "/api/projects",
     [isAuth, isUser, isValidSchema(createProjectSchema)],
