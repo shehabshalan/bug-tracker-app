@@ -67,7 +67,7 @@ const USER_PAGES = [
   },
 ];
 
-function Sidebar({ window }: { window: any }) {
+function Sidebar() {
   const { logout, getUserRole, user } = useAuthContext();
 
   const location = useLocation();
@@ -153,9 +153,6 @@ function Sidebar({ window }: { window: any }) {
     </div>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -200,7 +197,6 @@ function Sidebar({ window }: { window: any }) {
         aria-label="mailbox folders"
       >
         <Drawer
-          container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
@@ -247,13 +243,5 @@ function Sidebar({ window }: { window: any }) {
     </Box>
   );
 }
-
-Sidebar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
 
 export default Sidebar;

@@ -8,15 +8,15 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
 import { IProjects } from "../../interfaces/IProject";
 import { ITicket } from "../../interfaces/ITicket";
-import { createTicket, updateTicket } from "../../api/api";
+import { updateTicket } from "../../api/api";
 
 const TICKET_TYPE = ["Bug", "Feature", "Task"];
 const TICKET_PRIORITY = ["Low", "Medium", "High"];
@@ -36,8 +36,6 @@ function EditTicket({
   refetch: () => void;
 }) {
   const { id } = useParams();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
   const { handleClose, openType, setSuccess, setError, setMessage } =
     useAppContext();
   const { members } = useAuthContext();
@@ -51,7 +49,6 @@ function EditTicket({
   const [memberValue, setMemberValue] = useState(
     ticket?.ticketAssignedTo?.name || ""
   );
-  const [memberId, setMemberId] = useState("");
   const [title, setTitle] = useState(ticket.ticketName);
   const [description, setDescription] = useState(ticket.ticketDescription);
   const [time, setTime] = useState(ticket.ticketEstimateTimeInHours);

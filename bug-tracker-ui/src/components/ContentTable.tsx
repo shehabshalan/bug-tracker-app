@@ -1,5 +1,4 @@
-import React from "react";
-import { Box, Pagination, Paper } from "@mui/material";
+import { Pagination, Paper } from "@mui/material";
 import MaterialTable, { Column } from "@material-table/core";
 import { MTableToolbar, MTableBodyRow } from "@material-table/core";
 import Loading from "./Loading";
