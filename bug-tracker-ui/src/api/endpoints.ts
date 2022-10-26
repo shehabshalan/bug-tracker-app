@@ -2,7 +2,7 @@ export class Endpoints {
   public static baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:1337/api/"
-      : "https://reactblog-strapi.herokuapp.com/api/";
+      : "https://limitless-reef-02128.herokuapp.com/api/";
   public static login = Endpoints.baseUrl + "sessions";
   public static adminSignUp = Endpoints.baseUrl + "admin";
   public static createMember = Endpoints.baseUrl + "members";
