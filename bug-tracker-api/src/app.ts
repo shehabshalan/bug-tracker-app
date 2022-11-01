@@ -9,7 +9,7 @@ import corsOptions from "./utils/corsOptions";
 require("dotenv").config();
 
 const PORT = config.get<number>("port");
-const app = express();
+export const app = express();
 
 app.use(cors(corsOptions as CorsOptions));
 app.use(express.json());
