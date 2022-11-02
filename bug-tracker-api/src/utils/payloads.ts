@@ -10,3 +10,15 @@ export const projectPayload = {
   projectName: "admisssn first project",
   projectDescription: "this is my firssssst project and I am excited",
 };
+
+export const ticketPayload = {
+  ticketName: "this is another the first ticket",
+  ticketDescription: "our first ticket yaya ",
+  ticketType: "feature",
+  ticketPriority: "high",
+  ticketStatus: "open",
+  ticketAssignedTo: "62f41dc180717cc677ab3c50",
+  ticketAuthor: "62f41d4c80717cc677ab3c3f",
+  ticketProject: "62f41b69c626871081e3ff1d",
+  ticketEstimateTimeInHours: 2,
+};
