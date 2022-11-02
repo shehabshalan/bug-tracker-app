@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 export default {
-  port: process.env.PORT || 1337,
+  port: process.env.PORT || 4000,
   mongoURI: process.env.DB_CONNECTION_URI,
   saltWorkFactor: 10,
   accessTokenTtl: "1d",
