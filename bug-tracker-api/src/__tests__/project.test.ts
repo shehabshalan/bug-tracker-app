@@ -5,7 +5,7 @@ import { signJwt } from "../utils/jwt";
 import { userPayload, projectPayload } from "../utils/payloads";
 import config from "config";
 
-const projectId = "6359baed64ae90e8680b48ae";
+let createdProjectId = "";
 const MONGODB_URI = config.get<string>("mongoURI");
 
 const app = createServer();
@@ -36,67 +36,101 @@ describe("Projects", () => {
       });
     });
   });
-  describe("Get Project By Id --> /api/projects/:id", () => {
+
+  describe("Create Project --> /api/projects", () => {
     describe("given a user not logged in", () => {
       it("should return 401", async () => {
-        const res = await supertest(app).get(`/api/projects/${projectId}`);
+        const res = await supertest(app)
+          .post(`/api/projects`)
+          .send(projectPayload);
+
         expect(res.status).toBe(401);
       });
     });
-    describe("given a project id is not valid", () => {
+    describe("given missing required fields", () => {
       it("should return 400", async () => {
         const token = signJwt(userPayload);
         const res = await supertest(app)
-          .get(`/api/projects/123`)
-          .set("Authorization", `Bearer ${token}`);
+          .post(`/api/projects`)
+          .set("Authorization", `Bearer ${token}`)
+          .send({
+            title: "Test Project",
+          });
+
         expect(res.status).toBe(400);
       });
     });
-    describe("given a project doesn't exist", () => {
-      it("should return 404", async () => {
+    describe("given a user is logged in", () => {
+      it("should return 201", async () => {
         const token = signJwt(userPayload);
         const res = await supertest(app)
-          .get(`/api/projects/123456789012345678901234`)
-          .set("Authorization", `Bearer ${token}`);
-        expect(res.status).toBe(404);
+          .post(`/api/projects`)
+          .set("Authorization", `Bearer ${token}`)
+          .send(projectPayload);
+
+        expect(res.status).toBe(201);
+        createdProjectId = res.body._id;
+      });
+    });
+  });
+
+  describe("Get Project By Id --> /api/projects/:id", () => {
+    describe("given a user not logged in", () => {
+      it("should return 401", async () => {
+        const res = await supertest(app).get(
+          `/api/projects/${createdProjectId}`
+        );
+        expect(res.status).toBe(401);
       });
     });
     describe("given a user is logged in", () => {
       it("should return 200", async () => {
         const token = signJwt(userPayload);
         const res = await supertest(app)
-          .get(`/api/projects/${projectId}`)
+          .get(`/api/projects/${createdProjectId}`)
           .set("Authorization", `Bearer ${token}`);
         expect(res.status).toBe(200);
       });
     });
   });
 
-  describe("Create Project --> /api/projects", () => {
+  describe("Update Project By Id --> /api/projects/:id", () => {
     describe("given a user not logged in", () => {
       it("should return 401", async () => {
-        const res = await supertest(app).post(`/api/projects`);
+        const res = await supertest(app)
+          .put(`/api/projects/${createdProjectId}`)
+          .send(projectPayload);
         expect(res.status).toBe(401);
       });
     });
-    describe("given a user is logged in but project payload is missing", () => {
-      it("should return 400", async () => {
-        const token = signJwt(userPayload);
-        const res = await supertest(app)
-          .post(`/api/projects`)
-          .set("Authorization", `Bearer ${token}`);
-        expect(res.status).toBe(400);
-      });
-    });
-
     describe("given a user is logged in", () => {
-      it("should create project and return 201", async () => {
+      it("should return 203", async () => {
         const token = signJwt(userPayload);
         const res = await supertest(app)
-          .post(`/api/projects`)
+          .put(`/api/projects/${createdProjectId}`)
           .set("Authorization", `Bearer ${token}`)
           .send(projectPayload);
-        expect(res.status).toBe(201);
+        expect(res.status).toBe(203);
+      });
+    });
+  });
+
+  describe("Delete Project By Id --> /api/projects/:id", () => {
+    describe("given a user not logged in", () => {
+      it("should return 401", async () => {
+        const res = await supertest(app).delete(
+          `/api/projects/${createdProjectId}`
+        );
+        expect(res.status).toBe(401);
+      });
+    });
+    describe("given a user is logged in", () => {
+      it("should return 200", async () => {
+        const token = signJwt(userPayload);
+        const res = await supertest(app)
+          .delete(`/api/projects/${createdProjectId}`)
+          .set("Authorization", `Bearer ${token}`);
+        expect(res.status).toBe(200);
       });
     });
   });
