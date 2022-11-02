@@ -5,3 +5,8 @@ export const userPayload = {
   role: "admin",
   slug: "BT-1a29a8d1-7b76-42d3-afa0-c86706d179e1",
 };
+
+export const projectPayload = {
+  projectName: "admisssn first project",
+  projectDescription: "this is my firssssst project and I am excited",
+};
