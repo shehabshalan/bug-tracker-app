@@ -19,7 +19,7 @@ afterAll(async () => {
 });
 
 describe("Project", () => {
-  describe("Get Project -- Sad Path", () => {
+  describe("Get Project", () => {
     describe("given a user not logged in", () => {
       it("should return 401", async () => {
         const res = await supertest(app).get(`/api/projects/${projectId}`);
@@ -42,6 +42,15 @@ describe("Project", () => {
           .get(`/api/projects/123456789012345678901234`)
           .set("Authorization", `Bearer ${token}`);
         expect(res.status).toBe(404);
+      });
+    });
+    describe("given a user is logged in", () => {
+      it("should return 200", async () => {
+        const token = signJwt(userPayload);
+        const res = await supertest(app)
+          .get(`/api/projects/${projectId}`)
+          .set("Authorization", `Bearer ${token}`);
+        expect(res.status).toBe(200);
       });
     });
   });
