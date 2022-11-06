@@ -39,10 +39,6 @@ Navigate to the clone
     ```
   yarn install
   ```
-- Create .env file in the root folder (below command uses windows cmd)
-  ```
-  type . > .env
-  ```
 - Run the api
   ```
   yarn dev
