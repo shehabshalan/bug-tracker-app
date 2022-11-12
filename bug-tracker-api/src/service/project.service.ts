@@ -26,8 +26,6 @@ export const getProjects = async (user: IUser, limit: number, skip: number) => {
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(skip);
-
-    //   .populate("projectTickets");
     return { projects, count };
   } catch (e: any) {
     throw new Error(e);
