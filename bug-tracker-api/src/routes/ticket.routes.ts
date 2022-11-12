@@ -16,8 +16,9 @@ import {
   getUserTicketsHandler,
   updateTicketHandler,
 } from "../controller/ticket.controller";
+import { Route } from "../types/route.types";
 
-export const ticketRoutes = [
+export const ticketRoutes: Route[] = [
   {
     path: "/api/tickets",
     method: "get",

@@ -14,8 +14,9 @@ import {
   deleteProjectSchema,
   getProjectSchema,
 } from "../schema/project.schema";
+import { Route } from "../types/route.types";
 
-export const projectRoutes = [
+export const projectRoutes: Route[] = [
   {
     path: "/api/projects",
     method: "get",

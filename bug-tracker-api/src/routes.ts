@@ -8,6 +8,7 @@ import { projectRoutes } from "./routes/project.routes";
 import { authRoutes } from "./routes/auth.routes";
 import { ticketRoutes } from "./routes/ticket.routes";
 import { userRoutes } from "./routes/user.routes";
+import { Route } from "./types/route.types";
 
 const routes = (app: Express) => {
   // health check
@@ -18,27 +19,27 @@ const routes = (app: Express) => {
   app.get("/api/stats", [isAuth, isUser], getAccountStatsHandler);
 
   // auth routes
-  authRoutes.forEach((route) => {
+  authRoutes.forEach((route: Route) => {
     const { path, method, handler, controller } = route;
-    (app as any)[method](path, handler, controller);
+    app[method](path, handler, controller);
   });
 
-  // user routes
-  userRoutes.forEach((route) => {
+  // user routes with Route interface
+  userRoutes.forEach((route: Route) => {
     const { path, method, handler, controller } = route;
-    (app as any)[method](path, handler, controller);
+    app[method](path, handler, controller);
   });
 
   // project routes
-  projectRoutes.forEach((route: any) => {
+  projectRoutes.forEach((route: Route) => {
     const { path, method, handler, controller } = route;
-    (app as any)[method](path, handler, controller);
+    app[method](path, handler, controller);
   });
 
   // ticket routes
-  ticketRoutes.forEach((route: any) => {
+  ticketRoutes.forEach((route: Route) => {
     const { path, method, handler, controller } = route;
-    (app as any)[method](path, handler, controller);
+    app[method](path, handler, controller);
   });
 
   // not found

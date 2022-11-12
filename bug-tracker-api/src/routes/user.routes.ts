@@ -4,8 +4,9 @@ import {
 } from "../controller/user.controller";
 import isAuth from "../middleware/isAuth";
 import isUser from "../middleware/isUser";
+import { Route } from "../types/route.types";
 
-export const userRoutes = [
+export const userRoutes: Route[] = [
   {
     path: "/api/members",
     method: "get",

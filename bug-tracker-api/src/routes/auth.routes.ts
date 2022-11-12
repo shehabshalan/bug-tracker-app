@@ -6,8 +6,6 @@ import {
 import {
   createAdminHandler,
   createMemberHandler,
-  getAllMembersHandler,
-  getMembersHandler,
 } from "../controller/user.controller";
 import isAuth from "../middleware/isAuth";
 import isUser from "../middleware/isUser";
@@ -16,8 +14,9 @@ import isAdmin from "../middleware/isAdmin";
 import isValidSchema from "../middleware/isValidSchema";
 import { createSessionSchema } from "../schema/session.schema";
 import { createUserSchema } from "../schema/user.schema";
+import { Route } from "../types/route.types";
 
-export const authRoutes = [
+export const authRoutes: Route[] = [
   {
     path: "/api/sessions",
     method: "post",
