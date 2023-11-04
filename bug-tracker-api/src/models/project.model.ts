@@ -1,13 +1,13 @@
 import mongoose, { Mongoose } from "mongoose";
-import { ITicket } from "./ticket.model";
-import { IUser } from "./user.model";
+import TicketModel, { Ticket } from "./ticket.model";
+import { User } from "./user.model";
 
-export interface IProject extends mongoose.Document {
+export interface Project extends mongoose.Document {
   projectSlug: string;
   projectName: string;
   projectDescription: string;
-  projectMembers?: IUser["_id"][];
-  projectTickets?: ITicket["_id"][];
+  projectMembers?: User["_id"][];
+  projectTickets?: Ticket["_id"][];
   createdAt: Date;
   updatedAt: Date;
 }

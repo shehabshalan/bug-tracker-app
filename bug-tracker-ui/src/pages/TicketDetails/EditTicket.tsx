@@ -14,8 +14,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
-import { IProjects } from "../../interfaces/IProject";
-import { ITicket } from "../../interfaces/ITicket";
+import type { Project, Ticket } from "../../utils/types";
 import { updateTicket } from "../../api/api";
 
 const TICKET_TYPE = ["Bug", "Feature", "Task"];
@@ -31,8 +30,8 @@ function EditTicket({
   refetch,
 }: {
   projectId: string | undefined;
-  membersData: IProjects;
-  ticket: ITicket;
+  membersData: Project;
+  ticket: Ticket;
   refetch: () => void;
 }) {
   const { id } = useParams();

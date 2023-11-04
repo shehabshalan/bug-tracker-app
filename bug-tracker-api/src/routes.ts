@@ -12,8 +12,8 @@ import { Route } from "./types/route.types";
 
 const routes = (app: Express) => {
   // health check
-  app.get("/health", (req: Request, res: Response) => {
-    res.sendStatus(200);
+  app.get("/api/health", (req: Request, res: Response) => {
+    res.status(200).send("API is healthy");
   });
   // account stats
   app.get("/api/stats", [isAuth, isUser], getAccountStatsHandler);

@@ -1,11 +1,11 @@
 import { Column } from "@material-table/core";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { IProjects } from "../interfaces/IProject";
+import { Project } from "../utils/types";
 import { deleteProject } from "../api/api";
 import dateConverter from "../utils/dateConverter";
 
-export const projectColumns: Array<Column<IProjects>> = [
+export const projectColumns: Array<Column<Project>> = [
   {
     title: "Project Name",
     field: "projectName",
@@ -19,21 +19,21 @@ export const projectColumns: Array<Column<IProjects>> = [
   {
     title: "Members",
     field: "projectTickets",
-    render: (rowData: IProjects) => {
+    render: (rowData: Project) => {
       return rowData.projectMembers.length;
     },
   },
   {
     title: "Tickets",
     field: "projectTickets",
-    render: (rowData: IProjects) => {
+    render: (rowData: Project) => {
       return rowData.projectTickets.length;
     },
   },
   {
     title: "Created",
     field: "createdAt",
-    render: (rowData: IProjects) => {
+    render: (rowData: Project) => {
       return dateConverter(rowData.createdAt);
     },
   },

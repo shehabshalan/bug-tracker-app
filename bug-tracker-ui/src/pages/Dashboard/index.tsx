@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React from "react";
 import AddProject from "./AddProject";
 import ContentDivider from "../../components/ContentDivider";
 import ContentPage from "../../components/ContentPage";
@@ -8,22 +8,12 @@ import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
 import StatsCard from "./StatsCard";
 import { projectColumns } from "../../data/projectColumns";
-import { getTopProjects } from "../../api/api";
+import { useGetTopProjects } from "../../hooks/useGetTopProjects";
 
 function Dashboard() {
   const [page, setPage] = React.useState(1);
-  const [loading, setLoading] = React.useState(false);
 
-  const { data, isLoading, error } = useQuery(
-    ["topProjects", page],
-    getTopProjects,
-    {
-      keepPreviousData: true,
-      onSuccess: () => {
-        setLoading(false);
-      },
-    }
-  );
+  const { data, isLoading, error } = useGetTopProjects(page);
 
   return (
     <ContentPage>

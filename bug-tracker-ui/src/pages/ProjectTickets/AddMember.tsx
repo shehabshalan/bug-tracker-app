@@ -14,7 +14,8 @@ import { useAuthContext } from "../../context/AuthContext";
 import AlertMessage from "../../components/AlertMessage";
 import { useMutation } from "@tanstack/react-query";
 import { updateProject } from "../../api/api";
-import { IUser } from "../../interfaces/IUser";
+import { User } from "../../utils/types";
+
 function AddMember({
   id,
   membersData,
@@ -28,9 +29,9 @@ function AddMember({
   const [memberValue, setMemberValue] = useState("");
   const [memberId, setMemberId] = useState("");
 
-  const uniqueMembers = members.filter((member: IUser) => {
+  const uniqueMembers = members.filter((member: User) => {
     return !membersData?.projectMembers.some(
-      (data: IUser) => data._id === member._id
+      (data: User) => data._id === member._id
     );
   });
 

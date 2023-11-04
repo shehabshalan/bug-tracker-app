@@ -16,7 +16,7 @@ import {
   TicketPriority,
   TicketStatus,
   TicketType,
-} from "../../constants/enums";
+} from "../../utils/enums";
 import { useAppContext } from "../../context/AppContext";
 import { useAuthContext } from "../../context/AuthContext";
 import { createTicket } from "../../api/api";

@@ -1,16 +1,16 @@
 import mongoose, { Mongoose } from "mongoose";
-import { IProject } from "./project.model";
-import { IUser } from "./user.model";
+import { Project } from "./project.model";
+import { User } from "./user.model";
 
-export interface ITicket extends mongoose.Document {
+export interface Ticket extends mongoose.Document {
   ticketName: string;
   ticketDescription: string;
   ticketType: string;
   ticketPriority: string;
   ticketStatus: string;
-  ticketAssignedTo: IUser["_id"];
-  ticketAuthor: IUser["_id"];
-  ticketProject: IProject["_id"];
+  ticketAssignedTo: User["_id"];
+  ticketAuthor: User["_id"];
+  ticketProject: Project["_id"];
   ticketEstimateTimeInHours: number;
   ticketSlug: string;
   createdAt: Date;
@@ -77,5 +77,5 @@ const ticketSchema = new mongoose.Schema(
   }
 );
 
-const TicketModel = mongoose.model<ITicket>("Ticket", ticketSchema);
+const TicketModel = mongoose.model<Ticket>("Ticket", ticketSchema);
 export default TicketModel;

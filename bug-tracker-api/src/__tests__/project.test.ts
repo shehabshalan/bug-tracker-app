@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import supertest from "supertest";
 import createServer from "../utils/createServer";
 import { signJwt } from "../utils/jwt";
-import { userPayload, projectPayload } from "../utils/payloads";
+import { userPayload, projectPayload } from "./__mocks__/mocks";
 import config from "config";
 
 let createdProjectId = "";

@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
-import axios from "axios";
-import { Endpoints } from "../api/endpoints";
 import jwt_decode from "jwt-decode";
-import axiosInstance from "../api/axiosInstance";
+import { endpoints } from "../api/endpoints";
+import request from "../api/request";
 
 const AuthContext = createContext<any>({} as any);
 
@@ -19,7 +18,7 @@ export const AuthContextProvider = ({
   const login = async (email: string, password: string) => {
     try {
       setLoading(true);
-      const res = await axios.post(Endpoints.login, {
+      const res = await request.post(endpoints.login, {
         email,
         password,
       });
@@ -57,7 +56,7 @@ export const AuthContextProvider = ({
   ) => {
     try {
       setLoading(true);
-      const res = await axios.post(Endpoints.adminSignUp, {
+      const res = await request.post(endpoints.adminSignUp, {
         email,
         password,
         passwordConfirmation,
@@ -74,7 +73,7 @@ export const AuthContextProvider = ({
 
   const getMembers = async () => {
     try {
-      const res = await axiosInstance.get(Endpoints.getAllMembers);
+      const res = await request.get(endpoints.getAllMembers);
       setMembers(res.data.result);
     } catch (error: any) {
       console.log(error.response.data);
@@ -86,7 +85,7 @@ export const AuthContextProvider = ({
   };
   const verify = async () => {
     try {
-      const res = await axiosInstance.get(Endpoints.verifySession);
+      const res = await request.get(endpoints.verifySession);
     } catch (error: any) {
       logout();
     }

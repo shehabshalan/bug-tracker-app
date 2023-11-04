@@ -1,8 +1,8 @@
 import { Column } from "@material-table/core";
-import { IUser } from "../interfaces/IUser";
+import type { User } from "../utils/types";
 import dateConverter from "../utils/dateConverter";
 
-export const membersColumns: Array<Column<IUser>> = [
+export const membersColumns: Array<Column<User>> = [
   {
     title: "Member Name",
     field: "name",
@@ -12,7 +12,7 @@ export const membersColumns: Array<Column<IUser>> = [
   {
     title: "Created",
     field: "createdAt",
-    render: (rowData: IUser) => {
+    render: (rowData: User) => {
       return dateConverter(rowData.createdAt);
     },
   },

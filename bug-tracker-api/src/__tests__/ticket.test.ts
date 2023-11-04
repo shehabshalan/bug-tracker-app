@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import supertest from "supertest";
 import createServer from "../utils/createServer";
 import { signJwt } from "../utils/jwt";
-import { userPayload, ticketPayload } from "../utils/payloads";
+import { userPayload, ticketPayload } from "./__mocks__/mocks";
 import config from "config";
 
 const MONGODB_URI = config.get<string>("mongoURI");

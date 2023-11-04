@@ -1,10 +1,11 @@
 import { DocumentDefinition } from "mongoose";
-import ProjectModel, { IProject } from "../models/project.model";
-import UserModel, { IUser } from "../models/user.model";
+import ProjectModel, { Project } from "../models/project.model";
+import UserModel, { User } from "../models/user.model";
+import TicketModel from "../models/ticket.model";
 
 export const createProject = async (
-  requestBody: DocumentDefinition<Omit<IProject, "createdAt" | "updatedAt">>,
-  user: IUser
+  requestBody: DocumentDefinition<Omit<Project, "createdAt" | "updatedAt">>,
+  user: User
 ) => {
   try {
     const newProject = await ProjectModel.create({
@@ -17,7 +18,7 @@ export const createProject = async (
   }
 };
 
-export const getProjects = async (user: IUser, limit: number, skip: number) => {
+export const getProjects = async (user: User, limit: number, skip: number) => {
   try {
     let count = await ProjectModel.countDocuments({ projectSlug: user.slug });
     const projects = await ProjectModel.find({ projectSlug: user.slug })
@@ -45,7 +46,7 @@ export const getProject = async (id: string) => {
 
 export const updateProject = async (
   id: string,
-  requestBody: DocumentDefinition<Omit<IProject, "createdAt" | "updatedAt">>
+  requestBody: DocumentDefinition<Omit<Project, "createdAt" | "updatedAt">>
 ) => {
   try {
     const project = await ProjectModel.findByIdAndUpdate(id, requestBody, {
@@ -60,13 +61,14 @@ export const updateProject = async (
 export const deleteProject = async (id: string) => {
   try {
     const project = await ProjectModel.findByIdAndDelete(id);
+    await TicketModel.deleteMany({ ticketProject: id });
     return project;
   } catch (e: any) {
     throw new Error(e);
   }
 };
 
-export const getRecentProjects = async (user: IUser) => {
+export const getRecentProjects = async (user: User) => {
   try {
     //  get 4 recent projects
 

@@ -1,11 +1,11 @@
 import { DocumentDefinition } from "mongoose";
 import ProjectModel from "../models/project.model";
-import TicketModel, { ITicket } from "../models/ticket.model";
-import { IUser } from "../models/user.model";
+import TicketModel, { Ticket } from "../models/ticket.model";
+import { User } from "../models/user.model";
 
 export const createTicket = async (
-  requestBody: DocumentDefinition<Omit<ITicket, "createdAt" | "updatedAt">>,
-  user: IUser
+  requestBody: DocumentDefinition<Omit<Ticket, "createdAt" | "updatedAt">>,
+  user: User
 ) => {
   try {
     const newTicket = await TicketModel.create({
@@ -28,7 +28,7 @@ export const createTicket = async (
     throw new Error(e);
   }
 };
-export const getTickets = async (user: IUser, limit: number, skip: number) => {
+export const getTickets = async (user: User, limit: number, skip: number) => {
   try {
     let count = await TicketModel.countDocuments({ ticketSlug: user.slug });
     const tickets = await TicketModel.find({ ticketSlug: user.slug })
@@ -58,7 +58,7 @@ export const getTicket = async (id: string) => {
 
 export const updateTicket = async (
   id: string,
-  requestBody: DocumentDefinition<Omit<ITicket, "createdAt" | "updatedAt">>
+  requestBody: DocumentDefinition<Omit<Ticket, "createdAt" | "updatedAt">>
 ) => {
   try {
     const ticket = await TicketModel.findByIdAndUpdate(id, requestBody, {

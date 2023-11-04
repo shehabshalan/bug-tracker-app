@@ -1,7 +1,7 @@
 import TicketModel from "../models/ticket.model";
-import { IUser } from "../models/user.model";
+import { User } from "../models/user.model";
 
-export const getAccountStats = async (user: IUser) => {
+export const getAccountStats = async (user: User) => {
   let appStats;
   try {
     if (user.role === "admin") {

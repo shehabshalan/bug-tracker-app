@@ -1,11 +1,11 @@
 import { omit } from "lodash";
 import { DocumentDefinition, FilterQuery } from "mongoose";
-import UserModel, { IUser } from "../models/user.model";
+import UserModel, { User } from "../models/user.model";
 import { v4 as uuidv4 } from "uuid";
 
 export const createAdmin = async (
   requestBody: DocumentDefinition<
-    Omit<IUser, "createdAt" | "updatedAt" | "comparePassword">
+    Omit<User, "createdAt" | "updatedAt" | "comparePassword">
   >
 ) => {
   try {
@@ -27,9 +27,9 @@ export const createAdmin = async (
 
 export const createMember = async (
   requestBody: DocumentDefinition<
-    Omit<IUser, "createdAt" | "updatedAt" | "comparePassword">
+    Omit<User, "createdAt" | "updatedAt" | "comparePassword">
   >,
-  admin: IUser
+  admin: User
 ) => {
   try {
     const user = await UserModel.findOne({ email: requestBody.email });
@@ -71,12 +71,12 @@ export const validateUserPassword = async ({
   }
 };
 
-export const findUser = async (query: FilterQuery<IUser>) => {
+export const findUser = async (query: FilterQuery<User>) => {
   const user = await UserModel.findOne(query).lean();
   return user;
 };
 
-export const getMembers = async (admin: IUser, limit: number, skip: number) => {
+export const getMembers = async (admin: User, limit: number, skip: number) => {
   const count = await UserModel.countDocuments({
     role: "user",
     slug: admin.slug,
@@ -92,7 +92,7 @@ export const getMembers = async (admin: IUser, limit: number, skip: number) => {
   return { members, count };
 };
 
-export const getAllMembers = async (admin: IUser) => {
+export const getAllMembers = async (admin: User) => {
   const members = await UserModel.find({
     slug: admin.slug,
   }).sort({ createdAt: -1 });

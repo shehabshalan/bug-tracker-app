@@ -1,10 +1,8 @@
-import React from "react";
 import { styled } from "@mui/material/styles";
 import { Stack, Typography, Paper, Box } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { useQuery } from "@tanstack/react-query";
-import { getAccountStats } from "../../api/api";
+import useGetAccountStats from "../../hooks/useGetAccountStats";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,9 +31,7 @@ const StatChart = styled(Typography)(({ theme }) => ({
 }));
 
 function StatsCard() {
-  const { data }: { data: any } = useQuery(["stats"], getAccountStats, {
-    keepPreviousData: true,
-  });
+  const { data } = useGetAccountStats();
 
   const backgroundColor = ["#FF6384", "#36A2EB", "#FFCE56"];
   const hoverBackgroundColor = ["#FF6384", "#36A2EB", "#FFCE56"];
@@ -47,7 +43,7 @@ function StatsCard() {
         label: "Type",
         backgroundColor: backgroundColor,
         hoverBackgroundColor: hoverBackgroundColor,
-        data: data?.result?.ticketByType,
+        data: data?.ticketByType,
       },
     ],
   };
@@ -58,7 +54,7 @@ function StatsCard() {
         label: "Proirity",
         backgroundColor: backgroundColor,
         hoverBackgroundColor: hoverBackgroundColor,
-        data: data?.result?.ticketByPriority,
+        data: data?.ticketByPriority,
       },
     ],
   };
@@ -69,7 +65,7 @@ function StatsCard() {
         label: "Status",
         backgroundColor: backgroundColor,
         hoverBackgroundColor: hoverBackgroundColor,
-        data: data?.result?.ticketByStatus,
+        data: data?.ticketByStatus,
       },
     ],
   };

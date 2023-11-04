@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import config from "config";
+import ProjectModel from "./project.model";
+import TicketModel from "./ticket.model";
 
-export interface IUser extends mongoose.Document {
+export interface User extends mongoose.Document {
   name: string;
   email: string;
   password: string;
@@ -46,7 +48,7 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", async function (next) {
-  let user = this as IUser;
+  let user = this as User;
   if (!user.isModified("password")) {
     return next();
   }
@@ -60,12 +62,12 @@ userSchema.methods.comparePassword = async function (
   candidatePassword: string
 ): Promise<boolean> {
   /// because it's async, we need to return a promise of a type in this case boolean
-  const user = this as IUser;
+  const user = this as User;
   const isMatch = await bcrypt
     .compare(candidatePassword, user.password)
     .catch(() => false);
   return isMatch;
 };
 
-const UserModel = mongoose.model<IUser>("User", userSchema);
+const UserModel = mongoose.model<User>("User", userSchema);
 export default UserModel;

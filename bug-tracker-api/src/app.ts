@@ -1,4 +1,3 @@
-import express from "express";
 import config from "config";
 import dbConnect from "./utils/dbConnect";
 import logger from "./utils/logger";

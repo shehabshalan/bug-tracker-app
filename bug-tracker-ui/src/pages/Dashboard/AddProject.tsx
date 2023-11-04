@@ -11,8 +11,8 @@ import { useAppContext } from "../../context/AppContext";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createProject } from "../../api/api";
+import { useQueryClient } from "@tanstack/react-query";
+import useCreateProject from "../../hooks/useCreateProject";
 
 const validationSchema = yup.object({
   title: yup.string().required("title is required"),
@@ -22,15 +22,7 @@ function AddProject({ cacheKey }: { cacheKey: string }) {
   const { handleClose, openType, setSuccess, setMessage } = useAppContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(createProject, {
-    onSuccess: (data: any) => {
-      queryClient.invalidateQueries([cacheKey]);
-      setSuccess(true);
-      setMessage("Project created successfully");
-      navigate(`/project/${data._id}`);
-      handleClose();
-    },
-  });
+  const { mutate: createProject } = useCreateProject();
 
   const formik = useFormik({
     initialValues: {
@@ -44,7 +36,15 @@ function AddProject({ cacheKey }: { cacheKey: string }) {
         projectDescription: values.description,
       };
 
-      mutate(payload);
+      createProject(payload, {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries([cacheKey]);
+          setSuccess(true);
+          setMessage("Project created successfully");
+          navigate(`/project/${data._id}`);
+          handleClose();
+        },
+      });
     },
   });
 

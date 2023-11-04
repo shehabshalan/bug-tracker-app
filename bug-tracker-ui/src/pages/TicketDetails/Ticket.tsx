@@ -7,10 +7,10 @@ import {
   ListItemText,
 } from "@mui/material";
 import { capitalize } from "lodash";
-import { ITicket } from "../../interfaces/ITicket";
+import type { Ticket as TicketType } from "../../utils/types";
 import dateConverter from "../../utils/dateConverter";
 
-function Ticket({ ticket }: { ticket: ITicket }) {
+function Ticket({ ticket }: { ticket: TicketType }) {
   return (
     <>
       <Grid
