@@ -2,8 +2,8 @@ import axios from "axios";
 
 const BASE_URL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:4000/api/"
-    : "https://limitless-reef-02128.herokuapp.com/api/";
+    ? process.env.REACT_APP_BASE_API_DEV_URL
+    : process.env.REACT_APP_BASE_API_PROD_URL;
 
 const request = axios.create({
   baseURL: BASE_URL,
