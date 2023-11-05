@@ -6,6 +6,7 @@ import { useAppContext } from "../../context/AppContext";
 import { useQuery } from "@tanstack/react-query";
 import EditTicket from "./EditTicket";
 import AlertMessage from "../../components/AlertMessage";
+import { Breadcrumbs, Link, Typography } from "@mui/material";
 
 function TicketDetails() {
   const { setError, setMessage } = useAppContext();
@@ -42,6 +43,19 @@ function TicketDetails() {
   }
   return (
     <div>
+      <Breadcrumbs aria-label="breadcrumb" style={{ marginBottom: "1rem" }}>
+        <Link underline="hover" color="inherit" href="/">
+          Home
+        </Link>
+        <Link
+          underline="hover"
+          color="inherit"
+          href={`/project/${data?.ticketProject?._id}`}
+        >
+          {projectDetails?.projectName}
+        </Link>
+        <Typography color="text.primary">{data?.ticketName}</Typography>
+      </Breadcrumbs>
       <ContentTab
         title={"Ticket Details"}
         buttonText={"Update Ticket"}

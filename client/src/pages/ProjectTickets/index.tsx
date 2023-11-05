@@ -1,4 +1,11 @@
-import { Fab, Stack, Tooltip, Typography } from "@mui/material";
+import {
+  Breadcrumbs,
+  Fab,
+  Link,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
@@ -53,6 +60,14 @@ function ProjectDetails() {
 
   return (
     <ContentPage>
+      <Breadcrumbs aria-label="breadcrumb" style={{ marginBottom: "1rem" }}>
+        <Link underline="hover" color="inherit" href="/">
+          Home
+        </Link>
+        <Typography color="text.primary">
+          {projectDetails?.projectName}
+        </Typography>
+      </Breadcrumbs>
       <Typography variant="h6" gutterBottom>
         {projectDetails?.projectName} | Tickets
       </Typography>
@@ -79,11 +94,11 @@ function ProjectDetails() {
             <AddIcon onClick={() => handleClickOpen("openMember")} />
           </Fab>
         </Tooltip>
-        <Tooltip title="Remove Member">
+        {/* <Tooltip title="Remove Member">
           <Fab size="small" color="secondary" aria-label="add">
             <DeleteIcon onClick={() => handleClickOpen("openMember")} />
           </Fab>
-        </Tooltip>
+        </Tooltip> */}
       </Stack>
       <ContentTab
         title={"Tickets"}
