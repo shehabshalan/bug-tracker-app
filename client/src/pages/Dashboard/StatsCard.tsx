@@ -2,7 +2,13 @@ import { styled } from "@mui/material/styles";
 import { Stack, Typography, Paper, Box } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import useGetAccountStats from "../../hooks/useGetAccountStats";
+import { useGetAccountStats } from "../../hooks/useGetAccountStats";
+import {
+  BACKGROUND_COLOR,
+  TICKET_PRIORITY_LABELS,
+  TICKET_STATUS_LABELS,
+  TICKET_TYPE_LABELS,
+} from "../../utils/constants";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,38 +39,35 @@ const StatChart = styled(Typography)(({ theme }) => ({
 function StatsCard() {
   const { data } = useGetAccountStats();
 
-  const backgroundColor = ["#FF6384", "#36A2EB", "#FFCE56"];
-  const hoverBackgroundColor = ["#FF6384", "#36A2EB", "#FFCE56"];
-
   const ticketByTypeChart = {
-    labels: ["Bug", "Feature", "Task"],
+    labels: TICKET_TYPE_LABELS,
     datasets: [
       {
         label: "Type",
-        backgroundColor: backgroundColor,
-        hoverBackgroundColor: hoverBackgroundColor,
+        backgroundColor: BACKGROUND_COLOR,
+        hoverBackgroundColor: BACKGROUND_COLOR,
         data: data?.ticketByType,
       },
     ],
   };
   const ticketByPriorityChart = {
-    labels: ["High", "Medium", "Low"],
+    labels: TICKET_PRIORITY_LABELS,
     datasets: [
       {
         label: "Proirity",
-        backgroundColor: backgroundColor,
-        hoverBackgroundColor: hoverBackgroundColor,
+        backgroundColor: BACKGROUND_COLOR,
+        hoverBackgroundColor: BACKGROUND_COLOR,
         data: data?.ticketByPriority,
       },
     ],
   };
   const ticketByStatusChart = {
-    labels: ["Open", "In Progress", "Closed"],
+    labels: TICKET_STATUS_LABELS,
     datasets: [
       {
         label: "Status",
-        backgroundColor: backgroundColor,
-        hoverBackgroundColor: hoverBackgroundColor,
+        backgroundColor: BACKGROUND_COLOR,
+        hoverBackgroundColor: BACKGROUND_COLOR,
         data: data?.ticketByStatus,
       },
     ],
