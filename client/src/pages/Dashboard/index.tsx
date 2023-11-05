@@ -1,5 +1,4 @@
 import { Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import AddProject from "./AddProject";
 import ContentDivider from "../../components/ContentDivider";
