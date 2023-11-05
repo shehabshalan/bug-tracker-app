@@ -9,11 +9,9 @@ type AccountStats = {
   totalTickets: number;
 };
 
-const useGetAccountStats = () => {
+export const useGetAccountStats = () => {
   return useQuery(["stats"], async (): Promise<AccountStats> => {
     const res = await request.get(`${endpoints.accountStats}`);
     return res.data.result;
   });
 };
-
-export default useGetAccountStats;
