@@ -1,4 +1,4 @@
-import { Fab, IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import { Fab, Stack, Tooltip, Typography } from "@mui/material";
 import ContentPage from "../../components/ContentPage";
 import ContentTab from "../../components/ContentTab";
 import ContentTable from "../../components/ContentTable";
@@ -22,7 +22,6 @@ function ProjectDetails() {
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   const {
     data: tickets,
@@ -40,17 +39,17 @@ function ProjectDetails() {
     },
   });
 
-  const { data: projectDetails, refetch } = useQuery(
-    ["project-details", id, page],
-    getProjectMembers,
-    {
-      keepPreviousData: true,
-      onError: () => {
-        setError(true);
-        setMessage("Error fetching members");
-      },
-    }
-  );
+  const {
+    data: projectDetails,
+    refetch,
+    isLoading: isLoadingDetails,
+  } = useQuery(["project-details", id, page], getProjectMembers, {
+    keepPreviousData: true,
+    onError: () => {
+      setError(true);
+      setMessage("Error fetching members");
+    },
+  });
 
   return (
     <ContentPage>
@@ -64,7 +63,7 @@ function ProjectDetails() {
           my: 2,
         }}
       >
-        {!loading && (
+        {!isLoadingDetails && (
           <>
             <AvatarGroup total={projectDetails?.projectMembers.length}>
               {projectDetails?.projectMembers.map((member: any) => (

@@ -11,13 +11,11 @@ import { getProjects } from "../../api/api";
 function Projects() {
   const [page, setPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(0);
-  const [loading, setLoading] = React.useState(false);
 
   const { data, isLoading, error } = useQuery(["projects", page], getProjects, {
     keepPreviousData: true,
     onSuccess: (data) => {
       setTotalPages(data.totalPages);
-      setLoading(false);
     },
   });
 

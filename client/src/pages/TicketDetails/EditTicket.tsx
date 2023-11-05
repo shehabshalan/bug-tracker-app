@@ -53,12 +53,10 @@ function EditTicket({
   const [time, setTime] = useState(ticket.ticketEstimateTimeInHours);
 
   const { mutate } = useMutation(updateTicket, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       refetch();
       setSuccess(true);
       setMessage("Updated successfully");
-      console.log("success");
-
       handleClose();
     },
     onError: (error: any) => {

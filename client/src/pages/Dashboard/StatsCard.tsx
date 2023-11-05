@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Stack, Typography, Paper, Box } from "@mui/material";
+import { Stack, Typography, Paper } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { useGetAccountStats } from "../../hooks/useGetAccountStats";

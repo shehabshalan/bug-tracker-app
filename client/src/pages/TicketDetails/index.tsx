@@ -23,18 +23,17 @@ function TicketDetails() {
     }
   );
 
-  const { data: projectDetails }: { data: any; isLoading: any; error: any } =
-    useQuery(
-      ["project-details2", data?.ticketProject?._id],
-      getProjectMembers,
-      {
-        keepPreviousData: true,
-        onError: () => {
-          setError(true);
-          setMessage("Error fetching members");
-        },
-      }
-    );
+  const { data: projectDetails } = useQuery(
+    ["project-details2", data?.ticketProject?._id],
+    getProjectMembers,
+    {
+      keepPreviousData: true,
+      onError: () => {
+        setError(true);
+        setMessage("Error fetching members");
+      },
+    }
+  );
   if (error) {
     return <div>Error</div>;
   }

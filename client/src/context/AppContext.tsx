@@ -8,7 +8,6 @@ export function AppContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [mode, setMode] = useState("light");
   const theme = createTheme({
     typography: {
       fontFamily: "Roboto",
@@ -22,9 +21,6 @@ export function AppContextProvider({
       },
     },
   });
-  const [checked, setChecked] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [serviceStatus, setServiceStatus] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
@@ -62,10 +58,6 @@ export function AppContextProvider({
   return (
     <appContext.Provider
       value={{
-        checked,
-        serviceStatus,
-        loading,
-        mode,
         theme,
         openType,
         handleClickOpen,

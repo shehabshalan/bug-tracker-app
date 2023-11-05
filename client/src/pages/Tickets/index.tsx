@@ -10,13 +10,16 @@ import { getUserTickets } from "../../api/api";
 function Tickets() {
   const [page, setPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(0);
-  const { data, isLoading, error }: { data: any; isLoading: any; error: any } =
-    useQuery(["user-tickets", page], getUserTickets, {
+  const { data, isLoading, error } = useQuery(
+    ["user-tickets", page],
+    getUserTickets,
+    {
       keepPreviousData: true,
       onSuccess: (data) => {
         setTotalPages(data.totalPages);
       },
-    });
+    }
+  );
 
   return (
     <ContentPage>

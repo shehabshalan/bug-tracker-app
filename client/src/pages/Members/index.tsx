@@ -11,7 +11,6 @@ import { getMembers } from "../../api/api";
 
 function Members() {
   const [page, setPage] = React.useState(1);
-  const [loading, setLoading] = React.useState(false);
 
   const { data, isLoading, error, refetch } = useQuery(
     ["get-all-members", page],
@@ -20,6 +19,7 @@ function Members() {
       keepPreviousData: true,
     }
   );
+
   return (
     <ContentPage>
       <Typography variant="h6" gutterBottom>

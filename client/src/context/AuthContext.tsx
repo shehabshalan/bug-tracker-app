@@ -15,6 +15,7 @@ export const AuthContextProvider = ({
   const [user, setUser] = useState(localStorage.getItem("user") || {});
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const login = async (email: string, password: string) => {
     try {
       setLoading(true);
@@ -33,6 +34,7 @@ export const AuthContextProvider = ({
       alert(error.response.data);
     }
   };
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -48,6 +50,7 @@ export const AuthContextProvider = ({
     const user = jwt_decode(token) as any;
     return user.role;
   };
+
   const signup = async (
     name: string,
     email: string,
@@ -56,7 +59,7 @@ export const AuthContextProvider = ({
   ) => {
     try {
       setLoading(true);
-      const res = await request.post(endpoints.adminSignUp, {
+      await request.post(endpoints.adminSignUp, {
         email,
         password,
         passwordConfirmation,
@@ -83,13 +86,15 @@ export const AuthContextProvider = ({
   const refetchMembers = async () => {
     await getMembers();
   };
+
   const verify = async () => {
     try {
-      const res = await request.get(endpoints.verifySession);
+      await request.get(endpoints.verifySession);
     } catch (error: any) {
       logout();
     }
   };
+
   useEffect(() => {
     verify();
     getMembers();
